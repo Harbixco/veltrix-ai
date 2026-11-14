@@ -14,7 +14,7 @@ import {
   Clock,
   Send
 } from 'lucide-react';
-import { VELTRIX_SERVICES, CONTENT_PILLARS } from '@veltrix/shared';
+import { VELTRIX_SERVICES, CONTENT_PILLARS } from '../shared/constants';
 
 interface GeneratedCopy {
   topic: string;

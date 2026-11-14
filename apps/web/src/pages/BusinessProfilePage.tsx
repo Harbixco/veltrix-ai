@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Building2, Palette, ShieldCheck, Save, Sparkles, Check } from 'lucide-react';
-import { VELTRIX_BRAND_DEFAULTS, VELTRIX_SERVICES } from '@veltrix/shared';
+import { VELTRIX_BRAND_DEFAULTS, VELTRIX_SERVICES } from '../shared/constants';
 
 export const BusinessProfilePage: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'info' | 'brand' | 'services'>('info');

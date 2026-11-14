@@ -13,7 +13,7 @@ import {
   Filter,
   X
 } from 'lucide-react';
-import { VELTRIX_SERVICES, LEAD_STAGES } from '@veltrix/shared';
+import { VELTRIX_SERVICES, LEAD_STAGES } from '../shared/constants';
 
 interface Lead {
   id: string;

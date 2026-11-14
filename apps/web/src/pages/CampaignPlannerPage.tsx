@@ -14,7 +14,7 @@ import {
   Play,
   Pause
 } from 'lucide-react';
-import { VELTRIX_SERVICES } from '@veltrix/shared';
+import { VELTRIX_SERVICES } from '../shared/constants';
 
 interface Campaign {
   id: string;

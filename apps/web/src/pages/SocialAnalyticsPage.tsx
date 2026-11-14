@@ -18,7 +18,7 @@ import {
   Building2,
   ChevronRight
 } from 'lucide-react';
-import { CONTENT_PILLARS } from '@veltrix/shared';
+import { CONTENT_PILLARS } from '../shared/constants';
 
 interface AnalyticsOverview {
   totalPosts: number;
