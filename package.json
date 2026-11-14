@@ -7,11 +7,13 @@
     "packages/*"
   ],
   "scripts": {
-    "dev:api": "npm --workspace=apps/api run dev",
-    "dev:web": "npm --workspace=apps/web run dev",
-    "build": "npm run build --workspaces --if-present",
-    "db:generate": "npm --workspace=packages/database run prisma:generate",
-    "db:push": "npm --workspace=packages/database run prisma:push"
+    "build:packages": "npm --workspace=@veltrix/types run build && npm --workspace=@veltrix/shared run build",
+    "build:web": "npm run build:packages && npm --workspace=@veltrix/web run build",
+    "build": "npm run build:packages && npm --workspace=@veltrix/web run build",
+    "dev:api": "npm --workspace=@veltrix/api run dev",
+    "dev:web": "npm --workspace=@veltrix/web run dev",
+    "db:generate": "npm --workspace=@veltrix/database run prisma:generate",
+    "db:push": "npm --workspace=@veltrix/database run prisma:push"
   },
   "devDependencies": {
     "typescript": "^5.7.3"
