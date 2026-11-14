@@ -131,7 +131,9 @@ export class ReportService {
       actionableRecommendations: [
         'Scale the highest-converting Authority post format focusing on client website rebuild case studies.',
         'Target 3 additional local high-intent keywords to capture SME search traffic.',
-        'Trigger the automated 48-Hour WhatsApp follow-up workflow for the 2 qualified leads currently awaiting proposal review.'
+        totalLeads > 0
+          ? `Trigger the automated 48-Hour WhatsApp follow-up workflow for the ${totalLeads} qualified lead${totalLeads === 1 ? '' : 's'} currently in proposal review.`
+          : 'Connect your WhatsApp business conversion link on landing pages to start capturing inbound prospects.'
       ]
     };
   }
