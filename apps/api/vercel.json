@@ -6,12 +6,6 @@
       "use": "@vercel/node"
     }
   ],
-  "crons": [
-    {
-      "path": "/api/v1/calendar/cron/publish-due",
-      "schedule": "*/15 * * * *"
-    }
-  ],
   "routes": [
     {
       "src": "/(.*)",
