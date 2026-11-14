@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { DashboardLayout } from './layouts/DashboardLayout';
 import { DashboardOverview } from './pages/DashboardOverview';
 import { FacebookAccountsPage } from './pages/FacebookAccountsPage';
@@ -9,14 +9,56 @@ import { ReportsPage } from './pages/ReportsPage';
 import { SettingsPage } from './pages/SettingsPage';
 import { LoginPage } from './pages/LoginPage';
 
+/**
+ * Route guard: Redirects to /login if the user does not have an active authentication session.
+ */
+const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const location = useLocation();
+  const token = typeof window !== 'undefined' ? localStorage.getItem('veltrix_token') : null;
+
+  if (!token) {
+    return <Navigate to="/login" state={{ from: location }} replace />;
+  }
+
+  return <>{children}</>;
+};
+
+/**
+ * Public-only route guard: If the user is already authenticated, redirect them to the dashboard.
+ */
+const PublicOnlyRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const token = typeof window !== 'undefined' ? localStorage.getItem('veltrix_token') : null;
+
+  if (token) {
+    return <Navigate to="/" replace />;
+  }
+
+  return <>{children}</>;
+};
+
 export const App: React.FC = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/login" element={<LoginPage />} />
+        {/* Public Login Route */}
+        <Route
+          path="/login"
+          element={
+            <PublicOnlyRoute>
+              <LoginPage />
+            </PublicOnlyRoute>
+          }
+        />
 
-        {/* Core Clean Navigation Pages */}
-        <Route path="/" element={<DashboardLayout />}>
+        {/* Protected Dashboard Routes (Requires Authentication) */}
+        <Route
+          path="/"
+          element={
+            <ProtectedRoute>
+              <DashboardLayout />
+            </ProtectedRoute>
+          }
+        >
           <Route index element={<DashboardOverview />} />
           <Route path="facebook-accounts" element={<FacebookAccountsPage />} />
           <Route path="social-accounts" element={<FacebookAccountsPage />} />
@@ -26,6 +68,7 @@ export const App: React.FC = () => {
           <Route path="settings" element={<SettingsPage />} />
         </Route>
 
+        {/* Catch-all redirect */}
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>

@@ -13,7 +13,8 @@ import {
   Share2,
   Menu,
   X,
-  Sparkles
+  Sparkles,
+  UserCheck
 } from 'lucide-react';
 
 const NAV_ITEMS = [
@@ -39,10 +40,15 @@ export const DashboardLayout: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
+  // Retrieve authenticated user
+  const user = typeof window !== 'undefined' ? JSON.parse(localStorage.getItem('veltrix_user') || '{}') : {};
+  const userName = user.firstName ? `${user.firstName} ${user.lastName || ''}`.trim() : 'Kayode Agbaje';
+  const userEmail = user.email || 'admin@veltrixhub.com';
+
   const handleLogout = () => {
     localStorage.removeItem('veltrix_token');
     localStorage.removeItem('veltrix_user');
-    navigate('/login');
+    navigate('/login', { replace: true });
   };
 
   return (
@@ -75,26 +81,27 @@ export const DashboardLayout: React.FC = () => {
           <button
             onClick={() => setIsCollapsed(!isCollapsed)}
             className="rounded-lg p-1.5 text-slate-400 hover:bg-slate-800 hover:text-white transition-colors"
+            aria-label="Toggle Sidebar"
           >
             {isCollapsed ? <ChevronRight className="h-4 w-4" /> : <ChevronLeft className="h-4 w-4" />}
           </button>
         </div>
 
-        {/* Navigation Items */}
-        <nav className="flex-1 space-y-1 px-3 py-4">
+        {/* Navigation Links */}
+        <nav className="flex-1 space-y-1.5 p-3 overflow-y-auto">
           {NAV_ITEMS.map((item) => {
             const Icon = item.icon;
+            const isActive = location.pathname === item.path;
+
             return (
               <NavLink
                 key={item.path}
                 to={item.path}
-                className={({ isActive }) =>
-                  `flex items-center gap-3 rounded-xl px-3 py-2.5 text-xs font-medium transition-colors ${
-                    isActive
-                      ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20'
-                      : 'text-slate-400 hover:bg-slate-800 hover:text-white'
-                  }`
-                }
+                className={`flex items-center gap-3 rounded-xl px-3 py-2.5 text-xs font-medium transition-all ${
+                  isActive
+                    ? 'bg-emerald-500/10 text-emerald-400 font-semibold border border-emerald-500/20'
+                    : 'text-slate-400 hover:bg-slate-800/60 hover:text-slate-200'
+                } ${isCollapsed ? 'justify-center px-0' : ''}`}
                 title={isCollapsed ? item.name : undefined}
               >
                 <Icon className="h-4 w-4 shrink-0" />
@@ -109,12 +116,12 @@ export const DashboardLayout: React.FC = () => {
           {!isCollapsed ? (
             <div className="flex items-center justify-between rounded-xl bg-slate-950 p-2.5 border border-slate-800">
               <div className="truncate pr-2">
-                <p className="truncate text-xs font-medium text-slate-200">Veltrix Admin</p>
-                <p className="truncate text-[10px] text-slate-400">admin@veltrixhub.com</p>
+                <p className="truncate text-xs font-semibold text-slate-200">{userName}</p>
+                <p className="truncate text-[10px] text-slate-400">{userEmail}</p>
               </div>
               <button
                 onClick={handleLogout}
-                className="rounded-lg p-1.5 text-slate-400 hover:text-red-400 transition-colors"
+                className="rounded-lg p-1.5 text-slate-400 hover:text-rose-400 hover:bg-rose-500/10 transition-colors"
                 title="Log Out"
               >
                 <LogOut className="h-4 w-4" />
@@ -123,7 +130,7 @@ export const DashboardLayout: React.FC = () => {
           ) : (
             <button
               onClick={handleLogout}
-              className="flex w-full justify-center rounded-lg p-2 text-slate-400 hover:bg-slate-800 hover:text-red-400"
+              className="flex w-full justify-center rounded-lg p-2 text-slate-400 hover:bg-slate-800 hover:text-rose-400 transition-colors"
               title="Log Out"
             >
               <LogOut className="h-4 w-4" />
@@ -152,7 +159,7 @@ export const DashboardLayout: React.FC = () => {
                 </div>
                 <div>
                   <h3 className="font-bold text-sm text-white">Veltrix Hub</h3>
-                  <p className="text-[10px] text-slate-400">AI Growth Suite</p>
+                  <p className="text-[10px] text-slate-400">AI Growth Command</p>
                 </div>
               </div>
               <button
@@ -172,9 +179,9 @@ export const DashboardLayout: React.FC = () => {
                     key={item.path}
                     to={item.path}
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className={`flex items-center gap-3 rounded-xl px-3.5 py-3 text-xs font-semibold transition-colors ${
+                    className={`flex items-center gap-3 rounded-xl px-3.5 py-3 text-xs font-semibold min-h-[44px] transition-all ${
                       isActive
-                        ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/30'
+                        ? 'bg-emerald-500/15 text-emerald-400 border border-emerald-500/30'
                         : 'text-slate-300 hover:bg-slate-800 hover:text-white'
                     }`}
                   >
@@ -188,13 +195,13 @@ export const DashboardLayout: React.FC = () => {
             <div className="border-t border-slate-800 pt-3">
               <div className="flex items-center justify-between rounded-xl bg-slate-950 p-2.5 border border-slate-800 mb-2">
                 <div className="truncate pr-2">
-                  <p className="text-xs font-medium text-slate-200">Veltrix Admin</p>
-                  <p className="text-[10px] text-slate-400">admin@veltrixhub.com</p>
+                  <p className="text-xs font-semibold text-slate-200">{userName}</p>
+                  <p className="text-[10px] text-slate-400">{userEmail}</p>
                 </div>
               </div>
               <button
                 onClick={handleLogout}
-                className="w-full flex items-center justify-center gap-2 rounded-xl bg-red-500/10 border border-red-500/20 py-2.5 text-xs font-semibold text-red-400 hover:bg-red-500/20 transition-colors"
+                className="w-full flex items-center justify-center gap-2 rounded-xl bg-rose-500/10 border border-rose-500/20 py-2.5 text-xs font-semibold text-rose-400 hover:bg-rose-500/20 transition-colors min-h-[44px]"
               >
                 <LogOut className="h-4 w-4" />
                 <span>Log Out</span>
@@ -209,9 +216,9 @@ export const DashboardLayout: React.FC = () => {
       {/* ===================================================================== */}
       <div className="flex flex-1 flex-col overflow-hidden">
         {/* Top Header */}
-        <header className="flex h-14 sm:h-16 items-center justify-between border-b border-slate-800 bg-slate-900/90 backdrop-blur px-4 sm:px-6 shrink-0">
+        <header className="flex h-14 sm:h-16 items-center justify-between border-b border-slate-800 bg-slate-900/90 backdrop-blur px-3 sm:px-6 shrink-0">
           {/* Left on Mobile: Hamburger + Brand */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2.5 sm:gap-3">
             <button
               onClick={() => setIsMobileMenuOpen(true)}
               className="md:hidden rounded-xl p-2 min-h-[44px] min-w-[44px] flex items-center justify-center text-slate-300 hover:bg-slate-800 hover:text-white active:bg-slate-700 transition-colors"
@@ -229,12 +236,22 @@ export const DashboardLayout: React.FC = () => {
             </div>
           </div>
 
-          {/* Right Header Status */}
+          {/* Right Header Status + User Profile + Quick Logout */}
           <div className="flex items-center gap-2 sm:gap-3">
             <span className="hidden sm:inline text-xs text-slate-400">Organization:</span>
             <span className="text-[11px] sm:text-xs font-semibold text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 rounded-md">
               Growth Hub Active
             </span>
+
+            {/* Top Bar Logout Action */}
+            <button
+              onClick={handleLogout}
+              className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-slate-400 hover:text-rose-400 hover:bg-rose-500/10 border border-slate-800 hover:border-rose-500/30 transition-all text-xs"
+              title="Log Out of Session"
+            >
+              <LogOut className="h-3.5 w-3.5" />
+              <span className="hidden sm:inline">Logout</span>
+            </button>
           </div>
         </header>
 
