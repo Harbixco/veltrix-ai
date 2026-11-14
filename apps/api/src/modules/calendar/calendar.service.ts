@@ -283,6 +283,26 @@ export class CalendarService {
           isLivePublished = true;
         }
       }
+
+      // Automatically post first comment directly to Facebook (Metricool style)
+      if (publishedExternalId && decryptedToken) {
+        try {
+          const firstCommentMessage =
+            "Want a free initial review of your business's online presence or a professional website? Send Veltrix Hub a message.\nWhatsApp: https://wa.me/2348087098270";
+
+          await fetch(`https://graph.facebook.com/v19.0/${publishedExternalId}/comments`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              message: firstCommentMessage,
+              access_token: decryptedToken
+            })
+          });
+          console.info(`[Meta Direct Publish] First comment automatically posted to ${publishedExternalId}`);
+        } catch (commentErr) {
+          console.warn('[Meta First Comment Warning] Could not post first comment:', commentErr);
+        }
+      }
     } catch (apiErr: any) {
       console.error('[Meta Direct Publish Error]', apiErr);
       throw apiErr;

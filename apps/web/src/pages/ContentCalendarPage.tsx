@@ -984,9 +984,9 @@ export const ContentCalendarPage: React.FC = () => {
       setPublishedPosts([newPublished, ...publishedPosts]);
 
       if (data.permalinkUrl) {
-        setActionSuccess(`🎉 Published directly to Facebook! Post is live on your Page timeline.`);
+        setActionSuccess(`🎉 Published directly to Facebook! Post & First Comment are live on your Page timeline.`);
       } else {
-        setActionSuccess('🎉 Published directly to your Facebook Page timeline!');
+        setActionSuccess('🎉 Published directly to Facebook! Post & First Comment are live on your Page timeline.');
       }
       setTimeout(() => setActionSuccess(null), 6000);
     } catch (err: any) {
