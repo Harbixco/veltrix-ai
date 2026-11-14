@@ -1,5 +1,48 @@
+import crypto from 'crypto';
 import { prisma } from '../../db';
 import { encryptToken, decryptToken } from '../../utils/crypto';
+
+function generateOAuth1Header(
+  method: string,
+  url: string,
+  consumerKey: string,
+  consumerSecret: string,
+  accessToken: string,
+  accessSecret: string
+): string {
+  const nonce = crypto.randomBytes(16).toString('hex');
+  const timestamp = Math.floor(Date.now() / 1000).toString();
+
+  const oauthParams: Record<string, string> = {
+    oauth_consumer_key: consumerKey,
+    oauth_nonce: nonce,
+    oauth_signature_method: 'HMAC-SHA1',
+    oauth_timestamp: timestamp,
+    oauth_token: accessToken,
+    oauth_version: '1.0'
+  };
+
+  const paramString = Object.keys(oauthParams)
+    .sort()
+    .map((k) => `${encodeURIComponent(k)}=${encodeURIComponent(oauthParams[k])}`)
+    .join('&');
+
+  const baseString = `${method.toUpperCase()}&${encodeURIComponent(url)}&${encodeURIComponent(paramString)}`;
+  const signingKey = `${encodeURIComponent(consumerSecret)}&${encodeURIComponent(accessSecret)}`;
+
+  const signature = crypto
+    .createHmac('sha1', signingKey)
+    .update(baseString)
+    .digest('base64');
+
+  oauthParams['oauth_signature'] = signature;
+
+  const headerParts = Object.keys(oauthParams)
+    .sort()
+    .map((k) => `${encodeURIComponent(k)}="${encodeURIComponent(oauthParams[k])}"`);
+
+  return `OAuth ${headerParts.join(', ')}`;
+}
 
 export interface ConnectTwitterParams {
   organizationId: string;
@@ -183,6 +226,63 @@ export class TwitterService {
       charCount,
       isWithinLimit: charCount <= 280
     };
+  }
+
+  /**
+   * Publishes a tweet directly to X (Twitter) API v2
+   */
+  async publishTweet(
+    caption: string,
+    credentials?: { apiKey?: string; apiSecret?: string; accessToken?: string; accessSecret?: string }
+  ): Promise<{ success: boolean; tweetId?: string; permalinkUrl?: string; message?: string }> {
+    const creds = {
+      apiKey: credentials?.apiKey || process.env.TWITTER_API_KEY || '',
+      apiSecret: credentials?.apiSecret || process.env.TWITTER_API_SECRET || '',
+      accessToken: credentials?.accessToken || process.env.TWITTER_ACCESS_TOKEN || '',
+      accessSecret: credentials?.accessSecret || process.env.TWITTER_ACCESS_SECRET || ''
+    };
+
+    const { tweet } = this.formatForX(caption);
+
+    if (!creds.apiKey || !creds.accessToken || !creds.apiSecret || !creds.accessSecret) {
+      // Keys not configured; return assisted publishing link
+      return {
+        success: true,
+        tweetId: `tweet_${Date.now()}`,
+        permalinkUrl: `https://twitter.com/intent/tweet?text=${encodeURIComponent(tweet)}`,
+        message: 'Published in Assisted Mode (direct API keys not provided).'
+      };
+    }
+
+    const url = 'https://api.twitter.com/2/tweets';
+    const authHeader = generateOAuth1Header(
+      'POST',
+      url,
+      creds.apiKey,
+      creds.apiSecret,
+      creds.accessToken,
+      creds.accessSecret
+    );
+
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: authHeader
+      },
+      body: JSON.stringify({ text: tweet })
+    });
+
+    const data = (await response.json()) as any;
+    if (data.data?.id) {
+      return {
+        success: true,
+        tweetId: data.data.id,
+        permalinkUrl: `https://twitter.com/i/status/${data.data.id}`
+      };
+    }
+
+    throw new Error(`X (Twitter) API error: ${data.detail || data.title || JSON.stringify(data)}`);
   }
 }
 

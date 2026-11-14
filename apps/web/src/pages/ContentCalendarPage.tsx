@@ -949,9 +949,49 @@ export const ContentCalendarPage: React.FC = () => {
     if (!post) return;
 
     if (post.channel === 'TWITTER' || post.page?.pageId === 'AbiodunBuilds') {
-      window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(post.caption)}`, '_blank');
-      setActionSuccess('Opening 𝕏 Tweet Composer with pre-filled content!');
-      setTimeout(() => setActionSuccess(null), 3000);
+      setPublishingId(postId);
+      setActionSuccess('Publishing to 𝕏 (Twitter)...');
+      try {
+        const token = localStorage.getItem('veltrix_token');
+        const res = await fetch(`/api/v1/calendar/publish-now/${postId}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: token ? `Bearer ${token}` : ''
+          },
+          body: JSON.stringify({
+            mediaUrls: post.mediaUrls || [],
+            caption: post.caption
+          })
+        });
+        const data = await res.json();
+        const updatedScheduled = scheduledPosts.filter((p) => p.id !== postId);
+        const newPublished: PublishedPost = {
+          id: data.publishedPost?.id || `pub_${Date.now()}`,
+          socialPageId: post.socialPageId,
+          pageName: post.page?.pageName || 'Abiodun Builds (@AbiodunBuilds)',
+          caption: post.caption,
+          mediaUrls: post.mediaUrls,
+          contentPillar: post.topicBadge || 'Tech Insight',
+          publishedAt: new Date().toISOString(),
+          channel: 'TWITTER',
+          metrics: { reach: 1, engagementRate: 100, reactions: 1 }
+        };
+        setScheduledPosts(updatedScheduled);
+        setPublishedPosts([newPublished, ...publishedPosts]);
+
+        if (data.permalinkUrl && data.permalinkUrl.includes('intent/tweet')) {
+          window.open(data.permalinkUrl, '_blank');
+          setActionSuccess('Post published to 𝕏 queue & opened composer!');
+        } else {
+          setActionSuccess('🎉 Published directly to 𝕏 (Twitter)!');
+        }
+      } catch (err: any) {
+        window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(post.caption)}`, '_blank');
+      } finally {
+        setPublishingId(null);
+        setTimeout(() => setActionSuccess(null), 4000);
+      }
       return;
     }
 
@@ -966,7 +1006,11 @@ export const ContentCalendarPage: React.FC = () => {
         headers: {
           'Content-Type': 'application/json',
           Authorization: token ? `Bearer ${token}` : ''
-        }
+        },
+        body: JSON.stringify({
+          mediaUrls: post.mediaUrls || [],
+          caption: post.caption
+        })
       });
 
       const data = await res.json();

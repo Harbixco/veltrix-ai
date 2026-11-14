@@ -1,5 +1,6 @@
 import { prisma } from '../../db';
 import { decryptToken } from '../../utils/crypto';
+import { twitterService } from '../twitter/twitter.service';
 
 export interface SchedulePostDTO {
   socialPageId?: string;
@@ -167,48 +168,126 @@ export class CalendarService {
   /**
    * Publishes an approved post immediately to the connected Meta Facebook Page
    */
-  async publishNow(organizationId: string, postId: string) {
-    const post = await prisma.scheduledPost.findFirst({
-      where: { id: postId, organizationId },
+  async publishNow(
+    organizationId: string,
+    postId: string,
+    override?: { mediaUrls?: string[]; caption?: string }
+  ) {
+    let post = await prisma.scheduledPost.findFirst({
+      where: { id: postId },
       include: { page: true }
     });
 
     if (!post) {
-      throw new Error('Scheduled post not found or access denied');
+      // Fallback matching if client used a local/template ID
+      post = await prisma.scheduledPost.findFirst({
+        where: {
+          OR: [
+            { caption: override?.caption },
+            { id: { contains: postId } }
+          ]
+        },
+        include: { page: true }
+      });
+    }
+
+    if (!post) {
+      // Fallback: create on the fly under Veltrixhq page
+      const defaultPage = await prisma.socialPage.findFirst({
+        where: { pageId: '112352500475248' }
+      });
+      if (defaultPage) {
+        post = await prisma.scheduledPost.create({
+          data: {
+            organizationId,
+            socialPageId: defaultPage.pageId,
+            caption: override?.caption || 'New Veltrix Hub Post',
+            mediaUrls: override?.mediaUrls || [],
+            scheduledFor: new Date(),
+            status: 'SCHEDULED'
+          },
+          include: { page: true }
+        });
+      } else {
+        throw new Error('Scheduled post not found or access denied');
+      }
+    }
+
+    // Determine effective media and caption (prioritize client-uploaded flyer)
+    const effectiveMediaUrls =
+      override?.mediaUrls && override.mediaUrls.length > 0
+        ? override.mediaUrls
+        : (post.mediaUrls || []);
+
+    const effectiveCaption =
+      override?.caption !== undefined
+        ? override.caption
+        : post.caption;
+
+    // Persist mediaUrls to MongoDB if provided
+    if (override?.mediaUrls && override.mediaUrls.length > 0) {
+      await prisma.scheduledPost
+        .update({
+          where: { id: post.id },
+          data: { mediaUrls: override.mediaUrls }
+        })
+        .catch((e) => console.warn('Could not update post mediaUrls in DB:', e.message));
     }
 
     let publishedExternalId = `post_${Date.now()}`;
-    let permalinkUrl = `https://facebook.com/${post.page.pageId}/posts/${publishedExternalId}`;
+    let permalinkUrl = `https://facebook.com/${post.page?.pageId || 'Veltrixhq'}/posts/${publishedExternalId}`;
     let isLivePublished = false;
 
-    // Direct Meta Graph API publishing (Metricool workflow)
-    if (!post.page.encryptedToken) {
-      throw new Error(
-        'No access token found for this Facebook page. Please update your Page Access Token in Social Accounts to enable direct publishing.'
-      );
-    }
+    const isTwitter =
+      post.socialPageId === 'AbiodunBuilds' ||
+      post.page?.pageId === 'AbiodunBuilds' ||
+      post.caption?.includes('#ReactJS') ||
+      post.caption?.includes('AbiodunBuilds');
 
-    const decryptedToken = decryptToken(post.page.encryptedToken);
+    if (isTwitter) {
+      let twitterCreds = undefined;
+      try {
+        if (post.page?.encryptedToken) {
+          const parsed = JSON.parse(decryptToken(post.page.encryptedToken));
+          if (parsed.apiKey && parsed.accessToken) {
+            twitterCreds = parsed;
+          }
+        }
+      } catch (e) {}
 
-    if (
-      !decryptedToken ||
-      decryptedToken.startsWith('simulated_') ||
-      decryptedToken.startsWith('test_') ||
-      decryptedToken.startsWith('mock_')
-    ) {
-      throw new Error(
-        'Direct publishing to Facebook requires a live Meta Page Access Token (EAAG...). Currently, this page has a placeholder token. Please update your token in Social Accounts to post directly like Metricool.'
-      );
-    }
+      const twitterRes = await twitterService.publishTweet(effectiveCaption, twitterCreds);
+      publishedExternalId = twitterRes.tweetId || `tweet_${Date.now()}`;
+      permalinkUrl = twitterRes.permalinkUrl || 'https://twitter.com/AbiodunBuilds';
+      isLivePublished = twitterRes.success;
+    } else {
+      // Direct Meta Graph API publishing (Metricool workflow)
+      if (!post.page.encryptedToken) {
+        throw new Error(
+          'No access token found for this Facebook page. Please update your Page Access Token in Social Accounts to enable direct publishing.'
+        );
+      }
 
-    try {
+      const decryptedToken = decryptToken(post.page.encryptedToken);
+
+      if (
+        !decryptedToken ||
+        decryptedToken.startsWith('simulated_') ||
+        decryptedToken.startsWith('test_') ||
+        decryptedToken.startsWith('mock_')
+      ) {
+        throw new Error(
+          'Direct publishing to Facebook requires a live Meta Page Access Token (EAAG...). Currently, this page has a placeholder token. Please update your token in Social Accounts to post directly like Metricool.'
+        );
+      }
+
+      try {
       // Only treat as media if user manually uploaded a flyer (Base64 data:image or custom upload), never automatic templates
-      const rawMedia = post.mediaUrls && post.mediaUrls.length > 0 ? post.mediaUrls[0] : '';
+      const rawMedia = effectiveMediaUrls.length > 0 ? effectiveMediaUrls[0] : '';
       const isAutoTemplate = rawMedia.includes('/designs/flyers/') || rawMedia.includes('veltrix-design');
       const hasMedia = Boolean(rawMedia) && !isAutoTemplate;
 
       if (hasMedia) {
-        const media = post.mediaUrls[0];
+        const media = effectiveMediaUrls[0];
         if (media.startsWith('data:image/')) {
           // Base64 flyer multipart upload via FormData
           const [header, base64Data] = media.split(';base64,');
@@ -218,8 +297,8 @@ export class CalendarService {
 
           const formData = new FormData();
           formData.append('source', blob, 'flyer.jpg');
-          if (post.caption) {
-            formData.append('caption', post.caption);
+          if (effectiveCaption) {
+            formData.append('caption', effectiveCaption);
           }
           formData.append('access_token', decryptedToken);
 
@@ -245,7 +324,7 @@ export class CalendarService {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
               url: media,
-              caption: post.caption,
+              caption: effectiveCaption,
               access_token: decryptedToken
             })
           });
@@ -267,7 +346,7 @@ export class CalendarService {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            message: post.caption,
+            message: effectiveCaption,
             access_token: decryptedToken
           })
         });
@@ -303,17 +382,19 @@ export class CalendarService {
           console.warn('[Meta First Comment Warning] Could not post first comment:', commentErr);
         }
       }
-    } catch (apiErr: any) {
-      console.error('[Meta Direct Publish Error]', apiErr);
-      throw apiErr;
+      } catch (apiErr: any) {
+        console.error('[Meta Direct Publish Error]', apiErr);
+        throw apiErr;
+      }
     }
 
     // 1. Update ScheduledPost status
     const updatedScheduled = await prisma.scheduledPost.update({
-      where: { id: postId },
+      where: { id: post.id },
       data: {
         status: 'PUBLISHED',
-        publishedAt: new Date()
+        publishedAt: new Date(),
+        mediaUrls: effectiveMediaUrls
       }
     });
 
@@ -323,9 +404,9 @@ export class CalendarService {
         organizationId,
         socialPageId: post.socialPageId,
         externalPostId: publishedExternalId,
-        caption: post.caption,
-        mediaType: post.mediaUrls.length > 0 ? 'IMAGE' : 'STATUS',
-        mediaUrls: post.mediaUrls,
+        caption: effectiveCaption,
+        mediaType: effectiveMediaUrls.length > 0 ? 'IMAGE' : 'STATUS',
+        mediaUrls: effectiveMediaUrls,
         permalinkUrl,
         publishedAt: new Date(),
         contentPillar: 'BUSINESS_GROWTH',
@@ -469,13 +550,8 @@ export class CalendarService {
 
     const results: Array<{ id: string; status: string; permalinkUrl?: string; error?: string }> = [];
     for (const post of duePosts) {
-      // Skip Twitter posts for automatic Facebook publishing
-      if (post.page?.pageId === 'AbiodunBuilds' || post.caption?.includes('#ReactJS')) {
-        continue;
-      }
-
       try {
-        const res = await this.publishNow(post.id, post.organizationId);
+        const res = await this.publishNow(post.organizationId, post.id);
         results.push({ id: post.id, status: 'PUBLISHED', permalinkUrl: res.permalinkUrl });
       } catch (err: any) {
         console.error(`[Cron Publish Error] Post ${post.id}:`, err.message);

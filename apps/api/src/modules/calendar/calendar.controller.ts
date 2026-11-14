@@ -61,7 +61,12 @@ export async function cancelScheduledPost(req: AuthenticatedRequest, res: Respon
 export async function publishNow(req: AuthenticatedRequest, res: Response, next: NextFunction) {
   try {
     const postId = String(req.params.id);
-    const result = await calendarService.publishNow(req.user!.organizationId, postId);
+    const { mediaUrls, caption } = req.body || {};
+    const result = await calendarService.publishNow(
+      req.user!.organizationId,
+      postId,
+      { mediaUrls, caption }
+    );
 
     res.json(result);
   } catch (error: any) {
