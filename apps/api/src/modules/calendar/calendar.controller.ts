@@ -68,3 +68,33 @@ export async function publishNow(req: AuthenticatedRequest, res: Response, next:
     next(error);
   }
 }
+
+export async function updatePostMedia(req: AuthenticatedRequest, res: Response, next: NextFunction) {
+  try {
+    const postId = String(req.params.id);
+    const { mediaUrls } = req.body;
+    const result = await calendarService.updatePostMedia(
+      req.user!.organizationId,
+      postId,
+      mediaUrls
+    );
+
+    res.json(result);
+  } catch (error: any) {
+    next(error);
+  }
+}
+
+export async function batchApplyFacebookFlyer(req: AuthenticatedRequest, res: Response, next: NextFunction) {
+  try {
+    const { flyerUrl, dateStr, postIds } = req.body;
+    const result = await calendarService.batchApplyFacebookFlyer(
+      req.user!.organizationId,
+      { flyerUrl, dateStr, postIds }
+    );
+
+    res.json(result);
+  } catch (error: any) {
+    next(error);
+  }
+}

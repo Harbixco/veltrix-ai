@@ -231,6 +231,95 @@ export class CalendarService {
       permalinkUrl
     };
   }
+
+  /**
+   * Updates flyer media for a specific scheduled post
+   */
+  async updatePostMedia(organizationId: string, postId: string, mediaUrls: string[]) {
+    const post = await prisma.scheduledPost.findFirst({
+      where: { id: postId, organizationId }
+    });
+
+    if (!post) {
+      throw new Error('Scheduled post not found or access denied');
+    }
+
+    const updated = await prisma.scheduledPost.update({
+      where: { id: postId },
+      data: {
+        mediaUrls: Array.isArray(mediaUrls) ? mediaUrls : mediaUrls ? [mediaUrls] : []
+      },
+      include: {
+        page: {
+          select: {
+            pageName: true,
+            pageId: true
+          }
+        }
+      }
+    });
+
+    return {
+      success: true,
+      data: updated
+    };
+  }
+
+  /**
+   * Applies a single flyer across all Facebook posts for a given date or all 3 Facebook accounts
+   */
+  async batchApplyFacebookFlyer(
+    organizationId: string,
+    data: { flyerUrl: string; dateStr?: string; postIds?: string[] }
+  ) {
+    const { flyerUrl, dateStr, postIds } = data;
+
+    let targetPostIds: string[] = [];
+
+    if (postIds && postIds.length > 0) {
+      targetPostIds = postIds;
+    } else if (dateStr) {
+      const startOfDay = new Date(dateStr);
+      startOfDay.setHours(0, 0, 0, 0);
+      const endOfDay = new Date(dateStr);
+      endOfDay.setHours(23, 59, 59, 999);
+
+      const posts = await prisma.scheduledPost.findMany({
+        where: {
+          organizationId,
+          status: 'SCHEDULED',
+          scheduledFor: {
+            gte: startOfDay,
+            lte: endOfDay
+          }
+        },
+        select: { id: true, caption: true }
+      });
+
+      // Filter out twitter posts
+      targetPostIds = posts
+        .filter((p) => !p.caption.includes('#ReactJS') && !p.caption.includes('AbiodunBuilds'))
+        .map((p) => p.id);
+    }
+
+    if (targetPostIds.length > 0) {
+      await prisma.scheduledPost.updateMany({
+        where: {
+          id: { in: targetPostIds },
+          organizationId
+        },
+        data: {
+          mediaUrls: flyerUrl ? [flyerUrl] : []
+        }
+      });
+    }
+
+    return {
+      success: true,
+      updatedCount: targetPostIds.length,
+      flyerUrl
+    };
+  }
 }
 
 export const calendarService = new CalendarService();
