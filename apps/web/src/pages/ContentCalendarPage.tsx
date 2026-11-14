@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import {
   Upload,
+  Sun,
+  Moon,
   Calendar as CalendarIcon,
   Clock,
   Send,
@@ -688,6 +690,95 @@ export const ContentCalendarPage: React.FC = () => {
     }
   };
 
+
+  // Helper to distinguish 9:00 AM morning post vs 6:00 PM evening post
+  const isMorningPost = (post: ScheduledPost) => {
+    if (post.slotType === 'MORNING') return true;
+    const d = new Date(post.scheduledFor);
+    const hour = d.getHours();
+    const utcHour = d.getUTCHours();
+    return hour < 14 || utcHour < 14;
+  };
+
+  // Upload flyer for a specific time slot (9:00 AM or 6:00 PM) on a day
+  const handleSlotFacebookUpload = async (
+    day: number,
+    slot: 'MORNING' | 'EVENING',
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const slotLabel = slot === 'MORNING' ? '9:00 AM' : '6:00 PM';
+
+    try {
+      setActionSuccess(`Compressing & applying ${slotLabel} flyer to Facebook...`);
+      const dataUrl = await compressImageFile(file);
+
+      let targetPosts = scheduledPosts.filter((p) => {
+        const d = new Date(p.scheduledFor);
+        const isSameDay = d.getDate() === day;
+        const isTweet =
+          p.channel === 'TWITTER' ||
+          p.page?.pageId === 'AbiodunBuilds' ||
+          p.socialPageId === 'AbiodunBuilds';
+        if (!isSameDay || isTweet) return false;
+        return slot === 'MORNING' ? isMorningPost(p) : !isMorningPost(p);
+      });
+
+      if (targetPosts.length === 0) {
+        const targetDateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+        targetPosts = scheduledPosts.filter((p) => {
+          const isTweet =
+            p.channel === 'TWITTER' ||
+            p.page?.pageId === 'AbiodunBuilds' ||
+            p.socialPageId === 'AbiodunBuilds';
+          if (!p.scheduledFor.startsWith(targetDateStr) || isTweet) return false;
+          return slot === 'MORNING' ? isMorningPost(p) : !isMorningPost(p);
+        });
+      }
+
+      const targetPostIds = targetPosts.map((p) => p.id);
+
+      if (targetPostIds.length === 0) {
+        setActionSuccess(`No ${slotLabel} Facebook post scheduled for Day ${day}.`);
+        setTimeout(() => setActionSuccess(null), 3500);
+        return;
+      }
+
+      setScheduledPosts((prev) =>
+        prev.map((post) => {
+          if (targetPostIds.includes(post.id)) {
+            return { ...post, mediaUrls: [dataUrl] };
+          }
+          return post;
+        })
+      );
+
+      setActionSuccess(`${slotLabel} flyer applied to ${targetPostIds.length} Facebook post(s) for Day ${day}!`);
+      setTimeout(() => setActionSuccess(null), 4000);
+
+      const token = localStorage.getItem('veltrix_token');
+      await fetch('/api/v1/calendar/posts/batch-flyer', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: token ? `Bearer ${token}` : ''
+        },
+        body: JSON.stringify({
+          flyerUrl: dataUrl,
+          postIds: targetPostIds
+        })
+      });
+    } catch (err: any) {
+      console.error('Slot flyer upload error:', err);
+      setActionSuccess(`Upload failed: ${err.message || 'Please try again'}`);
+      setTimeout(() => setActionSuccess(null), 4000);
+    } finally {
+      e.target.value = '';
+    }
+  };
+
   // Upload single flyer for a specific Facebook post
   const handleSinglePostFlyerUpload = async (postId: string, e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -996,15 +1087,26 @@ export const ContentCalendarPage: React.FC = () => {
             <span>Reset Calendar</span>
           </button>
 
-          {/* Header Quick Upload Flyer for Facebook */}
-          <label className="w-full sm:w-auto flex items-center justify-center gap-1.5 px-3.5 py-2 bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold rounded-xl shadow cursor-pointer transition-all active:scale-95 shadow-blue-500/20">
-            <Upload className="w-3.5 h-3.5" />
-            <span>Upload Facebook Flyer</span>
+          {/* Header Quick Upload Flyer for Today's 9:00 AM & 6:00 PM Slots */}
+          <label className="w-full sm:w-auto flex items-center justify-center gap-1.5 px-3 py-2 bg-amber-600/90 hover:bg-amber-500 text-white text-xs font-semibold rounded-xl shadow cursor-pointer transition-all active:scale-95 shadow-amber-500/20">
+            <Sun className="w-3.5 h-3.5" />
+            <span>Upload 9:00 AM Flyer</span>
             <input
               type="file"
               accept="image/*"
               className="hidden"
-              onChange={(e) => handleBatchFacebookUpload(todayDate.getDate(), e)}
+              onChange={(e) => handleSlotFacebookUpload(todayDate.getDate(), 'MORNING', e)}
+            />
+          </label>
+
+          <label className="w-full sm:w-auto flex items-center justify-center gap-1.5 px-3 py-2 bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold rounded-xl shadow cursor-pointer transition-all active:scale-95 shadow-blue-500/20">
+            <Moon className="w-3.5 h-3.5" />
+            <span>Upload 6:00 PM Flyer</span>
+            <input
+              type="file"
+              accept="image/*"
+              className="hidden"
+              onChange={(e) => handleSlotFacebookUpload(todayDate.getDate(), 'EVENING', e)}
             />
           </label>
 
@@ -1627,32 +1729,63 @@ export const ContentCalendarPage: React.FC = () => {
 
             {/* Posts for Selected Day */}
             <div className="space-y-4">
-              {/* Batch Upload Single Flyer for all 3 Facebook Accounts on this Day */}
-              <div className="p-4 rounded-xl bg-gradient-to-r from-blue-950/70 via-indigo-950/40 to-slate-900 border border-blue-500/30 flex flex-col sm:flex-row items-center justify-between gap-3 shadow-lg">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-blue-600/20 border border-blue-500/40 flex items-center justify-center shrink-0">
-                    <Facebook className="w-5 h-5 text-blue-400" />
+              {/* Two Dedicated Slot Banners: 9:00 AM (Morning Hook) & 6:00 PM (Evening Spotlight) */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                {/* 9:00 AM Slot Card */}
+                <div className="p-3.5 sm:p-4 rounded-xl bg-gradient-to-br from-amber-950/40 via-slate-900 to-slate-950 border border-amber-500/30 flex flex-col justify-between gap-3 shadow-lg">
+                  <div className="flex items-start justify-between">
+                    <div className="flex items-center gap-2.5">
+                      <div className="w-9 h-9 rounded-xl bg-amber-500/20 border border-amber-500/30 flex items-center justify-center text-amber-400 shrink-0">
+                        <Sun className="w-5 h-5" />
+                      </div>
+                      <div>
+                        <div className="flex items-center gap-1.5">
+                          <h4 className="text-xs sm:text-sm font-bold text-white">9:00 AM Facebook Flyer</h4>
+                          <span className="px-1.5 py-0.2 rounded text-[9px] bg-amber-500/20 text-amber-300 font-bold border border-amber-500/30">Morning Hook</span>
+                        </div>
+                        <p className="text-[11px] text-slate-400 mt-0.5">Applies to 9:00 AM Facebook post across accounts</p>
+                      </div>
+                    </div>
                   </div>
-                  <div>
-                    <h4 className="text-sm font-bold text-white flex items-center gap-2">
-                      <span>Single Flyer for All 3 Facebook Accounts</span>
-                      <span className="px-1.5 py-0.5 rounded text-[10px] bg-blue-500/20 text-blue-300 font-semibold border border-blue-500/30">1-Click</span>
-                    </h4>
-                    <p className="text-xs text-slate-400">
-                      Upload 1 flyer image once to automatically attach it to all Facebook posts scheduled for Day {selectedDay}.
-                    </p>
-                  </div>
+                  <label className="cursor-pointer inline-flex items-center justify-center gap-2 px-3.5 py-2 bg-amber-600 hover:bg-amber-500 active:scale-95 text-white text-xs font-bold rounded-xl transition-all shadow-md shadow-amber-500/20">
+                    <Upload className="w-3.5 h-3.5" />
+                    <span>Upload 9:00 AM Flyer</span>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      className="hidden"
+                      onChange={(e) => handleSlotFacebookUpload(selectedDay, 'MORNING', e)}
+                    />
+                  </label>
                 </div>
-                <label className="cursor-pointer shrink-0 inline-flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-500 active:scale-95 text-white text-xs font-bold rounded-xl transition-all shadow-md shadow-blue-500/20">
-                  <Upload className="w-4 h-4" />
-                  <span>Upload Single Flyer</span>
-                  <input
-                    type="file"
-                    accept="image/*"
-                    className="hidden"
-                    onChange={(e) => handleBatchFacebookUpload(selectedDay, e)}
-                  />
-                </label>
+
+                {/* 6:00 PM Slot Card */}
+                <div className="p-3.5 sm:p-4 rounded-xl bg-gradient-to-br from-blue-950/40 via-slate-900 to-slate-950 border border-blue-500/30 flex flex-col justify-between gap-3 shadow-lg">
+                  <div className="flex items-start justify-between">
+                    <div className="flex items-center gap-2.5">
+                      <div className="w-9 h-9 rounded-xl bg-blue-500/20 border border-blue-500/30 flex items-center justify-center text-blue-400 shrink-0">
+                        <Moon className="w-5 h-5" />
+                      </div>
+                      <div>
+                        <div className="flex items-center gap-1.5">
+                          <h4 className="text-xs sm:text-sm font-bold text-white">6:00 PM Facebook Flyer</h4>
+                          <span className="px-1.5 py-0.2 rounded text-[9px] bg-blue-500/20 text-blue-300 font-bold border border-blue-500/30">Evening Spotlight</span>
+                        </div>
+                        <p className="text-[11px] text-slate-400 mt-0.5">Applies to 6:00 PM Facebook post across accounts</p>
+                      </div>
+                    </div>
+                  </div>
+                  <label className="cursor-pointer inline-flex items-center justify-center gap-2 px-3.5 py-2 bg-blue-600 hover:bg-blue-500 active:scale-95 text-white text-xs font-bold rounded-xl transition-all shadow-md shadow-blue-500/20">
+                    <Upload className="w-3.5 h-3.5" />
+                    <span>Upload 6:00 PM Flyer</span>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      className="hidden"
+                      onChange={(e) => handleSlotFacebookUpload(selectedDay, 'EVENING', e)}
+                    />
+                  </label>
+                </div>
               </div>
 
               {getPostsForDay(selectedDay).sched.length === 0 &&
@@ -1688,19 +1821,38 @@ export const ContentCalendarPage: React.FC = () => {
                         className="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-3"
                       >
                         <div className="flex items-center justify-between text-xs">
-                          <span
-                            className={`px-2.5 py-1 rounded-md font-bold flex items-center gap-1.5 ${
-                              isTweet
-                                ? 'bg-white/10 text-white border border-white/20'
-                                : 'bg-blue-500/10 text-blue-400 border border-blue-500/20'
-                            }`}
-                          >
-                            {isTweet ? <XLogo className="w-3.5 h-3.5" /> : <Facebook className="w-3.5 h-3.5" />}
-                            <span>
-                              {post.topicBadge ||
-                                (isTweet ? '𝕏 (@AbiodunBuilds)' : post.page?.pageName || 'Facebook')}
+                          <div className="flex items-center gap-2">
+                            <span
+                              className={`px-2.5 py-1 rounded-md font-bold flex items-center gap-1.5 ${
+                                isTweet
+                                  ? 'bg-white/10 text-white border border-white/20'
+                                  : isMorningPost(post)
+                                  ? 'bg-amber-500/10 text-amber-300 border border-amber-500/30'
+                                  : 'bg-blue-500/10 text-blue-400 border border-blue-500/20'
+                              }`}
+                            >
+                              {isTweet ? (
+                                <XLogo className="w-3.5 h-3.5" />
+                              ) : isMorningPost(post) ? (
+                                <Sun className="w-3.5 h-3.5 text-amber-400" />
+                              ) : (
+                                <Moon className="w-3.5 h-3.5 text-blue-400" />
+                              )}
+                              <span>
+                                {post.topicBadge ||
+                                  (isTweet
+                                    ? '𝕏 (@AbiodunBuilds)'
+                                    : isMorningPost(post)
+                                    ? '09:00 AM Morning Hook'
+                                    : '06:00 PM Evening Spotlight')}
+                              </span>
                             </span>
-                          </span>
+                            {!isTweet && (
+                              <span className="text-[10px] px-1.5 py-0.5 rounded font-mono font-bold bg-slate-800 text-slate-300 border border-slate-700">
+                                {isMorningPost(post) ? '09:00 AM' : '06:00 PM'}
+                              </span>
+                            )}
+                          </div>
                           <span className="text-slate-400 font-mono text-xs">
                             {new Date(post.scheduledFor).toLocaleTimeString([], {
                               hour: '2-digit',
@@ -1765,9 +1917,13 @@ export const ContentCalendarPage: React.FC = () => {
                               </button>
                             </div>
                           ) : (
-                            <label className="cursor-pointer text-[11px] font-semibold text-blue-400 hover:text-blue-300 flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-blue-500/10 border border-blue-500/20 hover:bg-blue-500/20 transition-all">
+                            <label className={`cursor-pointer text-[11px] font-semibold flex items-center gap-1.5 px-2.5 py-1 rounded-lg border transition-all ${
+                              isMorningPost(post)
+                                ? 'text-amber-300 bg-amber-500/10 border-amber-500/30 hover:bg-amber-500/20'
+                                : 'text-blue-300 bg-blue-500/10 border-blue-500/30 hover:bg-blue-500/20'
+                            }`}>
                               <Upload className="w-3 h-3" />
-                              <span>Upload Flyer</span>
+                              <span>Upload {isMorningPost(post) ? '9:00 AM' : '6:00 PM'} Flyer</span>
                               <input
                                 type="file"
                                 accept="image/*"
