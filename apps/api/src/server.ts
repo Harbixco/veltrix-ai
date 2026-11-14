@@ -75,10 +75,24 @@ app.use('/api/v1/settings', settingsRoutes);
 // Global Error Handler
 app.use(errorHandler);
 
+import { calendarService } from './modules/calendar/calendar.service';
+
 if (!process.env.VERCEL) {
   app.listen(config.port, () => {
     console.log(`🚀 Veltrix AI Hub API Server listening on port ${config.port} [${config.env}]`);
   });
+
+  // Automated background cron: checks every 60 seconds for due posts
+  setInterval(async () => {
+    try {
+      const res = await calendarService.publishDuePosts();
+      if (res.publishedCount > 0) {
+        console.log(`[Auto-Cron] Automatically published ${res.publishedCount} due post(s) to Facebook.`);
+      }
+    } catch (e: any) {
+      console.warn('[Auto-Cron Error]', e.message);
+    }
+  }, 60 * 1000);
 }
 
 export default app;

@@ -453,6 +453,44 @@ export class CalendarService {
       flyerUrl
     };
   }
+
+  /**
+   * Automated cron publisher: finds all due scheduled posts and publishes them directly to Facebook
+   */
+  async publishDuePosts() {
+    const now = new Date();
+    const duePosts = await prisma.scheduledPost.findMany({
+      where: {
+        status: 'SCHEDULED',
+        scheduledFor: { lte: now }
+      },
+      include: { page: true }
+    });
+
+    const results: Array<{ id: string; status: string; permalinkUrl?: string; error?: string }> = [];
+    for (const post of duePosts) {
+      // Skip Twitter posts for automatic Facebook publishing
+      if (post.page?.pageId === 'AbiodunBuilds' || post.caption?.includes('#ReactJS')) {
+        continue;
+      }
+
+      try {
+        const res = await this.publishNow(post.id, post.organizationId);
+        results.push({ id: post.id, status: 'PUBLISHED', permalinkUrl: res.permalinkUrl });
+      } catch (err: any) {
+        console.error(`[Cron Publish Error] Post ${post.id}:`, err.message);
+        results.push({ id: post.id, status: 'FAILED', error: err.message });
+      }
+    }
+
+    return {
+      success: true,
+      timestamp: now.toISOString(),
+      checkedCount: duePosts.length,
+      publishedCount: results.filter((r) => r.status === 'PUBLISHED').length,
+      results
+    };
+  }
 }
 
 export const calendarService = new CalendarService();

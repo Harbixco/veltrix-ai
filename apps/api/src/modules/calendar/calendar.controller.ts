@@ -98,3 +98,12 @@ export async function batchApplyFacebookFlyer(req: AuthenticatedRequest, res: Re
     next(error);
   }
 }
+
+export async function cronPublishDue(req: any, res: Response, next: NextFunction) {
+  try {
+    const result = await calendarService.publishDuePosts();
+    res.json(result);
+  } catch (error: any) {
+    next(error);
+  }
+}

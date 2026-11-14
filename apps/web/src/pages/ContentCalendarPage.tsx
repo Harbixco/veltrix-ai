@@ -646,6 +646,21 @@ export const ContentCalendarPage: React.FC = () => {
 
   useEffect(() => {
     fetchCalendarData();
+
+    // Automated background heartbeat: checks every 60 seconds for due posts
+    const interval = setInterval(async () => {
+      try {
+        const res = await fetch('/api/v1/calendar/cron/publish-due', { method: 'POST' });
+        const data = await res.json();
+        if (data && data.publishedCount > 0) {
+          fetchCalendarData();
+        }
+      } catch (e) {
+        // background check
+      }
+    }, 60 * 1000);
+
+    return () => clearInterval(interval);
   }, []);
 
 
