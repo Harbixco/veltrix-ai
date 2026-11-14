@@ -20,7 +20,6 @@ import {
 const NAV_ITEMS = [
   { name: 'Overview', path: '/', icon: LayoutDashboard },
   { name: 'Social Accounts', path: '/facebook-accounts', icon: Share2 },
-  { name: 'Design Studio', path: '/design-studio', icon: Palette },
   { name: 'Content Calendar', path: '/content-calendar', icon: Calendar },
   { name: 'Reports', path: '/reports', icon: FileSpreadsheet },
   { name: 'Settings', path: '/settings', icon: Settings }
@@ -30,7 +29,6 @@ const MOBILE_BOTTOM_ITEMS = [
   { name: 'Home', path: '/', icon: LayoutDashboard },
   { name: 'Socials', path: '/facebook-accounts', icon: Share2 },
   { name: 'Calendar', path: '/content-calendar', icon: Calendar },
-  { name: 'Studio', path: '/design-studio', icon: Palette },
   { name: 'Reports', path: '/reports', icon: FileSpreadsheet }
 ];
 

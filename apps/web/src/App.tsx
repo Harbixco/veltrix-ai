@@ -62,7 +62,7 @@ export const App: React.FC = () => {
           <Route index element={<DashboardOverview />} />
           <Route path="facebook-accounts" element={<FacebookAccountsPage />} />
           <Route path="social-accounts" element={<FacebookAccountsPage />} />
-          <Route path="design-studio" element={<DesignStudioPage />} />
+          <Route path="design-studio" element={<Navigate to="/content-calendar" replace />} />
           <Route path="content-calendar" element={<ContentCalendarPage />} />
           <Route path="reports" element={<ReportsPage />} />
           <Route path="settings" element={<SettingsPage />} />

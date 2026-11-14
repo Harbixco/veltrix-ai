@@ -275,23 +275,23 @@ export const DashboardOverview: React.FC = () => {
           </Link>
 
           <Link
-            to="/design-studio"
+            to="/content-calendar"
             className="p-4 rounded-2xl border border-slate-800 bg-slate-900 hover:border-slate-700 active:border-slate-600 transition-all flex flex-col justify-between group shadow-sm"
           >
             <div>
               <div className="flex items-center justify-between mb-2">
-                <Palette className="h-4 w-4 text-orange-400" />
-                <span className="text-[10px] text-orange-400 font-mono font-bold">6 Master Flyers</span>
+                <Calendar className="h-4 w-4 text-blue-400" />
+                <span className="text-[10px] text-blue-400 font-mono font-bold">1-Click Batch</span>
               </div>
               <h3 className="text-sm font-semibold text-white group-hover:text-emerald-400 transition-colors">
-                Design Studio
+                Content Calendar & Flyers
               </h3>
               <p className="text-xs text-slate-400 mt-1 leading-relaxed">
-                Download original high-res designs & generate vector SVG hook layouts.
+                Review scheduled content, upload single flyers for all 3 Facebook accounts, and publish.
               </p>
             </div>
-            <span className="text-xs text-emerald-400 flex items-center gap-1 mt-3 font-medium">
-              Open Studio <ArrowRight className="h-3 w-3" />
+            <span className="text-xs text-blue-400 flex items-center gap-1 mt-3 font-medium">
+              Open Calendar <ArrowRight className="h-3 w-3" />
             </span>
           </Link>
 

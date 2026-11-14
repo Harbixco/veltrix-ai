@@ -92,6 +92,60 @@ export function resolveFlyerForPost(
   return '';
 }
 
+
+/**
+ * Compresses and scales an image file down to max 1080x1080 at 82% JPEG quality.
+ * Prevents localStorage quota errors and avoids Vercel 4.5MB payload limits.
+ */
+export function compressImageFile(file: File, maxWidth = 1080, maxHeight = 1080, quality = 0.82): Promise<string> {
+  return new Promise((resolve, reject) => {
+    if (file.type === 'image/svg+xml') {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result as string);
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+      return;
+    }
+    const reader = new FileReader();
+    reader.onerror = reject;
+    reader.onload = (e) => {
+      const img = new Image();
+      img.onerror = () => {
+        resolve(e.target?.result as string);
+      };
+      img.onload = () => {
+        let width = img.width;
+        let height = img.height;
+
+        if (width > maxWidth || height > maxHeight) {
+          if (width > height) {
+            height = Math.round((height * maxWidth) / width);
+            width = maxWidth;
+          } else {
+            width = Math.round((width * maxHeight) / height);
+            height = maxHeight;
+          }
+        }
+
+        const canvas = document.createElement('canvas');
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        if (!ctx) {
+          resolve(e.target?.result as string);
+          return;
+        }
+
+        ctx.drawImage(img, 0, 0, width, height);
+        const compressed = canvas.toDataURL('image/jpeg', quality);
+        resolve(compressed);
+      };
+      img.src = e.target?.result as string;
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
 // ============================================================================
 // CURATED MASTER CONTENT CALENDAR FOR NOVEMBER 2026
 // All posts start clean with mediaUrls: [] (manual upload for Facebook, text-only for Twitter)
@@ -467,16 +521,24 @@ export const ContentCalendarPage: React.FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [actionSuccess, setActionSuccess] = useState<string | null>(null);
 
-  // Sync to localStorage
+  // Sync to localStorage with safe try-catch
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      localStorage.setItem('veltrix_scheduled_posts_v4', JSON.stringify(scheduledPosts));
+      try {
+        localStorage.setItem('veltrix_scheduled_posts_v4', JSON.stringify(scheduledPosts));
+      } catch (err) {
+        console.warn('Storage quota exceeded, preserving in-memory state:', err);
+      }
     }
   }, [scheduledPosts]);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      localStorage.setItem('veltrix_published_posts_v4', JSON.stringify(publishedPosts));
+      try {
+        localStorage.setItem('veltrix_published_posts_v4', JSON.stringify(publishedPosts));
+      } catch (err) {
+        console.warn('Storage quota exceeded, preserving in-memory state:', err);
+      }
     }
   }, [publishedPosts]);
 
@@ -493,10 +555,50 @@ export const ContentCalendarPage: React.FC = () => {
       const data = await response.json();
       if (data.success && data.data) {
         if (data.data.scheduledPosts && data.data.scheduledPosts.length > 0) {
-          setScheduledPosts(data.data.scheduledPosts);
+          const mappedScheduled: ScheduledPost[] = data.data.scheduledPosts.map((p: any) => {
+            const isTwitter =
+              p.channel === 'TWITTER' ||
+              p.page?.pageId === 'AbiodunBuilds' ||
+              p.socialPageId === 'AbiodunBuilds' ||
+              p.caption?.includes('@AbiodunBuilds') ||
+              p.caption?.includes('#ReactJS');
+            return {
+              id: p.id,
+              socialPageId: p.socialPageId || (isTwitter ? 'AbiodunBuilds' : '153585724815630'),
+              caption: p.caption,
+              mediaUrls: Array.isArray(p.mediaUrls) ? p.mediaUrls : [],
+              scheduledFor: p.scheduledFor,
+              status: p.status || 'SCHEDULED',
+              channel: isTwitter ? 'TWITTER' : 'FACEBOOK',
+              topicBadge: p.topicBadge || (isTwitter ? '𝕏 TECH POST' : 'FACEBOOK BROADCAST'),
+              page: p.page || {
+                pageName: isTwitter ? 'Abiodun Builds (@AbiodunBuilds)' : 'Veltrix Hub',
+                pageId: isTwitter ? 'AbiodunBuilds' : '153585724815630'
+              }
+            };
+          });
+          setScheduledPosts(mappedScheduled);
         }
         if (data.data.publishedPosts && data.data.publishedPosts.length > 0) {
-          setPublishedPosts(data.data.publishedPosts);
+          const mappedPublished: PublishedPost[] = data.data.publishedPosts.map((p: any) => {
+            const isTwitter =
+              p.channel === 'TWITTER' ||
+              p.page?.pageId === 'AbiodunBuilds' ||
+              p.caption?.includes('AbiodunBuilds');
+            return {
+              id: p.id,
+              socialPageId: p.socialPageId,
+              pageName: p.pageName || (isTwitter ? 'Abiodun Builds (@AbiodunBuilds)' : 'Veltrix Hub'),
+              caption: p.caption,
+              mediaUrls: Array.isArray(p.mediaUrls) ? p.mediaUrls : [],
+              contentPillar: p.contentPillar || 'Broadcast',
+              publishedAt: p.publishedAt,
+              channel: isTwitter ? 'TWITTER' : 'FACEBOOK',
+              permalinkUrl: p.permalinkUrl,
+              metrics: p.metrics
+            };
+          });
+          setPublishedPosts(mappedPublished);
         }
       }
     } catch (err) {
@@ -516,23 +618,39 @@ export const ContentCalendarPage: React.FC = () => {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    if (file.size > 8 * 1024 * 1024) {
-      alert('Flyer image size must be under 8MB');
-      return;
-    }
+    try {
+      setActionSuccess('Compressing & applying flyer image...');
+      const dataUrl = await compressImageFile(file);
 
-    const reader = new FileReader();
-    reader.onload = async () => {
-      const dataUrl = reader.result as string;
+      // Find all scheduled Facebook posts for this day
+      // A post is Facebook if it's NOT a twitter post
+      let dayPosts = scheduledPosts.filter((p) => {
+        const d = new Date(p.scheduledFor);
+        const isSameDay = d.getDate() === day;
+        const isTweet =
+          p.channel === 'TWITTER' ||
+          p.page?.pageId === 'AbiodunBuilds' ||
+          p.socialPageId === 'AbiodunBuilds';
+        return isSameDay && !isTweet;
+      });
 
-      const dayPosts = getPostsForDay(day).sched.filter(
-        (p) => p.channel === 'FACEBOOK' && p.page?.pageId !== 'AbiodunBuilds'
-      );
+      // Secondary check by string match if local timezone differs from UTC
+      if (dayPosts.length === 0) {
+        const targetDateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+        dayPosts = scheduledPosts.filter((p) => {
+          const isTweet =
+            p.channel === 'TWITTER' ||
+            p.page?.pageId === 'AbiodunBuilds' ||
+            p.socialPageId === 'AbiodunBuilds';
+          return p.scheduledFor.startsWith(targetDateStr) && !isTweet;
+        });
+      }
+
       const targetPostIds = dayPosts.map((p) => p.id);
 
       if (targetPostIds.length === 0) {
-        setActionSuccess('No Facebook posts scheduled for this day to attach flyer.');
-        setTimeout(() => setActionSuccess(null), 3000);
+        setActionSuccess(`No scheduled Facebook posts found for Day ${day}. Please schedule a Facebook post first.`);
+        setTimeout(() => setActionSuccess(null), 3500);
         return;
       }
 
@@ -545,43 +663,39 @@ export const ContentCalendarPage: React.FC = () => {
         })
       );
 
-      setActionSuccess(`Single flyer applied to all ${targetPostIds.length} Facebook posts for Day ${day}!`);
+      setActionSuccess(`Single flyer successfully attached to all ${targetPostIds.length} Facebook posts for Day ${day}!`);
       setTimeout(() => setActionSuccess(null), 4000);
 
-      try {
-        const token = localStorage.getItem('veltrix_token');
-        await fetch('/api/v1/calendar/posts/batch-flyer', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: token ? `Bearer ${token}` : ''
-          },
-          body: JSON.stringify({
-            flyerUrl: dataUrl,
-            postIds: targetPostIds
-          })
-        });
-      } catch (err) {
-        console.error('Failed to sync batch flyer to backend:', err);
-      }
-    };
-    reader.readAsDataURL(file);
-    e.target.value = '';
+      // Persist to backend database
+      const token = localStorage.getItem('veltrix_token');
+      await fetch('/api/v1/calendar/posts/batch-flyer', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: token ? `Bearer ${token}` : ''
+        },
+        body: JSON.stringify({
+          flyerUrl: dataUrl,
+          postIds: targetPostIds
+        })
+      });
+    } catch (err: any) {
+      console.error('Batch upload error:', err);
+      setActionSuccess(`Upload failed: ${err.message || 'Please choose a valid image file'}`);
+      setTimeout(() => setActionSuccess(null), 4000);
+    } finally {
+      e.target.value = '';
+    }
   };
 
   // Upload single flyer for a specific Facebook post
-  const handleSinglePostFlyerUpload = (postId: string, e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleSinglePostFlyerUpload = async (postId: string, e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    if (file.size > 8 * 1024 * 1024) {
-      alert('Flyer image size must be under 8MB');
-      return;
-    }
-
-    const reader = new FileReader();
-    reader.onload = async () => {
-      const dataUrl = reader.result as string;
+    try {
+      setActionSuccess('Compressing & attaching flyer to Facebook post...');
+      const dataUrl = await compressImageFile(file);
 
       setScheduledPosts((prev) =>
         prev.map((post) => {
@@ -595,22 +709,22 @@ export const ContentCalendarPage: React.FC = () => {
       setActionSuccess('Facebook flyer attached successfully!');
       setTimeout(() => setActionSuccess(null), 3000);
 
-      try {
-        const token = localStorage.getItem('veltrix_token');
-        await fetch(`/api/v1/calendar/posts/${postId}/media`, {
-          method: 'PATCH',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: token ? `Bearer ${token}` : ''
-          },
-          body: JSON.stringify({ mediaUrls: [dataUrl] })
-        });
-      } catch (err) {
-        console.error('Failed to sync flyer to backend:', err);
-      }
-    };
-    reader.readAsDataURL(file);
-    e.target.value = '';
+      const token = localStorage.getItem('veltrix_token');
+      await fetch(`/api/v1/calendar/posts/${postId}/media`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: token ? `Bearer ${token}` : ''
+        },
+        body: JSON.stringify({ mediaUrls: [dataUrl] })
+      });
+    } catch (err: any) {
+      console.error('Single upload error:', err);
+      setActionSuccess(`Upload failed: ${err.message || 'Please try again'}`);
+      setTimeout(() => setActionSuccess(null), 4000);
+    } finally {
+      e.target.value = '';
+    }
   };
 
   // Remove flyer from a post
@@ -792,18 +906,20 @@ export const ContentCalendarPage: React.FC = () => {
     const sched = scheduledPosts.filter((p) => {
       const d = new Date(p.scheduledFor);
       const str = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
-      if (str !== targetDateStr) return false;
-      if (platformFilter === 'FACEBOOK') return p.channel === 'FACEBOOK';
-      if (platformFilter === 'TWITTER') return p.channel === 'TWITTER';
+      if (str !== targetDateStr && d.getDate() !== day) return false;
+      const isTweet = p.channel === 'TWITTER' || p.page?.pageId === 'AbiodunBuilds' || p.socialPageId === 'AbiodunBuilds';
+      if (platformFilter === 'FACEBOOK') return !isTweet;
+      if (platformFilter === 'TWITTER') return isTweet;
       return true;
     });
 
     const pub = publishedPosts.filter((p) => {
       const d = new Date(p.publishedAt);
       const str = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
-      if (str !== targetDateStr) return false;
-      if (platformFilter === 'FACEBOOK') return p.channel === 'FACEBOOK';
-      if (platformFilter === 'TWITTER') return p.channel === 'TWITTER';
+      if (str !== targetDateStr && d.getDate() !== day) return false;
+      const isTweet = p.channel === 'TWITTER' || p.socialPageId === 'AbiodunBuilds' || p.pageName?.includes('Abiodun');
+      if (platformFilter === 'FACEBOOK') return !isTweet;
+      if (platformFilter === 'TWITTER') return isTweet;
       return true;
     });
 
@@ -812,14 +928,16 @@ export const ContentCalendarPage: React.FC = () => {
 
   // Filtered lists for timeline
   const filteredScheduled = scheduledPosts.filter((p) => {
-    if (platformFilter === 'FACEBOOK') return p.channel === 'FACEBOOK';
-    if (platformFilter === 'TWITTER') return p.channel === 'TWITTER';
+    const isTweet = p.channel === 'TWITTER' || p.page?.pageId === 'AbiodunBuilds' || p.socialPageId === 'AbiodunBuilds';
+    if (platformFilter === 'FACEBOOK') return !isTweet;
+    if (platformFilter === 'TWITTER') return isTweet;
     return true;
   });
 
   const filteredPublished = publishedPosts.filter((p) => {
-    if (platformFilter === 'FACEBOOK') return p.channel === 'FACEBOOK';
-    if (platformFilter === 'TWITTER') return p.channel === 'TWITTER';
+    const isTweet = p.channel === 'TWITTER' || p.socialPageId === 'AbiodunBuilds' || p.pageName?.includes('Abiodun');
+    if (platformFilter === 'FACEBOOK') return !isTweet;
+    if (platformFilter === 'TWITTER') return isTweet;
     return true;
   });
 
@@ -877,6 +995,18 @@ export const ContentCalendarPage: React.FC = () => {
             <Sparkles className="w-3.5 h-3.5 text-amber-400" />
             <span>Reset Calendar</span>
           </button>
+
+          {/* Header Quick Upload Flyer for Facebook */}
+          <label className="w-full sm:w-auto flex items-center justify-center gap-1.5 px-3.5 py-2 bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold rounded-xl shadow cursor-pointer transition-all active:scale-95 shadow-blue-500/20">
+            <Upload className="w-3.5 h-3.5" />
+            <span>Upload Facebook Flyer</span>
+            <input
+              type="file"
+              accept="image/*"
+              className="hidden"
+              onChange={(e) => handleBatchFacebookUpload(todayDate.getDate(), e)}
+            />
+          </label>
 
           {/* Schedule Button */}
           <button

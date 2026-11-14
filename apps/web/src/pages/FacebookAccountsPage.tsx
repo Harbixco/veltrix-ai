@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import {
   Facebook,
+  Calendar,
   RefreshCw,
   Plus,
   Trash2,
@@ -663,6 +665,31 @@ export const FacebookAccountsPage: React.FC = () => {
             <p className="text-xs text-slate-300 leading-relaxed">
               Official Meta Graph API policies distinguish **Facebook Pages** from **Personal Profiles**. Automated post analytics, reach tracking, and publishing require an authorized Page identity. For personal profiles, Veltrix Hub provides an assisted workflow (one-click copy and manual distribution). All access tokens are securely stored using **AES-256-GCM encryption**.
             </p>
+          </div>
+
+          {/* 1-Click Batch Flyer Upload Banner for Facebook */}
+          <div className="p-4 rounded-2xl bg-gradient-to-r from-blue-950/70 via-indigo-950/40 to-slate-900 border border-blue-500/30 flex flex-col sm:flex-row items-center justify-between gap-3 shadow-lg">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-xl bg-blue-600/20 border border-blue-500/40 flex items-center justify-center shrink-0">
+                <Facebook className="w-5 h-5 text-blue-400" />
+              </div>
+              <div>
+                <h3 className="text-sm font-bold text-white flex items-center gap-2">
+                  <span>Upload Flyer for All 3 Facebook Accounts</span>
+                  <span className="px-1.5 py-0.5 rounded text-[10px] bg-blue-500/20 text-blue-300 font-semibold border border-blue-500/30">1-Click Batch</span>
+                </h3>
+                <p className="text-xs text-slate-400 mt-0.5">
+                  Open Content Calendar to upload a single flyer and attach it to all Facebook posts scheduled across your accounts.
+                </p>
+              </div>
+            </div>
+            <Link
+              to="/content-calendar"
+              className="shrink-0 inline-flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-500 active:scale-95 text-white text-xs font-bold rounded-xl transition-all shadow-md shadow-blue-500/20"
+            >
+              <Calendar className="w-4 h-4" />
+              <span>Go to Content Calendar</span>
+            </Link>
           </div>
 
           {/* 3 Identity Slots Display */}

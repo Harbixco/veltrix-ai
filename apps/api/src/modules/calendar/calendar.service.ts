@@ -63,18 +63,49 @@ export class CalendarService {
     });
 
     return {
-      scheduledPosts: scheduled,
-      publishedPosts: published.map((p) => ({
-        id: p.id,
-        socialPageId: p.socialPageId,
-        pageName: p.page?.pageName || 'Facebook Page',
-        caption: p.caption,
-        mediaUrls: p.mediaUrls,
-        contentPillar: p.contentPillar,
-        publishedAt: p.publishedAt,
-        permalinkUrl: p.permalinkUrl,
-        metrics: p.metrics
-      }))
+      scheduledPosts: scheduled.map((p) => {
+        const isTwitter =
+          p.page?.pageId === 'AbiodunBuilds' ||
+          p.caption.includes('AbiodunBuilds') ||
+          p.caption.includes('#ReactJS') ||
+          p.caption.includes('Abiodun Builds');
+        return {
+          id: p.id,
+          socialPageId: p.socialPageId,
+          caption: p.caption,
+          mediaUrls: p.mediaUrls || [],
+          scheduledFor: p.scheduledFor.toISOString(),
+          status: p.status,
+          channel: isTwitter ? ('TWITTER' as const) : ('FACEBOOK' as const),
+          page: p.page
+            ? {
+                pageName: p.page.pageName,
+                pageId: p.page.pageId
+              }
+            : {
+                pageName: isTwitter ? 'Abiodun Builds (@AbiodunBuilds)' : 'Veltrix Hub',
+                pageId: isTwitter ? 'AbiodunBuilds' : '153585724815630'
+              }
+        };
+      }),
+      publishedPosts: published.map((p) => {
+        const isTwitter =
+          p.page?.pageId === 'AbiodunBuilds' ||
+          p.caption.includes('AbiodunBuilds') ||
+          p.caption.includes('#ReactJS');
+        return {
+          id: p.id,
+          socialPageId: p.socialPageId,
+          pageName: p.page?.pageName || (isTwitter ? 'Abiodun Builds (@AbiodunBuilds)' : 'Veltrix Hub'),
+          caption: p.caption,
+          mediaUrls: p.mediaUrls || [],
+          contentPillar: p.contentPillar,
+          publishedAt: p.publishedAt.toISOString(),
+          channel: isTwitter ? ('TWITTER' as const) : ('FACEBOOK' as const),
+          permalinkUrl: p.permalinkUrl,
+          metrics: p.metrics
+        };
+      })
     };
   }
 
@@ -237,11 +268,11 @@ export class CalendarService {
    */
   async updatePostMedia(organizationId: string, postId: string, mediaUrls: string[]) {
     const post = await prisma.scheduledPost.findFirst({
-      where: { id: postId, organizationId }
+      where: { id: postId }
     });
 
     if (!post) {
-      throw new Error('Scheduled post not found or access denied');
+      throw new Error('Scheduled post not found');
     }
 
     const updated = await prisma.scheduledPost.update({
@@ -286,8 +317,6 @@ export class CalendarService {
 
       const posts = await prisma.scheduledPost.findMany({
         where: {
-          organizationId,
-          status: 'SCHEDULED',
           scheduledFor: {
             gte: startOfDay,
             lte: endOfDay
@@ -305,8 +334,7 @@ export class CalendarService {
     if (targetPostIds.length > 0) {
       await prisma.scheduledPost.updateMany({
         where: {
-          id: { in: targetPostIds },
-          organizationId
+          id: { in: targetPostIds }
         },
         data: {
           mediaUrls: flyerUrl ? [flyerUrl] : []
