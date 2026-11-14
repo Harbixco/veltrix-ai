@@ -63,8 +63,10 @@ app.use('/api/v1/settings', settingsRoutes);
 // Global Error Handler
 app.use(errorHandler);
 
-const server = app.listen(config.port, () => {
-  console.log(`🚀 Veltrix AI Hub API Server listening on port ${config.port} [${config.env}]`);
-});
+if (!process.env.VERCEL) {
+  app.listen(config.port, () => {
+    console.log(`🚀 Veltrix AI Hub API Server listening on port ${config.port} [${config.env}]`);
+  });
+}
 
 export default app;

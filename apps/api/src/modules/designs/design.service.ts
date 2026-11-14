@@ -1,4 +1,4 @@
-import { prisma } from '@veltrix/database';
+import { prisma } from '../../db';
 
 export interface DesignRecipeTemplate {
   key: string;

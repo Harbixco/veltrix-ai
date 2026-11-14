@@ -1,5 +1,5 @@
 import { Response, NextFunction } from 'express';
-import { prisma } from '@veltrix/database';
+import { prisma } from '../../db';
 import { AuthenticatedRequest } from '../../middleware/auth';
 
 export async function getProfile(req: AuthenticatedRequest, res: Response, next: NextFunction) {

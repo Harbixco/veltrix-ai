@@ -1,4 +1,4 @@
-import { prisma } from '@veltrix/database';
+import { prisma } from '../../db';
 import { encryptToken, decryptToken } from '../../utils/crypto';
 
 const GRAPH_API_BASE = 'https://graph.facebook.com/v19.0';

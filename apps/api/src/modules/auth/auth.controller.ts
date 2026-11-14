@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import { prisma } from '@veltrix/database';
+import { prisma } from '../../db';
 import { config } from '../../config';
 import { AuthenticatedRequest } from '../../middleware/auth';
 
