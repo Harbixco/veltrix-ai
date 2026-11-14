@@ -6,10 +6,21 @@ dotenv.config({ path: path.resolve(__dirname, '../../../.env') });
 dotenv.config({ path: path.resolve(__dirname, '../.env') });
 
 const DESIGN_TEMPLATES = [
-  '/designs/veltrix-design-1.jpg',
-  '/designs/veltrix-design-2.jpg',
-  '/designs/veltrix-design-3.jpg',
-  '/designs/veltrix-design-4.jpg'
+  '/designs/flyers/flyer-day01-morning-wrong-problem.jpg',
+  '/designs/flyers/flyer-day02-morning-how-much-disappear.jpg',
+  '/designs/flyers/flyer-day03-morning-more-followers.jpg',
+  '/designs/flyers/flyer-day04-morning-10-seconds-clarity.jpg',
+  '/designs/flyers/flyer-day05-morning-website-design-mistakes.jpg',
+  '/designs/flyers/flyer-day06-morning-verify-your-business.jpg',
+  '/designs/flyers/flyer-day07-morning-why-no-inquiries.jpg',
+  '/designs/flyers/flyer-day08-morning-invisible-to-google.jpg',
+  '/designs/flyers/flyer-day09-morning-whatsapp-status-disappears.jpg',
+  '/designs/flyers/flyer-day10-morning-stop-depending-on-whatsapp.jpg',
+  '/designs/flyers/flyer-day11-morning-less-professional-online.jpg',
+  '/designs/flyers/flyer-day12-morning-why-visitors-leave.jpg',
+  '/designs/flyers/flyer-day13-morning-ads-need-landing-page.jpg',
+  '/designs/flyers/flyer-day14-morning-searches-for-your-business.jpg',
+  '/designs/flyers/flyer-day15-morning-trust-starts-with-clarity.jpg'
 ];
 
 interface PostDefinition {
@@ -106,7 +117,7 @@ Websites • E-commerce • Branding
     dayOffset: 5,
     dateStr: '2026-11-18T09:00:00+01:00',
     hook: "3 website design mistakes that can frustrate potential customers.",
-    designIndex: 0,
+    designIndex: 4,
     caption: `3 website design mistakes that can frustrate potential customers:
 
 1. Slow Mobile Loading: If your page takes more than 3 seconds to open on a 4G phone, over half your visitors are gone.
@@ -122,7 +133,7 @@ At Veltrix Hub, we build clean, fast, mobile-first websites designed to guide yo
     dayOffset: 6,
     dateStr: '2026-11-19T09:00:00+01:00',
     hook: "Customers need a way to verify your business before they feel comfortable buying.",
-    designIndex: 1,
+    designIndex: 5,
     caption: `Customers need a way to verify your business before they feel comfortable buying.
 
 In today's digital landscape, customers are more cautious than ever. If your only presence is a social media profile without a registered domain, verifiable reviews, or a transparent business address, customers hesitate.
@@ -141,7 +152,7 @@ How to establish instant credibility:
     dayOffset: 7,
     dateStr: '2026-11-20T09:00:00+01:00',
     hook: "People visit your website, but why aren't they making inquiries?",
-    designIndex: 2,
+    designIndex: 6,
     caption: `People visit your website, but why aren't they making inquiries?
 
 Having website traffic is like having people walk into your store. But if everyone walks in and walks right back out without asking a question, something is broken in the layout.
@@ -162,7 +173,7 @@ Websites • E-commerce • Branding
     dayOffset: 8,
     dateStr: '2026-11-21T09:00:00+01:00',
     hook: "Your website may be invisible to Google. Here's what to check.",
-    designIndex: 3,
+    designIndex: 7,
     caption: `Your website may be invisible to Google. Here's what to check:
 
 Just because your website is live doesn't mean Google has indexed it. When someone in your city searches for your services, does your business appear?
@@ -183,7 +194,7 @@ Websites • E-commerce • Branding
     dayOffset: 9,
     dateStr: '2026-11-22T09:00:00+01:00',
     hook: "Your products deserve more than a WhatsApp status that disappears.",
-    designIndex: 0,
+    designIndex: 8,
     caption: `Your products deserve more than a WhatsApp status that disappears.
 
 WhatsApp status is great for quick updates. But relying on disappearing stories to run an entire business means:
@@ -202,7 +213,7 @@ Upgrade from manual hustle to automated sales with Veltrix Hub.
     dayOffset: 10,
     dateStr: '2026-11-23T09:00:00+01:00',
     hook: "Stop depending on WhatsApp to carry your whole sales process.",
-    designIndex: 1,
+    designIndex: 9,
     caption: `Stop depending on WhatsApp to carry your whole sales process.
 
 WhatsApp should be your closing room—not your entire warehouse, catalog, FAQ, and invoice desk.
@@ -221,7 +232,7 @@ Build a professional digital home that pre-qualifies leads before they ever mess
     dayOffset: 11,
     dateStr: '2026-11-24T09:00:00+01:00',
     hook: "Looking less professional online can affect how customers perceive your offer.",
-    designIndex: 2,
+    designIndex: 10,
     caption: `Looking less professional online can affect how customers perceive your offer.
 
 Perception determines price. If a customer visits your online presence and sees low-resolution graphics, inconsistent typography, and broken links, they automatically assume your work is low quality.
@@ -242,7 +253,7 @@ Websites • E-commerce • Branding
     dayOffset: 12,
     dateStr: '2026-11-25T09:00:00+01:00',
     hook: "Why do visitors leave a website without taking the next step?",
-    designIndex: 3,
+    designIndex: 11,
     caption: `Why do visitors leave a website without taking the next step?
 
 Most website exits boil down to cognitive friction:
@@ -263,7 +274,7 @@ Websites • E-commerce • Branding
     dayOffset: 13,
     dateStr: '2026-11-26T09:00:00+01:00',
     hook: "Ads can bring visitors, but your website still needs to give them a reason to act.",
-    designIndex: 0,
+    designIndex: 12,
     caption: `Ads can bring visitors, but your website still needs to give them a reason to act.
 
 Running Facebook, Instagram, or Google ads without an optimized landing page is like paying for a billboard that points people to an empty store.
@@ -284,7 +295,7 @@ Let's optimize your conversion funnel with Veltrix Hub.
     dayOffset: 14,
     dateStr: '2026-11-27T09:00:00+01:00',
     hook: "If someone searches for your business today, what will they find?",
-    designIndex: 1,
+    designIndex: 13,
     caption: `If someone searches for your business today, what will they find?
 
 When a customer hears about you through word of mouth, the very first thing they do is Google your business name.
@@ -302,7 +313,7 @@ Control your narrative. Make sure your business appears authoritative, trustwort
     dayOffset: 15,
     dateStr: '2026-11-28T09:00:00+01:00',
     hook: "Trust starts with how clearly you present your business online.",
-    designIndex: 2,
+    designIndex: 14,
     caption: `Trust starts with how clearly you present your business online.
 
 In business, clarity equals confidence, and confidence equals conversion. When your value proposition, services, and proof are laid out seamlessly, clients feel secure investing in your solutions.

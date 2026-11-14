@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { resolveFlyerForPost } from './ContentCalendarPage';
 import {
   Facebook,
   RefreshCw,
@@ -793,11 +794,11 @@ export const FacebookAccountsPage: React.FC = () => {
                       </div>
 
                       <div className="flex gap-2.5 items-start">
-                        {p.mediaUrls?.[0] ? (
+                        {resolveFlyerForPost(p) ? (
                           <img
-                            src={p.mediaUrls[0]}
+                            src={resolveFlyerForPost(p)}
                             alt="Post thumbnail"
-                            onClick={() => setLightboxFlyer({ url: p.mediaUrls[0], title: p.contentPillar || 'Flyer' })}
+                            onClick={() => setLightboxFlyer({ url: resolveFlyerForPost(p), title: p.contentPillar || 'Flyer' })}
                             className="h-14 w-14 rounded-lg object-cover border border-slate-800 shrink-0 cursor-pointer hover:border-emerald-500 transition-colors"
                           />
                         ) : (
@@ -851,11 +852,11 @@ export const FacebookAccountsPage: React.FC = () => {
                         <tr key={p.id} className="hover:bg-slate-900/30 transition-colors">
                           <td className="py-3 px-3 max-w-sm">
                             <div className="flex items-start gap-2.5">
-                              {p.mediaUrls?.[0] ? (
+                              {resolveFlyerForPost(p) ? (
                                 <img
-                                  src={p.mediaUrls[0]}
+                                  src={resolveFlyerForPost(p)}
                                   alt="Post thumbnail"
-                                  onClick={() => setLightboxFlyer({ url: p.mediaUrls[0], title: p.contentPillar || 'Flyer' })}
+                                  onClick={() => setLightboxFlyer({ url: resolveFlyerForPost(p), title: p.contentPillar || 'Flyer' })}
                                   className="h-10 w-10 rounded-md object-cover border border-slate-800 shrink-0 cursor-pointer hover:border-emerald-500 transition-colors"
                                 />
                               ) : (

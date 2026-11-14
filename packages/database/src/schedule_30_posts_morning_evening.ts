@@ -1,10 +1,39 @@
 import { prisma } from './index';
 
-const DESIGN_TEMPLATES = [
-  '/designs/veltrix-design-1.jpg',
-  '/designs/veltrix-design-2.jpg',
-  '/designs/veltrix-design-3.jpg',
-  '/designs/veltrix-design-4.jpg'
+const MORNING_FLYERS = [
+  '/designs/flyers/flyer-day01-morning-wrong-problem.jpg',
+  '/designs/flyers/flyer-day02-morning-how-much-disappear.jpg',
+  '/designs/flyers/flyer-day03-morning-more-followers.jpg',
+  '/designs/flyers/flyer-day04-morning-10-seconds-clarity.jpg',
+  '/designs/flyers/flyer-day05-morning-website-design-mistakes.jpg',
+  '/designs/flyers/flyer-day06-morning-verify-your-business.jpg',
+  '/designs/flyers/flyer-day07-morning-why-no-inquiries.jpg',
+  '/designs/flyers/flyer-day08-morning-invisible-to-google.jpg',
+  '/designs/flyers/flyer-day09-morning-whatsapp-status-disappears.jpg',
+  '/designs/flyers/flyer-day10-morning-stop-depending-on-whatsapp.jpg',
+  '/designs/flyers/flyer-day11-morning-less-professional-online.jpg',
+  '/designs/flyers/flyer-day12-morning-why-visitors-leave.jpg',
+  '/designs/flyers/flyer-day13-morning-ads-need-landing-page.jpg',
+  '/designs/flyers/flyer-day14-morning-searches-for-your-business.jpg',
+  '/designs/flyers/flyer-day15-morning-trust-starts-with-clarity.jpg'
+];
+
+const EVENING_FLYERS = [
+  '/designs/flyers/flyer-day01-evening-ai-lead-automation.jpg',
+  '/designs/flyers/flyer-day02-evening-website-development.jpg',
+  '/designs/flyers/flyer-day03-evening-ecommerce-development.jpg',
+  '/designs/flyers/flyer-day04-evening-crm-sales-automation.jpg',
+  '/designs/flyers/flyer-day05-evening-custom-web-apps.jpg',
+  '/designs/flyers/flyer-day06-evening-seo-architecture.jpg',
+  '/designs/flyers/flyer-day07-evening-ai-chatbots.jpg',
+  '/designs/flyers/flyer-day08-evening-website-maintenance.jpg',
+  '/designs/flyers/flyer-day09-evening-cac-registration.jpg',
+  '/designs/flyers/flyer-day10-evening-landing-pages.jpg',
+  '/designs/flyers/flyer-day11-evening-whatsapp-business-api.jpg',
+  '/designs/flyers/flyer-day12-evening-mobile-app-development.jpg',
+  '/designs/flyers/flyer-day13-evening-digital-consultation.jpg',
+  '/designs/flyers/flyer-day14-evening-digital-transformation.jpg',
+  '/designs/flyers/flyer-day15-evening-partnership-innovate-build-grow.jpg'
 ];
 
 interface PostScheduleItem {
@@ -613,7 +642,7 @@ async function scheduleThirtyPostsBatch() {
     // 1. Morning Post: 09:00 AM WAT (08:00 UTC)
     const morningDate = new Date(`${dateBase}T09:00:00+01:00`);
     const morningItem = MORNING_HOOKS[day - 1];
-    const morningDesign = DESIGN_TEMPLATES[(day - 1) % DESIGN_TEMPLATES.length];
+    const morningDesign = MORNING_FLYERS[day - 1];
 
     await prisma.scheduledPost.create({
       data: {
@@ -630,7 +659,7 @@ async function scheduleThirtyPostsBatch() {
     // 2. Evening Post: 06:00 PM (18:00 WAT / 17:00 UTC)
     const eveningDate = new Date(`${dateBase}T18:00:00+01:00`);
     const eveningItem = EVENING_SERVICES[day - 1];
-    const eveningDesign = DESIGN_TEMPLATES[(day + 1) % DESIGN_TEMPLATES.length];
+    const eveningDesign = EVENING_FLYERS[day - 1];
 
     await prisma.scheduledPost.create({
       data: {
