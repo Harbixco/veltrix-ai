@@ -1,5 +1,3 @@
-import fs from 'fs';
-import path from 'path';
 import { prisma } from '../../db';
 import { decryptToken } from '../../utils/crypto';
 
@@ -204,7 +202,10 @@ export class CalendarService {
     }
 
     try {
-      const hasMedia = post.mediaUrls && post.mediaUrls.length > 0 && Boolean(post.mediaUrls[0]);
+      // Only treat as media if user manually uploaded a flyer (Base64 data:image or custom upload), never automatic templates
+      const rawMedia = post.mediaUrls && post.mediaUrls.length > 0 ? post.mediaUrls[0] : '';
+      const isAutoTemplate = rawMedia.includes('/designs/flyers/') || rawMedia.includes('veltrix-design');
+      const hasMedia = Boolean(rawMedia) && !isAutoTemplate;
 
       if (hasMedia) {
         const media = post.mediaUrls[0];
@@ -237,77 +238,27 @@ export class CalendarService {
             permalinkUrl = `https://facebook.com/${publishedExternalId}`;
             isLivePublished = true;
           }
-        } else if (media.startsWith('/') || media.startsWith('http')) {
-          let buffer: Buffer | null = null;
-          let mimeType = 'image/jpeg';
-          if (media.endsWith('.png')) mimeType = 'image/png';
-          else if (media.endsWith('.svg')) mimeType = 'image/svg+xml';
+        } else if (media.startsWith('http')) {
+          // Public image URL
+          const response = await fetch(`https://graph.facebook.com/v19.0/${post.page.pageId}/photos`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              url: media,
+              caption: post.caption,
+              access_token: decryptedToken
+            })
+          });
 
-          if (media.startsWith('/')) {
-            const cleanPath = media.replace(/^\//, '');
-            const possiblePaths = [
-              path.resolve(process.cwd(), 'apps/web/public', cleanPath),
-              path.resolve(__dirname, '../../../../web/public', cleanPath),
-              path.resolve(process.cwd(), 'public', cleanPath)
-            ];
-            for (const p of possiblePaths) {
-              if (fs.existsSync(p)) {
-                buffer = fs.readFileSync(p);
-                break;
-              }
-            }
+          const result = (await response.json()) as any;
+          if (result.error) {
+            throw new Error(`Meta Graph API Error: ${result.error.message || 'Failed to publish photo'} (Code: ${result.error.code || 'unknown'})`);
           }
 
-          if (buffer) {
-            const blob = new Blob([buffer], { type: mimeType });
-            const formData = new FormData();
-            formData.append('source', blob, 'flyer.jpg');
-            if (post.caption) {
-              formData.append('caption', post.caption);
-            }
-            formData.append('access_token', decryptedToken);
-
-            const response = await fetch(`https://graph.facebook.com/v19.0/${post.page.pageId}/photos`, {
-              method: 'POST',
-              body: formData
-            });
-
-            const result = (await response.json()) as any;
-            if (result.error) {
-              throw new Error(`Meta Graph API Error: ${result.error.message || 'Failed to upload photo'} (Code: ${result.error.code || 'unknown'})`);
-            }
-
-            if (result.id) {
-              publishedExternalId = result.id;
-              permalinkUrl = `https://facebook.com/${publishedExternalId}`;
-              isLivePublished = true;
-            }
-          } else {
-            // Public image URL or fallback to production URL
-            const publicUrl = media.startsWith('http')
-              ? media
-              : `https://veltrixhubai.vercel.app${media.startsWith('/') ? media : '/' + media}`;
-
-            const response = await fetch(`https://graph.facebook.com/v19.0/${post.page.pageId}/photos`, {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({
-                url: publicUrl,
-                caption: post.caption,
-                access_token: decryptedToken
-              })
-            });
-
-            const result = (await response.json()) as any;
-            if (result.error) {
-              throw new Error(`Meta Graph API Error: ${result.error.message || 'Failed to publish photo'} (Code: ${result.error.code || 'unknown'})`);
-            }
-
-            if (result.id) {
-              publishedExternalId = result.id;
-              permalinkUrl = `https://facebook.com/${publishedExternalId}`;
-              isLivePublished = true;
-            }
+          if (result.id) {
+            publishedExternalId = result.id;
+            permalinkUrl = `https://facebook.com/${publishedExternalId}`;
+            isLivePublished = true;
           }
         }
       } else {

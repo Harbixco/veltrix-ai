@@ -74,165 +74,27 @@ export interface PublishedPost {
 
 // ============================================================================
 // DYNAMIC FLYER RESOLVER
-// Guarantees that every Facebook post automatically renders its OWN distinct topic-matched flyer.
-// Twitter posts remain strictly text-only. Manual image uploads are fully supported as overrides.
+// Guarantees that every post always renders its OWN distinct topic-matched flyer,
+// even if an older database record or cache references a generic template.
 // ============================================================================
-export function getExactFlyerForCaption(caption?: string): string {
-  const text = caption || '';
-  const firstLine = text.trim().split('\n')[0].toLowerCase();
-  const hook = text.slice(0, 300).toLowerCase();
-
-  // Day 1
-  if (firstLine.includes('wrong problem') || firstLine.includes('solving the wrong')) {
-    return '/designs/flyers/flyer-day01-morning-wrong-problem.jpg';
-  }
-  if (firstLine.includes('ai business')) {
-    return '/designs/flyers/flyer-day01-evening-ai-lead-automation.jpg';
-  }
-
-  // Day 2
-  if (firstLine.includes('how much') || firstLine.includes('customers ask')) {
-    return '/designs/flyers/flyer-day02-morning-how-much-disappear.jpg';
-  }
-  if (firstLine.includes('custom website development') || firstLine.includes('70% of business websites') || firstLine.includes('slow loading speed')) {
-    return '/designs/flyers/flyer-day02-evening-website-development.jpg';
-  }
-
-  // Day 3
-  if (firstLine.includes('more followers')) {
-    return '/designs/flyers/flyer-day03-morning-more-followers.jpg';
-  }
-  if (firstLine.includes('e-commerce store') || firstLine.includes('e-commerce development')) {
-    return '/designs/flyers/flyer-day03-evening-ecommerce-development.jpg';
-  }
-
-  // Day 4
-  if (firstLine.includes('10 seconds') || firstLine.includes('understand what you sell')) {
-    return '/designs/flyers/flyer-day04-morning-10-seconds-clarity.jpg';
-  }
-  if (firstLine.includes('crm & sales') || firstLine.includes('sales pipeline')) {
-    return '/designs/flyers/flyer-day04-evening-crm-sales-automation.jpg';
-  }
-
-  // Day 5
-  if (firstLine.includes('design mistakes') || firstLine.includes('frustrate potential customers') || firstLine.includes('frustrating your buyers')) {
-    return '/designs/flyers/flyer-day05-morning-website-design-mistakes.jpg';
-  }
-  if (firstLine.includes('corporate branding') || firstLine.includes('brand identity') || firstLine.includes('branding vs informal')) {
-    return '/designs/flyers/flyer-day04-evening-brand-identity.jpg';
-  }
-
-  // Day 6
-  if (firstLine.includes('verify your business') || firstLine.includes('comfortable buying')) {
-    return '/designs/flyers/flyer-day06-morning-verify-your-business.jpg';
-  }
-  if (firstLine.includes('search engine optimization') || firstLine.includes('seo') || firstLine.includes('rank architecture')) {
-    return '/designs/flyers/flyer-day06-evening-seo-architecture.jpg';
-  }
-
-  // Day 7
-  if (firstLine.includes('making inquiries') || firstLine.includes('why aren') || firstLine.includes('visit your website')) {
-    return '/designs/flyers/flyer-day07-morning-why-no-inquiries.jpg';
-  }
-  if (firstLine.includes('ai support chatbots') || firstLine.includes('ai chatbots') || firstLine.includes('smart ai chatbot')) {
-    return '/designs/flyers/flyer-day07-evening-ai-chatbots.jpg';
-  }
-
-  // Day 8
-  if (firstLine.includes('invisible to google') || firstLine.includes('page 1 on google')) {
-    return '/designs/flyers/flyer-day08-morning-invisible-to-google.jpg';
-  }
-  if (firstLine.includes('website maintenance') || firstLine.includes('unmonitored website') || firstLine.includes('offline for days')) {
-    return '/designs/flyers/flyer-day08-evening-website-maintenance.jpg';
-  }
-
-  // Day 9
-  if (firstLine.includes('whatsapp status') || firstLine.includes('products deserve more than')) {
-    return '/designs/flyers/flyer-day09-morning-whatsapp-status-disappears.jpg';
-  }
-  if (firstLine.includes('cac business registration') || firstLine.includes('cac') || firstLine.includes('corporate affairs')) {
-    return '/designs/flyers/flyer-day09-evening-cac-registration.jpg';
-  }
-
-  // Day 10
-  if (firstLine.includes('stop depending on whatsapp') || firstLine.includes('carry your whole sales')) {
-    return '/designs/flyers/flyer-day10-morning-stop-depending-on-whatsapp.jpg';
-  }
-  if (firstLine.includes('landing page design') || firstLine.includes('high-converting landing') || firstLine.includes('flyers that convert')) {
-    return '/designs/flyers/flyer-day10-evening-landing-pages.jpg';
-  }
-
-  // Day 11
-  if (firstLine.includes('less professional') || firstLine.includes('informal business') || firstLine.includes('perceive your offer')) {
-    return '/designs/flyers/flyer-day11-morning-less-professional-online.jpg';
-  }
-  if (firstLine.includes('whatsapp business automation') || firstLine.includes('whatsapp api')) {
-    return '/designs/flyers/flyer-day11-evening-whatsapp-business-api.jpg';
-  }
-
-  // Day 12
-  if (firstLine.includes('why do visitors leave') || firstLine.includes('visitors leave a website') || firstLine.includes('without taking the next step')) {
-    return '/designs/flyers/flyer-day12-morning-why-visitors-leave.jpg';
-  }
-  if (firstLine.includes('mobile application') || firstLine.includes('mobile app')) {
-    return '/designs/flyers/flyer-day12-evening-mobile-app-development.jpg';
-  }
-
-  // Day 13
-  if (firstLine.includes('ads can bring') || firstLine.includes('ads bring visitors') || firstLine.includes('reason to act')) {
-    return '/designs/flyers/flyer-day13-morning-ads-need-landing-page.jpg';
-  }
-  if (firstLine.includes('digital growth consultation') || firstLine.includes('1-on-1 digital') || firstLine.includes('digital consultation') || firstLine.includes('strategy session') || firstLine.includes('scale your business online')) {
-    return '/designs/flyers/flyer-day13-evening-digital-consultation.jpg';
-  }
-
-  // Day 14
-  if (firstLine.includes('searches for your business') || firstLine.includes('googles your business') || firstLine.includes('what will they find')) {
-    return '/designs/flyers/flyer-day14-morning-searches-for-your-business.jpg';
-  }
-  if (firstLine.includes('digital transformation') || firstLine.includes('transformation overhaul')) {
-    return '/designs/flyers/flyer-day14-evening-digital-transformation.jpg';
-  }
-
-  // Day 15
-  if (firstLine.includes('trust starts with') || firstLine.includes('present your business online')) {
-    return '/designs/flyers/flyer-day15-morning-trust-starts-with-clarity.jpg';
-  }
-  if (firstLine.includes('growth partner') || firstLine.includes('tech partner') || firstLine.includes('technology partner') || firstLine.includes('choose veltrix hub')) {
-    return '/designs/flyers/flyer-day15-evening-partnership-innovate-build-grow.jpg';
-  }
-
-  // Fallback broad matches
-  if (hook.includes('branding') || hook.includes('brand identity')) return '/designs/flyers/flyer-day04-evening-brand-identity.jpg';
-  if (hook.includes('landing page')) return '/designs/flyers/flyer-day10-evening-landing-pages.jpg';
-  if (hook.includes('cac')) return '/designs/flyers/flyer-day09-evening-cac-registration.jpg';
-  if (hook.includes('website')) return '/designs/flyers/flyer-day02-evening-website-development.jpg';
-
-  return '/designs/flyers/flyer-day02-evening-website-development.jpg';
-}
-
 export function resolveFlyerForPost(
   post: { caption?: string; mediaUrls?: string[]; channel?: string; page?: { pageId?: string } } | null | undefined
 ): string {
   if (!post) return '';
   // Twitter posts NEVER have flyers (strictly text-only)
-  if (
-    post.channel === 'TWITTER' ||
-    post.page?.pageId === 'AbiodunBuilds' ||
-    post.caption?.includes('#ReactJS') ||
-    post.caption?.includes('#TypeScript') ||
-    post.caption?.includes('#Frontend') ||
-    post.caption?.includes('#ReactNative') ||
-    post.caption?.includes('#CodeNewbie')
-  ) {
+  if (post.channel === 'TWITTER' || post.page?.pageId === 'AbiodunBuilds') {
     return '';
   }
-  // Return mediaUrls if set (manual upload or pre-assigned distinct flyer)
+  // Only return manually attached/uploaded flyer from mediaUrls
   if (post.mediaUrls && Array.isArray(post.mediaUrls) && post.mediaUrls.length > 0 && post.mediaUrls[0]) {
-    return post.mediaUrls[0];
+    const url = post.mediaUrls[0];
+    // Ignore legacy auto-generated flyer paths
+    if (url.includes('/designs/flyers/') || url.includes('veltrix-design')) {
+      return '';
+    }
+    return url;
   }
-  // Automatic fallback: match the distinct topic flyer from the post's caption
-  return getExactFlyerForCaption(post.caption);
+  return '';
 }
 
 
@@ -314,7 +176,7 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     slotType: 'MIDDAY',
     topicBadge: 'WEBSITE SPEED & CONVERSION',
     caption: `Why 70% of business websites in Nigeria lose customers before they even read the offer:\n\n1. Slow loading speed (over 4 seconds on mobile networks)\n2. No direct WhatsApp conversion button on the screen\n3. Cluttered layout that confuses first-time visitors\n\nAt Veltrix Hub, we build digital infrastructure designed for speed, clarity, and trust.\n\nSend us a DM for a free website review today.`,
-    mediaUrls: ['/designs/flyers/flyer-day02-evening-website-development.jpg'],
+    mediaUrls: [],
     scheduledFor: '2026-11-14T13:00:00.000Z',
     status: 'SCHEDULED',
     page: { pageName: 'Veltrixhq', pageId: '112352500475248' }
@@ -352,7 +214,7 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     slotType: 'MIDDAY',
     topicBadge: 'CORPORATE BRANDING & TRUST',
     caption: `Professional Branding vs Informal Business:\n\nCustomers will happily pay 3x more to a business with clean corporate branding, verified CAC credentials, and an official domain email.\n\nStop losing high-value clients to competitors with better presentation. Let Veltrix Hub transform your brand perception this week.`,
-    mediaUrls: ['/designs/flyers/flyer-day04-evening-brand-identity.jpg'],
+    mediaUrls: [],
     scheduledFor: '2026-11-15T13:00:00.000Z',
     status: 'SCHEDULED',
     page: { pageName: 'Veltrixhq', pageId: '112352500475248' }
@@ -390,7 +252,7 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     slotType: 'MIDDAY',
     topicBadge: 'WEBSITE MAINTENANCE & CARE',
     caption: `Did you know that an unmonitored website can go offline for days without the owner noticing?\n\nWith Veltrix Hub Website Maintenance, we provide 24/7 uptime monitoring, daily automated backups, and instant security patches so your business never misses a sale.\n\nFocus on running your business while we handle your digital infrastructure.`,
-    mediaUrls: ['/designs/flyers/flyer-day08-evening-website-maintenance.jpg'],
+    mediaUrls: [],
     scheduledFor: '2026-11-16T13:00:00.000Z',
     status: 'SCHEDULED',
     page: { pageName: 'Veltrixhq', pageId: '112352500475248' }
@@ -428,7 +290,7 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     slotType: 'MIDDAY',
     topicBadge: 'CAC LEGAL REGISTRATION',
     caption: `Is your business legally registered with the CAC?\n\nOperating without CAC registration means any competitor can legally claim your business name tomorrow.\n\nVeltrix Hub handles complete CAC business registration, tax certificates, and official documents smoothly.\n\nProtect your brand name today. Send us a message on WhatsApp.`,
-    mediaUrls: ['/designs/flyers/flyer-day09-evening-cac-registration.jpg'],
+    mediaUrls: [],
     scheduledFor: '2026-11-17T13:00:00.000Z',
     status: 'SCHEDULED',
     page: { pageName: 'Veltrixhq', pageId: '112352500475248' }
@@ -466,7 +328,7 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     slotType: 'MIDDAY',
     topicBadge: 'AUTOMATED LEAD ACQUISITION',
     caption: `Automating customer inquiries:\n\nWhat if every prospect who messaged your business got their questions answered and booked a consultation within 30 seconds, even at 2 AM?\n\nAI customer automations by Veltrix Hub connect directly to WhatsApp and your CRM to capture sales 24/7.\n\nAsk us for a live demo.`,
-    mediaUrls: ['/designs/flyers/flyer-day07-evening-ai-chatbots.jpg'],
+    mediaUrls: [],
     scheduledFor: '2026-11-18T13:00:00.000Z',
     status: 'SCHEDULED',
     page: { pageName: 'Veltrixhq', pageId: '112352500475248' }
@@ -504,7 +366,7 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     slotType: 'MIDDAY',
     topicBadge: 'GRAPHIC DESIGN & ADS',
     caption: `Flyers that convert vs Flyers that get scrolled past:\n\nHigh-converting flyers have 1 bold headline, 3 clear benefits, an attractive offer, and a direct WhatsApp call-to-action.\n\nElevate your visual marketing with Veltrix Hub Graphic Design & Campaign Studio.`,
-    mediaUrls: ['/designs/flyers/flyer-day10-evening-landing-pages.jpg'],
+    mediaUrls: [],
     scheduledFor: '2026-11-19T13:00:00.000Z',
     status: 'SCHEDULED',
     page: { pageName: 'Veltrixhq', pageId: '112352500475248' }
@@ -542,7 +404,7 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     slotType: 'MIDDAY',
     topicBadge: 'STRATEGIC DIGITAL AUDIT',
     caption: `Ready to scale your business online before the end of the year?\n\nBook a strategic digital consultation with Veltrix Hub. We audit your existing online funnel, brand visibility, and lead generation channels to craft a clear roadmap for growth.\n\nSend us a DM or chat on WhatsApp to schedule your session.`,
-    mediaUrls: ['/designs/flyers/flyer-day13-evening-digital-consultation.jpg'],
+    mediaUrls: [],
     scheduledFor: '2026-11-20T13:00:00.000Z',
     status: 'SCHEDULED',
     page: { pageName: 'Veltrixhq', pageId: '112352500475248' }
@@ -568,7 +430,7 @@ const INITIAL_HISTORICAL_PUBLISHED: PublishedPost[] = [
     pageName: 'Veltrixhq',
     channel: 'FACEBOOK',
     caption: `5 signs your business website is losing you customers in 2026:\n1. Non-mobile responsive\n2. Takes longer than 3 seconds to load\n3. Missing WhatsApp conversion button\n4. Outdated contact numbers\n5. No SSL security certificate`,
-    mediaUrls: ['/designs/flyers/flyer-day05-morning-website-design-mistakes.jpg'],
+    mediaUrls: [],
     contentPillar: 'Conversion Optimization',
     publishedAt: '2026-11-10T14:00:00.000Z',
     permalinkUrl: 'https://facebook.com/veltrixhub',
@@ -591,7 +453,7 @@ const INITIAL_HISTORICAL_PUBLISHED: PublishedPost[] = [
     pageName: 'Veltrixhq',
     channel: 'FACEBOOK',
     caption: `CAC Registration isn't an expense; it's the foundation of your business trust. Open corporate bank accounts, bid for high-value tenders, and protect your name from competitors.`,
-    mediaUrls: ['/designs/flyers/flyer-day09-evening-cac-registration.jpg'],
+    mediaUrls: [],
     contentPillar: 'CAC & Business Compliance',
     publishedAt: '2026-11-12T13:30:00.000Z',
     permalinkUrl: 'https://facebook.com/veltrixhub',
@@ -616,13 +478,21 @@ export const ContentCalendarPage: React.FC = () => {
   );
   const [currentDate, setCurrentDate] = useState(new Date(2026, 10, 14)); // November 2026
 
-  // Using _v5 cache key to ensure fresh topic-matched flyers load immediately
+  // Cache key v6 (strictly clean mediaUrls: [] - 100% manual flyer upload only)
   const [scheduledPosts, setScheduledPosts] = useState<ScheduledPost[]>(() => {
     if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('veltrix_scheduled_posts_v5');
+      const saved = localStorage.getItem('veltrix_scheduled_posts_v6');
       if (saved) {
         try {
-          return JSON.parse(saved);
+          const parsed = JSON.parse(saved);
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            return parsed.map((p: ScheduledPost) => ({
+              ...p,
+              mediaUrls: (p.mediaUrls || []).filter(
+                (u) => !u.includes('/designs/flyers/') && !u.includes('veltrix-design')
+              )
+            }));
+          }
         } catch (e) {
           // ignore
         }
@@ -633,10 +503,18 @@ export const ContentCalendarPage: React.FC = () => {
 
   const [publishedPosts, setPublishedPosts] = useState<PublishedPost[]>(() => {
     if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('veltrix_published_posts_v5');
+      const saved = localStorage.getItem('veltrix_published_posts_v6');
       if (saved) {
         try {
-          return JSON.parse(saved);
+          const parsed = JSON.parse(saved);
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            return parsed.map((p: PublishedPost) => ({
+              ...p,
+              mediaUrls: (p.mediaUrls || []).filter(
+                (u) => !u.includes('/designs/flyers/') && !u.includes('veltrix-design')
+              )
+            }));
+          }
         } catch (e) {
           // ignore
         }
@@ -660,7 +538,7 @@ export const ContentCalendarPage: React.FC = () => {
   const [selectedChannel, setSelectedChannel] = useState<'FACEBOOK' | 'TWITTER'>('TWITTER');
   const [newCaption, setNewCaption] = useState('');
   const [newDate, setNewDate] = useState('');
-  const [newMediaUrl, setNewMediaUrl] = useState('/designs/flyers/flyer-nov14-website-speed.svg');
+  const [newMediaUrl, setNewMediaUrl] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [actionSuccess, setActionSuccess] = useState<string | null>(null);
 
@@ -675,7 +553,7 @@ export const ContentCalendarPage: React.FC = () => {
   useEffect(() => {
     if (typeof window !== 'undefined') {
       try {
-        localStorage.setItem('veltrix_scheduled_posts_v5', JSON.stringify(scheduledPosts));
+        localStorage.setItem('veltrix_scheduled_posts_v6', JSON.stringify(scheduledPosts));
       } catch (err) {
         console.warn('Storage quota exceeded, preserving in-memory state:', err);
       }
@@ -685,7 +563,7 @@ export const ContentCalendarPage: React.FC = () => {
   useEffect(() => {
     if (typeof window !== 'undefined') {
       try {
-        localStorage.setItem('veltrix_published_posts_v5', JSON.stringify(publishedPosts));
+        localStorage.setItem('veltrix_published_posts_v6', JSON.stringify(publishedPosts));
       } catch (err) {
         console.warn('Storage quota exceeded, preserving in-memory state:', err);
       }
@@ -716,7 +594,11 @@ export const ContentCalendarPage: React.FC = () => {
               id: p.id,
               socialPageId: p.socialPageId || (isTwitter ? 'AbiodunBuilds' : '153585724815630'),
               caption: p.caption,
-              mediaUrls: Array.isArray(p.mediaUrls) ? p.mediaUrls : [],
+              mediaUrls: Array.isArray(p.mediaUrls)
+                ? p.mediaUrls.filter(
+                    (u: string) => !u.includes('/designs/flyers/') && !u.includes('veltrix-design')
+                  )
+                : [],
               scheduledFor: p.scheduledFor,
               status: p.status || 'SCHEDULED',
               channel: isTwitter ? 'TWITTER' : 'FACEBOOK',
@@ -740,7 +622,11 @@ export const ContentCalendarPage: React.FC = () => {
               socialPageId: p.socialPageId,
               pageName: p.pageName || (isTwitter ? 'Abiodun Builds (@AbiodunBuilds)' : 'Veltrix Hub'),
               caption: p.caption,
-              mediaUrls: Array.isArray(p.mediaUrls) ? p.mediaUrls : [],
+              mediaUrls: Array.isArray(p.mediaUrls)
+                ? p.mediaUrls.filter(
+                    (u: string) => !u.includes('/designs/flyers/') && !u.includes('veltrix-design')
+                  )
+                : [],
               contentPillar: p.contentPillar || 'Broadcast',
               publishedAt: p.publishedAt,
               channel: isTwitter ? 'TWITTER' : 'FACEBOOK',
@@ -1003,11 +889,11 @@ export const ContentCalendarPage: React.FC = () => {
       console.warn('Clipboard write failed:', e);
     }
 
-    const hasFlyer = post.mediaUrls && post.mediaUrls.length > 0 && post.mediaUrls[0];
-    if (hasFlyer) {
+    const flyer = resolveFlyerForPost(post);
+    if (flyer) {
       try {
         const a = document.createElement('a');
-        a.href = post.mediaUrls[0];
+        a.href = flyer;
         a.download = `facebook-flyer-${post.slotType || 'slot'}.png`;
         document.body.appendChild(a);
         a.click();
@@ -1146,7 +1032,7 @@ export const ContentCalendarPage: React.FC = () => {
       socialPageId: isTweet ? 'AbiodunBuilds' : '112352500475248',
       channel: selectedChannel,
       caption: newCaption,
-      mediaUrls: newMediaUrl ? [newMediaUrl] : ['/designs/flyers/flyer-nov14-website-speed.svg'],
+      mediaUrls: newMediaUrl ? [newMediaUrl] : [],
       scheduledFor: new Date(newDate).toISOString(),
       status: 'SCHEDULED',
       topicBadge: isTweet ? '𝕏 TECH INSIGHT' : 'FACEBOOK BROADCAST',
@@ -1178,19 +1064,20 @@ export const ContentCalendarPage: React.FC = () => {
     setIsModalOpen(false);
     setNewCaption('');
     setNewDate('');
+    setNewMediaUrl('');
     setIsSubmitting(false);
-    setActionSuccess(`New ${selectedChannel === 'TWITTER' ? '𝕏 post' : 'Facebook post'} scheduled with custom flyer!`);
+    setActionSuccess(`New ${selectedChannel === 'TWITTER' ? '𝕏 post' : 'Facebook post'} scheduled successfully!`);
     setTimeout(() => setActionSuccess(null), 4000);
   };
 
-  // Quick reset to the master 24 topic-matched flyer schedule
+  // Quick reset to clean November 2026 schedule
   const handleResetToCurated = () => {
-    if (window.confirm('Reset content calendar with all 24 distinct topic-matched flyers for November 2026?')) {
+    if (window.confirm('Reset content calendar for November 2026? All posts will start clean without flyers.')) {
       setScheduledPosts(INITIAL_CURATED_SCHEDULED);
       setPublishedPosts(INITIAL_HISTORICAL_PUBLISHED);
-      localStorage.setItem('veltrix_scheduled_posts_v5', JSON.stringify(INITIAL_CURATED_SCHEDULED));
-      localStorage.setItem('veltrix_published_posts_v5', JSON.stringify(INITIAL_HISTORICAL_PUBLISHED));
-      setActionSuccess('Content calendar reloaded with 24 unique, topic-matched flyers!');
+      localStorage.setItem('veltrix_scheduled_posts_v6', JSON.stringify(INITIAL_CURATED_SCHEDULED));
+      localStorage.setItem('veltrix_published_posts_v6', JSON.stringify(INITIAL_HISTORICAL_PUBLISHED));
+      setActionSuccess('Content calendar reloaded cleanly!');
       setTimeout(() => setActionSuccess(null), 3000);
     }
   };
@@ -2358,7 +2245,7 @@ export const ContentCalendarPage: React.FC = () => {
                     type="button"
                     onClick={() => {
                       setSelectedChannel('TWITTER');
-                      setNewMediaUrl('/designs/flyers/flyer-nov14-react-perf.svg');
+                      setNewMediaUrl('');
                     }}
                     className={`flex items-center justify-center gap-2 p-2.5 rounded-xl border text-xs font-semibold transition-all ${
                       selectedChannel === 'TWITTER'
@@ -2374,7 +2261,6 @@ export const ContentCalendarPage: React.FC = () => {
                     type="button"
                     onClick={() => {
                       setSelectedChannel('FACEBOOK');
-                      setNewMediaUrl('/designs/flyers/flyer-nov14-website-speed.svg');
                     }}
                     className={`flex items-center justify-center gap-2 p-2.5 rounded-xl border text-xs font-semibold transition-all ${
                       selectedChannel === 'FACEBOOK'
@@ -2388,28 +2274,56 @@ export const ContentCalendarPage: React.FC = () => {
                 </div>
               </div>
 
-              {/* Flyer Template Selection */}
-              <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1.5">
-                  Flyer Visual Template
-                </label>
-                <select
-                  value={newMediaUrl}
-                  onChange={(e) => setNewMediaUrl(e.target.value)}
-                  className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-emerald-500"
-                >
-                  <option value="/designs/flyers/flyer-nov14-website-speed.svg">Website Speed & Conversion Flyer</option>
-                  <option value="/designs/flyers/flyer-nov12-cac-registration.svg">CAC Business Registration Flyer</option>
-                  <option value="/designs/flyers/flyer-nov15-branding-trust.svg">Corporate Branding & Trust Flyer</option>
-                  <option value="/designs/flyers/flyer-nov16-website-uptime.svg">24/7 Website Maintenance Flyer</option>
-                  <option value="/designs/flyers/flyer-nov18-ai-quotes-2am.svg">AI 24/7 Customer Lead Qualifier Flyer</option>
-                  <option value="/designs/flyers/flyer-nov19-flyers-convert.svg">Graphic Design & Creative Ads Flyer</option>
-                  <option value="/designs/flyers/flyer-nov20-digital-audit.svg">Strategic Digital Growth Consultation</option>
-                  <option value="/designs/flyers/flyer-nov14-react-perf.svg">React.js Architecture Tech Card</option>
-                  <option value="/designs/flyers/flyer-nov16-typescript-pro.svg">TypeScript Pro Tech Card</option>
-                  <option value="/designs/flyers/flyer-nov17-mobile-first.svg">Mobile-First Testing Card</option>
-                </select>
-              </div>
+              {/* Optional Manual Flyer Upload */}
+              {selectedChannel === 'FACEBOOK' && (
+                <div>
+                  <div className="flex items-center justify-between mb-1.5">
+                    <label className="text-xs font-semibold text-slate-300">
+                      Flyer Visual (Optional - Manual Upload)
+                    </label>
+                    {newMediaUrl && (
+                      <button
+                        type="button"
+                        onClick={() => setNewMediaUrl('')}
+                        className="text-[11px] text-red-400 hover:text-red-300"
+                      >
+                        Remove flyer
+                      </button>
+                    )}
+                  </div>
+                  {newMediaUrl ? (
+                    <div className="relative rounded-xl overflow-hidden border border-slate-800 bg-slate-950 p-2 flex items-center gap-3">
+                      <img src={newMediaUrl} alt="Flyer preview" className="w-12 h-12 object-cover rounded-lg" />
+                      <div className="flex-1 min-w-0">
+                        <p className="text-xs text-slate-200 font-medium truncate">Flyer Attached</p>
+                        <p className="text-[10px] text-emerald-400">Ready to publish</p>
+                      </div>
+                    </div>
+                  ) : (
+                    <label className="flex flex-col items-center justify-center p-3 border-2 border-dashed border-slate-800 hover:border-slate-700 rounded-xl bg-slate-950/60 cursor-pointer transition-colors">
+                      <Upload className="w-5 h-5 text-slate-400 mb-1" />
+                      <span className="text-xs text-slate-300 font-medium">Click to upload flyer image</span>
+                      <span className="text-[10px] text-slate-500">PNG, JPG, WebP</span>
+                      <input
+                        type="file"
+                        accept="image/*"
+                        className="hidden"
+                        onChange={async (e) => {
+                          const file = e.target.files?.[0];
+                          if (file) {
+                            try {
+                              const dataUrl = await compressImageFile(file);
+                              setNewMediaUrl(dataUrl);
+                            } catch (err) {
+                              console.error('Failed to process image:', err);
+                            }
+                          }
+                        }}
+                      />
+                    </label>
+                  )}
+                </div>
+              )}
 
               {/* Caption */}
               <div>
