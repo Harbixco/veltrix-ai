@@ -1,0 +1,70 @@
+import { Response, NextFunction } from 'express';
+import { AuthenticatedRequest } from '../../middleware/auth';
+import { calendarService } from './calendar.service';
+
+export async function getCalendarPosts(req: AuthenticatedRequest, res: Response, next: NextFunction) {
+  try {
+    const { startDate, endDate } = req.query;
+    const posts = await calendarService.getCalendarPosts(
+      req.user!.organizationId,
+      startDate ? String(startDate) : undefined,
+      endDate ? String(endDate) : undefined
+    );
+
+    res.json({
+      success: true,
+      data: posts
+    });
+  } catch (error: any) {
+    next(error);
+  }
+}
+
+export async function schedulePost(req: AuthenticatedRequest, res: Response, next: NextFunction) {
+  try {
+    const { socialPageId, caption, mediaUrls, scheduledFor } = req.body;
+
+    if (!caption || !scheduledFor) {
+      return res.status(400).json({
+        success: false,
+        error: { code: 'VALIDATION_ERROR', message: 'Caption and scheduled publication date/time are required' }
+      });
+    }
+
+    const scheduled = await calendarService.schedulePost(req.user!.organizationId, {
+      socialPageId,
+      caption,
+      mediaUrls: Array.isArray(mediaUrls) ? mediaUrls : mediaUrls ? [mediaUrls] : [],
+      scheduledFor
+    });
+
+    res.status(201).json({
+      success: true,
+      data: scheduled
+    });
+  } catch (error: any) {
+    next(error);
+  }
+}
+
+export async function cancelScheduledPost(req: AuthenticatedRequest, res: Response, next: NextFunction) {
+  try {
+    const postId = String(req.params.id);
+    const result = await calendarService.cancelScheduledPost(req.user!.organizationId, postId);
+
+    res.json(result);
+  } catch (error: any) {
+    next(error);
+  }
+}
+
+export async function publishNow(req: AuthenticatedRequest, res: Response, next: NextFunction) {
+  try {
+    const postId = String(req.params.id);
+    const result = await calendarService.publishNow(req.user!.organizationId, postId);
+
+    res.json(result);
+  } catch (error: any) {
+    next(error);
+  }
+}

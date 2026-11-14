@@ -1,0 +1,719 @@
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// =============================================================================
+// ENUMS & EMBEDDED TYPES
+// =============================================================================
+
+enum Role {
+  OWNER
+  ADMIN
+  MARKETER
+  VIEWER
+}
+
+enum ContentPillar {
+  EDUCATION
+  BUSINESS_GROWTH
+  AUTHORITY
+  INSPIRATION
+  PROMOTION
+}
+
+enum PostStatus {
+  DRAFT
+  IN_REVIEW
+  APPROVED
+  SCHEDULED
+  PUBLISHED
+  FAILED
+}
+
+enum LeadStage {
+  NEW
+  CONTACTED
+  INTERESTED
+  QUALIFIED
+  PROPOSAL_SENT
+  NEGOTIATION
+  WON
+  LOST
+}
+
+enum OpportunityStatus {
+  OPEN
+  WON
+  LOST
+  ABANDONED
+}
+
+enum SocialPlatform {
+  FACEBOOK_PAGE
+  FACEBOOK_PROFILE
+  INSTAGRAM
+  LINKEDIN
+}
+
+type ColorPalette {
+  primary   String
+  secondary String
+  accent    String
+  neutral   String
+  dark      String
+  light     String
+}
+
+type TypographyConfig {
+  headingFont String
+  bodyFont    String
+  accentFont  String?
+}
+
+type PostMetricsSummary {
+  reach          Int     @default(0)
+  impressions    Int     @default(0)
+  reactions      Int     @default(0)
+  comments       Int     @default(0)
+  shares         Int     @default(0)
+  clicks         Int     @default(0)
+  videoViews     Int     @default(0)
+  engagementRate Float   @default(0.0)
+}
+
+// =============================================================================
+// 1. TENANCY & USERS (Entities 1 - 3)
+// =============================================================================
+
+model User {
+  id               String               @id @default(auto()) @map("_id") @db.ObjectId
+  email            String               @unique
+  passwordHash     String
+  firstName        String
+  lastName         String
+  avatarUrl        String?
+  isActive         Boolean              @default(true)
+  createdAt        DateTime             @default(now())
+  updatedAt        DateTime             @updatedAt
+
+  memberships      OrganizationMember[]
+  auditLogs        AuditLog[]
+  aiConversations  AIConversation[]
+  notifications    Notification[]
+}
+
+model Organization {
+  id               String               @id @default(auto()) @map("_id") @db.ObjectId
+  name             String
+  slug             String               @unique
+  planType         String               @default("FREE")
+  isActive         Boolean              @default(true)
+  createdAt        DateTime             @default(now())
+  updatedAt        DateTime             @updatedAt
+
+  members          OrganizationMember[]
+  businessProfile  BusinessProfile?
+  brandGuidelines  BrandGuidelines?
+  services         Service[]
+  targetAudiences  TargetAudience[]
+  competitors      Competitor[]
+  socialAccounts   SocialAccount[]
+  socialPages      SocialPage[]
+  socialPosts      SocialPost[]
+  contentCampaigns ContentCampaign[]
+  contentDrafts    ContentDraft[]
+  contentIdeas     ContentIdea[]
+  designAssets     DesignAsset[]
+  generatedDesigns GeneratedDesign[]
+  seoProjects      SEOProject[]
+  workflows        AutomationWorkflow[]
+  leads            Lead[]
+  customers        Customer[]
+  opportunities    SalesOpportunity[]
+  scheduledPosts   ScheduledPost[]
+  aiConversations  AIConversation[]
+  recommendations  AIRecommendation[]
+  usageRecords     UsageRecord[]
+  auditLogs        AuditLog[]
+  subscriptions    SubscriptionPlan[]
+
+  @@index([createdAt])
+}
+
+model OrganizationMember {
+  id             String       @id @default(auto()) @map("_id") @db.ObjectId
+  organizationId String       @db.ObjectId
+  userId         String       @db.ObjectId
+  role           Role         @default(MARKETER)
+  invitedAt      DateTime     @default(now())
+  joinedAt       DateTime?
+
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  user           User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([organizationId, userId])
+  @@index([userId])
+}
+
+// =============================================================================
+// 2. BUSINESS KNOWLEDGE BASE (Entities 4 - 8)
+// =============================================================================
+
+model BusinessProfile {
+  id             String       @id @default(auto()) @map("_id") @db.ObjectId
+  organizationId String       @unique @db.ObjectId
+  businessName   String
+  legalName      String?
+  tagline        String       @default("We don't just build websites. We build trust.")
+  description    String
+  mission        String
+  vision         String
+  industry       String
+  location       String       @default("Nigeria")
+  websiteUrl     String?
+  contactEmail   String?
+  whatsappNumber String?
+  establishedYear Int?
+  updatedAt      DateTime     @updatedAt
+
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+}
+
+model BrandGuidelines {
+  id             String           @id @default(auto()) @map("_id") @db.ObjectId
+  organizationId String           @unique @db.ObjectId
+  colors         ColorPalette
+  typography     TypographyConfig
+  logoUrl        String?
+  logoDarkUrl    String?
+  iconUrl        String?
+  brandVoice     String           @default("Professional, educational, empathetic, and results-oriented")
+  rules          String[]
+  updatedAt      DateTime         @updatedAt
+
+  organization   Organization     @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+}
+
+model Service {
+  id             String           @id @default(auto()) @map("_id") @db.ObjectId
+  organizationId String           @db.ObjectId
+  name           String
+  slug           String
+  description    String
+  benefits       String[]
+  painPoints     String[]
+  targetAudience String
+  basePrice      Float?
+  currency       String           @default("NGN")
+  defaultCta     String
+  isActive       Boolean          @default(true)
+  orderIndex     Int              @default(0)
+
+  organization   Organization     @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  socialPosts    SocialPost[]
+  leads          Lead[]
+  campaigns      ContentCampaign[]
+
+  @@unique([organizationId, slug])
+  @@index([organizationId, isActive])
+}
+
+model TargetAudience {
+  id             String       @id @default(auto()) @map("_id") @db.ObjectId
+  organizationId String       @db.ObjectId
+  personaName    String
+  industry       String
+  demographics   String
+  keyChallenges  String[]
+  motivations    String[]
+  objections     String[]
+
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  @@index([organizationId])
+}
+
+model Competitor {
+  id             String       @id @default(auto()) @map("_id") @db.ObjectId
+  organizationId String       @db.ObjectId
+  name           String
+  websiteUrl     String?
+  facebookPageUrl String?
+  strengths      String[]
+  weaknesses     String[]
+  differentiators String[]
+
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  @@index([organizationId])
+}
+
+// =============================================================================
+// 3. SOCIAL MEDIA & META INTEGRATION (Entities 9 - 13)
+// =============================================================================
+
+model SocialAccount {
+  id             String         @id @default(auto()) @map("_id") @db.ObjectId
+  organizationId String         @db.ObjectId
+  provider       SocialPlatform @default(FACEBOOK_PAGE)
+  accountId      String
+  accountName    String
+  encryptedToken String
+  tokenExpiresAt DateTime?
+  isActive       Boolean        @default(true)
+  lastSyncedAt   DateTime?
+  createdAt      DateTime       @default(now())
+
+  organization   Organization   @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  pages          SocialPage[]
+
+  @@index([organizationId, provider])
+}
+
+model SocialPage {
+  id              String        @id @default(auto()) @map("_id") @db.ObjectId
+  organizationId  String        @db.ObjectId
+  socialAccountId String        @db.ObjectId
+  pageId          String
+  pageName        String
+  pageCategory    String?
+  fanCount        Int           @default(0)
+  encryptedToken  String
+  isActive        Boolean       @default(true)
+  lastSyncedAt    DateTime?
+
+  organization    Organization  @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  account         SocialAccount @relation(fields: [socialAccountId], references: [id], onDelete: Cascade)
+  posts           SocialPost[]
+  scheduledPosts  ScheduledPost[]
+
+  @@unique([organizationId, pageId])
+  @@index([organizationId])
+}
+
+model SocialPost {
+  id             String             @id @default(auto()) @map("_id") @db.ObjectId
+  organizationId String             @db.ObjectId
+  socialPageId   String             @db.ObjectId
+  serviceId      String?            @db.ObjectId
+  externalPostId String
+  caption        String
+  mediaType      String             @default("IMAGE")
+  mediaUrls      String[]
+  permalinkUrl   String?
+  publishedAt    DateTime
+  contentPillar  ContentPillar      @default(EDUCATION)
+  metrics        PostMetricsSummary
+  aiAnalysis     String?
+
+  organization   Organization       @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  page           SocialPage         @relation(fields: [socialPageId], references: [id], onDelete: Cascade)
+  service        Service?           @relation(fields: [serviceId], references: [id], onDelete: SetNull)
+  metricSnapshots MetricSnapshot[]
+  postMetrics    PostMetrics[]
+
+  @@unique([socialPageId, externalPostId])
+  @@index([organizationId, publishedAt])
+  @@index([organizationId, contentPillar])
+}
+
+model PostMetrics {
+  id             String       @id @default(auto()) @map("_id") @db.ObjectId
+  socialPostId   String       @db.ObjectId
+  reach          Int          @default(0)
+  impressions    Int          @default(0)
+  reactions      Int          @default(0)
+  comments       Int          @default(0)
+  shares         Int          @default(0)
+  clicks         Int          @default(0)
+  recordedAt     DateTime     @default(now())
+
+  post           SocialPost   @relation(fields: [socialPostId], references: [id], onDelete: Cascade)
+
+  @@index([socialPostId, recordedAt])
+}
+
+model MetricSnapshot {
+  id             String       @id @default(auto()) @map("_id") @db.ObjectId
+  socialPostId   String       @db.ObjectId
+  snapshotDate   DateTime     @default(now())
+  metrics        PostMetricsSummary
+
+  post           SocialPost   @relation(fields: [socialPostId], references: [id], onDelete: Cascade)
+
+  @@index([socialPostId, snapshotDate])
+}
+
+// =============================================================================
+// 4. CONTENT & CREATIVE STUDIO (Entities 14 - 18)
+// =============================================================================
+
+model ContentIdea {
+  id             String        @id @default(auto()) @map("_id") @db.ObjectId
+  organizationId String        @db.ObjectId
+  title          String
+  description    String
+  pillar         ContentPillar
+  targetAudience String
+  estimatedImpact String       @default("MEDIUM")
+  isUsed         Boolean       @default(false)
+  createdAt      DateTime      @default(now())
+
+  organization   Organization  @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  @@index([organizationId, isUsed])
+}
+
+model ContentDraft {
+  id             String        @id @default(auto()) @map("_id") @db.ObjectId
+  organizationId String        @db.ObjectId
+  campaignId     String?       @db.ObjectId
+  title          String
+  caption        String
+  contentPillar  ContentPillar
+  suggestedCta   String
+  visualConcept  String
+  status         PostStatus    @default(DRAFT)
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+
+  organization   Organization  @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  campaign       ContentCampaign? @relation(fields: [campaignId], references: [id], onDelete: SetNull)
+
+  @@index([organizationId, status])
+}
+
+model ContentCampaign {
+  id             String        @id @default(auto()) @map("_id") @db.ObjectId
+  organizationId String        @db.ObjectId
+  serviceId      String?       @db.ObjectId
+  name           String
+  objective      String
+  startDate      DateTime
+  endDate        DateTime?
+  budget         Float?
+  status         String        @default("ACTIVE")
+  createdAt      DateTime      @default(now())
+
+  organization   Organization  @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  service        Service?      @relation(fields: [serviceId], references: [id], onDelete: SetNull)
+  drafts         ContentDraft[]
+  leads          Lead[]
+
+  @@index([organizationId, status])
+}
+
+model DesignAsset {
+  id             String        @id @default(auto()) @map("_id") @db.ObjectId
+  organizationId String        @db.ObjectId
+  name           String
+  assetType      String        @default("IMAGE")
+  fileUrl        String
+  width          Int?
+  height         Int?
+  tags           String[]
+  uploadedAt     DateTime      @default(now())
+
+  organization   Organization  @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  @@index([organizationId])
+}
+
+model GeneratedDesign {
+  id             String        @id @default(auto()) @map("_id") @db.ObjectId
+  organizationId String        @db.ObjectId
+  templateKey    String
+  canvasState    String
+  previewUrl     String
+  format         String        @default("1080x1080")
+  createdAt      DateTime      @default(now())
+
+  organization   Organization  @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  @@index([organizationId])
+}
+
+// =============================================================================
+// 5. SEO & AUTOMATION (Entities 19 - 24)
+// =============================================================================
+
+model SEOProject {
+  id             String             @id @default(auto()) @map("_id") @db.ObjectId
+  organizationId String             @db.ObjectId
+  siteUrl        String
+  isConnected    Boolean            @default(false)
+  gscPropertyId  String?
+  createdAt      DateTime           @default(now())
+
+  organization   Organization       @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  properties     WebsiteProperty[]
+  keywords       Keyword[]
+  reports        SEOReport[]
+
+  @@index([organizationId])
+}
+
+model WebsiteProperty {
+  id           String       @id @default(auto()) @map("_id") @db.ObjectId
+  seoProjectId String       @db.ObjectId
+  urlPath      String
+  pageTitle    String?
+  metaDesc     String?
+  status       Int          @default(200)
+
+  project      SEOProject   @relation(fields: [seoProjectId], references: [id], onDelete: Cascade)
+
+  @@index([seoProjectId])
+}
+
+model Keyword {
+  id             String       @id @default(auto()) @map("_id") @db.ObjectId
+  seoProjectId   String       @db.ObjectId
+  query          String
+  searchVolume   Int?
+  averagePosition Float?
+  clicks         Int          @default(0)
+  impressions    Int          @default(0)
+  intent         String       @default("INFORMATIONAL")
+
+  project        SEOProject   @relation(fields: [seoProjectId], references: [id], onDelete: Cascade)
+
+  @@index([seoProjectId, query])
+}
+
+model SEOReport {
+  id           String       @id @default(auto()) @map("_id") @db.ObjectId
+  seoProjectId String       @db.ObjectId
+  auditScore   Int
+  findings     String
+  generatedAt  DateTime     @default(now())
+
+  project      SEOProject   @relation(fields: [seoProjectId], references: [id], onDelete: Cascade)
+
+  @@index([seoProjectId, generatedAt])
+}
+
+model AutomationWorkflow {
+  id             String                @id @default(auto()) @map("_id") @db.ObjectId
+  organizationId String                @db.ObjectId
+  name           String
+  triggerType    String
+  conditions     String
+  actions        String
+  isActive       Boolean               @default(true)
+  createdAt      DateTime              @default(now())
+
+  organization   Organization          @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  executions     AutomationExecution[]
+
+  @@index([organizationId, isActive])
+}
+
+model AutomationExecution {
+  id           String             @id @default(auto()) @map("_id") @db.ObjectId
+  workflowId   String             @db.ObjectId
+  status       String             @default("SUCCESS")
+  payload      String
+  executedAt   DateTime           @default(now())
+
+  workflow     AutomationWorkflow @relation(fields: [workflowId], references: [id], onDelete: Cascade)
+
+  @@index([workflowId, executedAt])
+}
+
+// =============================================================================
+// 6. CLIENT ACQUISITION & CRM (Entities 25 - 29)
+// =============================================================================
+
+model Lead {
+  id             String             @id @default(auto()) @map("_id") @db.ObjectId
+  organizationId String             @db.ObjectId
+  serviceId      String?            @db.ObjectId
+  campaignId     String?            @db.ObjectId
+  fullName       String
+  companyName    String?
+  email          String?
+  phone          String?
+  source         String             @default("WHATSAPP")
+  attributionRef String?
+  stage          LeadStage          @default(NEW)
+  estimatedValue Float?
+  notes          String?
+  createdAt      DateTime           @default(now())
+  updatedAt      DateTime           @updatedAt
+
+  organization   Organization       @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  service        Service?           @relation(fields: [serviceId], references: [id], onDelete: SetNull)
+  campaign       ContentCampaign?   @relation(fields: [campaignId], references: [id], onDelete: SetNull)
+  activities     LeadActivity[]
+  customer       Customer?
+
+  @@index([organizationId, stage])
+  @@index([organizationId, createdAt])
+}
+
+model LeadActivity {
+  id             String       @id @default(auto()) @map("_id") @db.ObjectId
+  leadId         String       @db.ObjectId
+  activityType   String       @default("NOTE")
+  description    String
+  performedAt    DateTime     @default(now())
+
+  lead           Lead         @relation(fields: [leadId], references: [id], onDelete: Cascade)
+
+  @@index([leadId, performedAt])
+}
+
+model Customer {
+  id             String             @id @default(auto()) @map("_id") @db.ObjectId
+  organizationId String             @db.ObjectId
+  leadId         String?            @unique @db.ObjectId
+  name           String
+  email          String?
+  phone          String?
+  lifetimeValue  Float              @default(0.0)
+  convertedAt    DateTime           @default(now())
+
+  organization   Organization       @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  lead           Lead?              @relation(fields: [leadId], references: [id], onDelete: SetNull)
+  opportunities  SalesOpportunity[]
+
+  @@index([organizationId])
+}
+
+model SalesOpportunity {
+  id             String            @id @default(auto()) @map("_id") @db.ObjectId
+  organizationId String            @db.ObjectId
+  customerId     String            @db.ObjectId
+  title          String
+  dealValue      Float
+  status         OpportunityStatus @default(OPEN)
+  closedAt       DateTime?
+
+  organization   Organization      @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  customer       Customer          @relation(fields: [customerId], references: [id], onDelete: Cascade)
+
+  @@index([organizationId, status])
+}
+
+model ScheduledPost {
+  id             String       @id @default(auto()) @map("_id") @db.ObjectId
+  organizationId String       @db.ObjectId
+  socialPageId   String       @db.ObjectId
+  caption        String
+  mediaUrls      String[]
+  scheduledFor   DateTime
+  status         PostStatus   @default(SCHEDULED)
+  publishedAt    DateTime?
+  errorMessage   String?
+
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  page           SocialPage   @relation(fields: [socialPageId], references: [id], onDelete: Cascade)
+
+  @@index([organizationId, scheduledFor])
+}
+
+// =============================================================================
+// 7. AI & SYSTEM AUDITING (Entities 30 - 36)
+// =============================================================================
+
+model AIConversation {
+  id             String            @id @default(auto()) @map("_id") @db.ObjectId
+  organizationId String            @db.ObjectId
+  userId         String            @db.ObjectId
+  title          String            @default("Growth Strategy Session")
+  createdAt      DateTime          @default(now())
+
+  organization   Organization      @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  user           User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  messages       AIMessageHistory[]
+
+  @@index([organizationId, userId])
+}
+
+model AIMessageHistory {
+  id             String         @id @default(auto()) @map("_id") @db.ObjectId
+  conversationId String         @db.ObjectId
+  senderRole     String         @default("USER")
+  content        String
+  tokensUsed     Int            @default(0)
+  sentAt         DateTime       @default(now())
+
+  conversation   AIConversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+
+  @@index([conversationId, sentAt])
+}
+
+model AIRecommendation {
+  id             String       @id @default(auto()) @map("_id") @db.ObjectId
+  organizationId String       @db.ObjectId
+  category       String
+  title          String
+  recommendation String
+  evidenceData   String
+  priority       String       @default("HIGH")
+  isDismissed    Boolean      @default(false)
+  generatedAt    DateTime     @default(now())
+
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  @@index([organizationId, isDismissed])
+}
+
+model Notification {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId     String   @db.ObjectId
+  title      String
+  message    String
+  isRead     Boolean  @default(false)
+  createdAt  DateTime @default(now())
+
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, isRead])
+}
+
+model SubscriptionPlan {
+  id             String       @id @default(auto()) @map("_id") @db.ObjectId
+  organizationId String       @db.ObjectId
+  planCode       String       @default("STARTER")
+  aiCreditLimit  Int          @default(1000)
+  creditsUsed    Int          @default(0)
+  startDate      DateTime     @default(now())
+  renewalDate    DateTime?
+
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  @@index([organizationId])
+}
+
+model UsageRecord {
+  id             String       @id @default(auto()) @map("_id") @db.ObjectId
+  organizationId String       @db.ObjectId
+  actionType     String
+  creditsCost    Int          @default(1)
+  recordedAt     DateTime     @default(now())
+
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  @@index([organizationId, recordedAt])
+}
+
+model AuditLog {
+  id             String       @id @default(auto()) @map("_id") @db.ObjectId
+  organizationId String       @db.ObjectId
+  userId         String       @db.ObjectId
+  action         String
+  ipAddress      String?
+  timestamp      DateTime     @default(now())
+
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  user           User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([organizationId, timestamp])
+}

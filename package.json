@@ -1,0 +1,19 @@
+{
+  "name": "veltrix-ai-growth-hub",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev:api": "npm --workspace=apps/api run dev",
+    "dev:web": "npm --workspace=apps/web run dev",
+    "build": "npm run build --workspaces --if-present",
+    "db:generate": "npm --workspace=packages/database run prisma:generate",
+    "db:push": "npm --workspace=packages/database run prisma:push"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.3"
+  }
+}
