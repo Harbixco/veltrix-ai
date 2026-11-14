@@ -398,9 +398,33 @@ export class CalendarService {
       }
     });
 
-    // 2. Ingest into SocialPost as a verified published post
-    const publishedPost = await prisma.socialPost.create({
-      data: {
+    // 2. Ingest into SocialPost as a verified published post (clean real metrics)
+    const initialMetrics = {
+      reach: 0,
+      impressions: 0,
+      reactions: 0,
+      comments: 0,
+      shares: 0,
+      clicks: 0,
+      videoViews: 0,
+      engagementRate: 0
+    };
+
+    const publishedPost = await prisma.socialPost.upsert({
+      where: {
+        socialPageId_externalPostId: {
+          socialPageId: post.socialPageId,
+          externalPostId: publishedExternalId
+        }
+      },
+      update: {
+        caption: effectiveCaption,
+        mediaType: effectiveMediaUrls.length > 0 ? 'IMAGE' : 'STATUS',
+        mediaUrls: effectiveMediaUrls,
+        permalinkUrl,
+        publishedAt: new Date()
+      },
+      create: {
         organizationId,
         socialPageId: post.socialPageId,
         externalPostId: publishedExternalId,
@@ -410,35 +434,22 @@ export class CalendarService {
         permalinkUrl,
         publishedAt: new Date(),
         contentPillar: 'BUSINESS_GROWTH',
-        metrics: {
-          reach: 120,
-          impressions: 145,
-          reactions: 14,
-          comments: 3,
-          shares: 2,
-          clicks: 8,
-          videoViews: 0,
-          engagementRate: 15.83
-        }
+        metrics: initialMetrics
       }
     });
 
-    // 3. Create initial metric snapshot
-    await prisma.metricSnapshot.create({
-      data: {
-        socialPostId: publishedPost.id,
-        metrics: {
-          reach: 120,
-          impressions: 145,
-          reactions: 14,
-          comments: 3,
-          shares: 2,
-          clicks: 8,
-          videoViews: 0,
-          engagementRate: 15.83
-        }
-      }
+    // 3. Create initial metric snapshot if none exists
+    const existingSnapshot = await prisma.metricSnapshot.findFirst({
+      where: { socialPostId: publishedPost.id }
     });
+    if (!existingSnapshot) {
+      await prisma.metricSnapshot.create({
+        data: {
+          socialPostId: publishedPost.id,
+          metrics: initialMetrics
+        }
+      });
+    }
 
     return {
       success: true,

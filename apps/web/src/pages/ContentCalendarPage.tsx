@@ -56,6 +56,7 @@ export interface ScheduledPost {
 export interface PublishedPost {
   id: string;
   socialPageId: string;
+  externalPostId?: string;
   pageName: string;
   caption: string;
   mediaUrls: string[];
@@ -423,54 +424,7 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
   }
 ];
 
-const INITIAL_HISTORICAL_PUBLISHED: PublishedPost[] = [
-  {
-    id: 'pub_nov10',
-    socialPageId: '112352500475248',
-    pageName: 'Veltrixhq',
-    channel: 'FACEBOOK',
-    caption: `5 signs your business website is losing you customers in 2026:\n1. Non-mobile responsive\n2. Takes longer than 3 seconds to load\n3. Missing WhatsApp conversion button\n4. Outdated contact numbers\n5. No SSL security certificate`,
-    mediaUrls: [],
-    contentPillar: 'Conversion Optimization',
-    publishedAt: '2026-11-10T14:00:00.000Z',
-    permalinkUrl: 'https://facebook.com/veltrixhub',
-    metrics: { reach: 1840, engagementRate: 4.8, reactions: 72, comments: 14, shares: 6 }
-  },
-  {
-    id: 'pub_nov11',
-    socialPageId: 'AbiodunBuilds',
-    pageName: 'Abiodun Builds (@AbiodunBuilds)',
-    channel: 'TWITTER',
-    caption: `Most React performance bottlenecks trace back to unnecessary state lifts rather than deep component trees. Keep state local, validate props early, and let the virtual DOM do what it was built for. #ReactJS`,
-    mediaUrls: [],
-    contentPillar: 'Frontend Architecture',
-    publishedAt: '2026-11-11T10:00:00.000Z',
-    metrics: { reach: 3410, engagementRate: 6.2, reactions: 142, comments: 28, shares: 19 }
-  },
-  {
-    id: 'pub_nov12',
-    socialPageId: '112352500475248',
-    pageName: 'Veltrixhq',
-    channel: 'FACEBOOK',
-    caption: `CAC Registration isn't an expense; it's the foundation of your business trust. Open corporate bank accounts, bid for high-value tenders, and protect your name from competitors.`,
-    mediaUrls: [],
-    contentPillar: 'CAC & Business Compliance',
-    publishedAt: '2026-11-12T13:30:00.000Z',
-    permalinkUrl: 'https://facebook.com/veltrixhub',
-    metrics: { reach: 2120, engagementRate: 5.1, reactions: 88, comments: 19, shares: 11 }
-  },
-  {
-    id: 'pub_nov13',
-    socialPageId: 'AbiodunBuilds',
-    pageName: 'Abiodun Builds (@AbiodunBuilds)',
-    channel: 'TWITTER',
-    caption: `The difference between a junior and senior engineer isn't how fast you write code. It's how much code you realize you don't need to write at all. Simplicity is the ultimate sophistication. #BuildInPublic`,
-    mediaUrls: [],
-    contentPillar: 'Engineering Leadership',
-    publishedAt: '2026-11-13T17:45:00.000Z',
-    metrics: { reach: 4150, engagementRate: 7.4, reactions: 210, comments: 45, shares: 38 }
-  }
-];
+const INITIAL_HISTORICAL_PUBLISHED: PublishedPost[] = [];
 
 export const ContentCalendarPage: React.FC = () => {
   const [viewMode, setViewMode] = useState<'calendar' | 'timeline'>(
@@ -478,10 +432,10 @@ export const ContentCalendarPage: React.FC = () => {
   );
   const [currentDate, setCurrentDate] = useState(new Date(2026, 10, 14)); // November 2026
 
-  // Cache key v6 (strictly clean mediaUrls: [] - 100% manual flyer upload only)
+  // Cache key v7 (strictly real posts, deduplicated, zero dummy data)
   const [scheduledPosts, setScheduledPosts] = useState<ScheduledPost[]>(() => {
     if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('veltrix_scheduled_posts_v6');
+      const saved = localStorage.getItem('veltrix_scheduled_posts_v7');
       if (saved) {
         try {
           const parsed = JSON.parse(saved);
@@ -503,7 +457,7 @@ export const ContentCalendarPage: React.FC = () => {
 
   const [publishedPosts, setPublishedPosts] = useState<PublishedPost[]>(() => {
     if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('veltrix_published_posts_v6');
+      const saved = localStorage.getItem('veltrix_published_posts_v7');
       if (saved) {
         try {
           const parsed = JSON.parse(saved);
@@ -620,6 +574,7 @@ export const ContentCalendarPage: React.FC = () => {
             return {
               id: p.id,
               socialPageId: p.socialPageId,
+              externalPostId: p.externalPostId,
               pageName: p.pageName || (isTwitter ? 'Abiodun Builds (@AbiodunBuilds)' : 'Veltrix Hub'),
               caption: p.caption,
               mediaUrls: Array.isArray(p.mediaUrls)
@@ -627,14 +582,25 @@ export const ContentCalendarPage: React.FC = () => {
                     (u: string) => !u.includes('/designs/flyers/') && !u.includes('veltrix-design')
                   )
                 : [],
-              contentPillar: p.contentPillar || 'Broadcast',
+              contentPillar: isTwitter ? '𝕏 Broadcast' : 'Facebook Broadcast',
               publishedAt: p.publishedAt,
               channel: isTwitter ? 'TWITTER' : 'FACEBOOK',
               permalinkUrl: p.permalinkUrl,
-              metrics: p.metrics
+              metrics: p.metrics || { reach: 0, impressions: 0 }
             };
           });
-          setPublishedPosts(mappedPublished);
+
+          // Strict deduplication by externalPostId or caption
+          const uniqueMap = new Map<string, PublishedPost>();
+          for (const item of mappedPublished) {
+            const key = item.externalPostId || item.caption.trim().slice(0, 60);
+            if (!uniqueMap.has(key)) {
+              uniqueMap.set(key, item);
+            }
+          }
+          setPublishedPosts(Array.from(uniqueMap.values()));
+        } else {
+          setPublishedPosts([]);
         }
       }
     } catch (err) {
@@ -975,10 +941,15 @@ export const ContentCalendarPage: React.FC = () => {
           contentPillar: post.topicBadge || 'Tech Insight',
           publishedAt: new Date().toISOString(),
           channel: 'TWITTER',
-          metrics: { reach: 1, engagementRate: 100, reactions: 1 }
+          metrics: { reach: 0, engagementRate: 0, reactions: 0 }
         };
         setScheduledPosts(updatedScheduled);
-        setPublishedPosts([newPublished, ...publishedPosts]);
+        setPublishedPosts((prev) => {
+          const filtered = prev.filter(
+            (p) => p.id !== post.id && p.caption?.trim().slice(0, 60) !== post.caption?.trim().slice(0, 60)
+          );
+          return [newPublished, ...filtered];
+        });
 
         if (data.permalinkUrl && data.permalinkUrl.includes('intent/tweet')) {
           window.open(data.permalinkUrl, '_blank');
@@ -1036,11 +1007,16 @@ export const ContentCalendarPage: React.FC = () => {
         contentPillar: post.topicBadge || 'Social Broadcast',
         publishedAt: new Date().toISOString(),
         channel: post.channel,
-        metrics: { reach: 1, engagementRate: 100, reactions: 1 }
+        metrics: { reach: 0, engagementRate: 0, reactions: 0 }
       };
 
       setScheduledPosts(updatedScheduled);
-      setPublishedPosts([newPublished, ...publishedPosts]);
+      setPublishedPosts((prev) => {
+        const filtered = prev.filter(
+          (p) => p.id !== post.id && p.caption?.trim().slice(0, 60) !== post.caption?.trim().slice(0, 60)
+        );
+        return [newPublished, ...filtered];
+      });
 
       if (data.permalinkUrl) {
         setActionSuccess(`🎉 Published directly to Facebook! Post & First Comment are live on your Page timeline.`);
@@ -1134,8 +1110,8 @@ export const ContentCalendarPage: React.FC = () => {
     if (window.confirm('Reset content calendar for November 2026? All posts will start clean without flyers.')) {
       setScheduledPosts(INITIAL_CURATED_SCHEDULED);
       setPublishedPosts(INITIAL_HISTORICAL_PUBLISHED);
-      localStorage.setItem('veltrix_scheduled_posts_v6', JSON.stringify(INITIAL_CURATED_SCHEDULED));
-      localStorage.setItem('veltrix_published_posts_v6', JSON.stringify(INITIAL_HISTORICAL_PUBLISHED));
+      localStorage.setItem('veltrix_scheduled_posts_v7', JSON.stringify(INITIAL_CURATED_SCHEDULED));
+      localStorage.setItem('veltrix_published_posts_v7', JSON.stringify(INITIAL_HISTORICAL_PUBLISHED));
       setActionSuccess('Content calendar reloaded cleanly!');
       setTimeout(() => setActionSuccess(null), 3000);
     }
@@ -1185,7 +1161,16 @@ export const ContentCalendarPage: React.FC = () => {
       return true;
     });
 
-    return { sched, pub };
+    // Deduplicate published posts by externalPostId or caption to avoid duplicate cards
+    const pubMap = new Map<string, PublishedPost>();
+    for (const p of pub) {
+      const key = p.externalPostId || p.caption.trim().slice(0, 60);
+      if (!pubMap.has(key)) {
+        pubMap.set(key, p);
+      }
+    }
+
+    return { sched, pub: Array.from(pubMap.values()) };
   };
 
   // Filtered lists for timeline
@@ -1196,12 +1181,22 @@ export const ContentCalendarPage: React.FC = () => {
     return true;
   });
 
-  const filteredPublished = publishedPosts.filter((p) => {
-    const isTweet = p.channel === 'TWITTER' || p.socialPageId === 'AbiodunBuilds' || p.pageName?.includes('Abiodun');
-    if (platformFilter === 'FACEBOOK') return !isTweet;
-    if (platformFilter === 'TWITTER') return isTweet;
-    return true;
-  });
+  const filteredPublished = (() => {
+    const raw = publishedPosts.filter((p) => {
+      const isTweet = p.channel === 'TWITTER' || p.socialPageId === 'AbiodunBuilds' || p.pageName?.includes('Abiodun');
+      if (platformFilter === 'FACEBOOK') return !isTweet;
+      if (platformFilter === 'TWITTER') return isTweet;
+      return true;
+    });
+    const map = new Map<string, PublishedPost>();
+    for (const p of raw) {
+      const key = p.externalPostId || p.caption.trim().slice(0, 60);
+      if (!map.has(key)) {
+        map.set(key, p);
+      }
+    }
+    return Array.from(map.values());
+  })();
 
   // Today marker
   const todayDate = new Date();
@@ -1857,9 +1852,11 @@ export const ContentCalendarPage: React.FC = () => {
 
                     <div className="pt-3 border-t border-slate-800/80 flex items-center justify-between text-xs">
                       <span className="text-slate-400 font-medium">
-                        Audience Reach:{' '}
-                        <strong className="text-white">
-                          {post.metrics?.reach?.toLocaleString() || '1,840'}
+                        Status:{' '}
+                        <strong className="text-emerald-400">
+                          {post.metrics?.reach && post.metrics.reach > 0
+                            ? `Audience Reach: ${post.metrics.reach.toLocaleString()}`
+                            : 'Live on Timeline'}
                         </strong>
                       </span>
 
@@ -1870,7 +1867,7 @@ export const ContentCalendarPage: React.FC = () => {
                           rel="noreferrer"
                           className="flex items-center gap-1 text-emerald-400 hover:text-emerald-300 text-xs transition-colors"
                         >
-                          <span>View on Meta</span>
+                          <span>View Live</span>
                           <ExternalLink className="w-3 h-3" />
                         </a>
                       )}
@@ -2170,16 +2167,34 @@ export const ContentCalendarPage: React.FC = () => {
                   {getPostsForDay(selectedDay).pub.map((post) => (
                     <div
                       key={post.id}
-                      className="p-3.5 rounded-xl bg-slate-950/60 border border-emerald-500/20 text-xs space-y-1.5"
+                      className="p-3.5 rounded-xl bg-slate-950/60 border border-emerald-500/20 text-xs space-y-2"
                     >
                       <div className="flex items-center justify-between">
-                        <span className="text-emerald-400 font-semibold flex items-center gap-1">
+                        <span className="text-emerald-400 font-semibold flex items-center gap-1.5">
                           <CheckCircle2 className="w-3.5 h-3.5" />
-                          <span>Published Record ({post.contentPillar})</span>
+                          <span>
+                            {post.channel === 'TWITTER' ? 'Published to 𝕏' : 'Published to Facebook'}
+                          </span>
                         </span>
-                        <span className="text-slate-400">Reach: {post.metrics?.reach || '1,840'}</span>
+                        {post.permalinkUrl ? (
+                          <a
+                            href={post.permalinkUrl}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="flex items-center gap-1 text-emerald-400 hover:text-emerald-300 font-medium"
+                          >
+                            <span>View Live</span>
+                            <ExternalLink className="w-3 h-3" />
+                          </a>
+                        ) : (
+                          <span className="text-slate-400">
+                            {post.metrics?.reach && post.metrics.reach > 0
+                              ? `Reach: ${post.metrics.reach.toLocaleString()}`
+                              : 'Live'}
+                          </span>
+                        )}
                       </div>
-                      <p className="text-slate-300 line-clamp-2">{post.caption}</p>
+                      <p className="text-slate-300 line-clamp-2 leading-relaxed">{post.caption}</p>
                     </div>
                   ))}
                 </>
@@ -2201,7 +2216,7 @@ export const ContentCalendarPage: React.FC = () => {
                 className="flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold text-emerald-400 bg-emerald-500/10 hover:bg-emerald-500/20 rounded-xl border border-emerald-500/30 transition-colors"
               >
                 <Plus className="w-3.5 h-3.5" />
-                <span>+ Add Post to Day {selectedDay}</span>
+                <span>Add Post to Day {selectedDay}</span>
               </button>
               <button
                 onClick={() => setSelectedDay(null)}
