@@ -19,7 +19,9 @@ import {
   MessageSquare,
   Eye,
   Check,
-  X
+  X,
+  Download,
+  Maximize2
 } from 'lucide-react';
 
 // Official X Vector Logo Component
@@ -38,6 +40,7 @@ export interface ScheduledPost {
   status: 'SCHEDULED' | 'PUBLISHED' | 'FAILED';
   channel: 'FACEBOOK' | 'TWITTER';
   slotType?: 'MORNING' | 'MIDDAY' | 'EVENING';
+  topicBadge?: string;
   page?: {
     pageName: string;
     pageId: string;
@@ -65,7 +68,7 @@ export interface PublishedPost {
 
 // ============================================================================
 // CURATED MASTER CONTENT CALENDAR FOR NOVEMBER 2026
-// Fulfills the requirement: 2 posts every day for X (@AbiodunBuilds) + Facebook
+// Every post has its OWN distinct topic-matched flyer matching the hook!
 // ============================================================================
 const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
   // --- TODAY: SATURDAY, NOV 14 ---
@@ -74,8 +77,9 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     socialPageId: 'AbiodunBuilds',
     channel: 'TWITTER',
     slotType: 'MORNING',
+    topicBadge: 'REACT.JS ARCHITECTURE',
     caption: `React performance tip: Most lag isn't caused by missing useMemo.\n\nIt's caused by lifting state higher than it needs to be.\n\nKeep state local. When state stays near the component that actually uses it, 90% of unnecessary re-renders vanish.\n\n#ReactJS #TypeScript #WebDev`,
-    mediaUrls: [],
+    mediaUrls: ['/designs/flyers/flyer-nov14-react-perf.svg'],
     scheduledFor: '2026-11-14T09:00:00.000Z',
     status: 'SCHEDULED',
     page: { pageName: 'Abiodun Builds (@AbiodunBuilds)', pageId: 'AbiodunBuilds' }
@@ -85,8 +89,9 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     socialPageId: '109283746520192',
     channel: 'FACEBOOK',
     slotType: 'MIDDAY',
+    topicBadge: 'WEBSITE SPEED & CONVERSION',
     caption: `Why 70% of business websites in Nigeria lose customers before they even read the offer:\n\n1. Slow loading speed (over 4 seconds on mobile networks)\n2. No direct WhatsApp conversion button on the screen\n3. Cluttered layout that confuses first-time visitors\n\nAt Veltrix Hub, we build digital infrastructure designed for speed, clarity, and trust.\n\nSend us a DM for a free website review today.`,
-    mediaUrls: ['https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80'],
+    mediaUrls: ['/designs/flyers/flyer-nov14-website-speed.svg'],
     scheduledFor: '2026-11-14T13:00:00.000Z',
     status: 'SCHEDULED',
     page: { pageName: 'Veltrix Hub Official', pageId: '109283746520192' }
@@ -96,8 +101,9 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     socialPageId: 'AbiodunBuilds',
     channel: 'TWITTER',
     slotType: 'EVENING',
+    topicBadge: 'AI AUTOMATION & WORKFLOWS',
     caption: `AI won't replace software engineers.\n\nBut an engineer who builds custom AI automations will replace an entire legacy agency.\n\nWe connect LLMs directly to client databases and WhatsApp to qualify leads in under 20 seconds.\n\n#AIAutomation #SoftwareEngineering`,
-    mediaUrls: [],
+    mediaUrls: ['/designs/flyers/flyer-nov14-ai-lead-response.svg'],
     scheduledFor: '2026-11-14T18:00:00.000Z',
     status: 'SCHEDULED',
     page: { pageName: 'Abiodun Builds (@AbiodunBuilds)', pageId: 'AbiodunBuilds' }
@@ -109,8 +115,9 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     socialPageId: 'AbiodunBuilds',
     channel: 'TWITTER',
     slotType: 'MORNING',
+    topicBadge: 'CLEAN ARCHITECTURE',
     caption: `Stop using useEffect to sync related state.\n\nIf a value can be computed from existing props or state, derive it during render:\n\nconst fullName = \`\${firstName} \${lastName}\`;\n\nNo extra render cycle. Zero synchronization bugs.\n\n#React #Frontend #CleanCode`,
-    mediaUrls: [],
+    mediaUrls: ['/designs/flyers/flyer-nov15-derived-state.svg'],
     scheduledFor: '2026-11-15T09:00:00.000Z',
     status: 'SCHEDULED',
     page: { pageName: 'Abiodun Builds (@AbiodunBuilds)', pageId: 'AbiodunBuilds' }
@@ -120,8 +127,9 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     socialPageId: '109283746520192',
     channel: 'FACEBOOK',
     slotType: 'MIDDAY',
+    topicBadge: 'CORPORATE BRANDING & TRUST',
     caption: `Professional Branding vs Informal Business:\n\nCustomers will happily pay 3x more to a business with clean corporate branding, verified CAC credentials, and an official domain email.\n\nStop losing high-value clients to competitors with better presentation. Let Veltrix Hub transform your brand perception this week.`,
-    mediaUrls: [],
+    mediaUrls: ['/designs/flyers/flyer-nov15-branding-trust.svg'],
     scheduledFor: '2026-11-15T13:00:00.000Z',
     status: 'SCHEDULED',
     page: { pageName: 'Veltrix Hub Official', pageId: '109283746520192' }
@@ -131,8 +139,9 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     socialPageId: 'AbiodunBuilds',
     channel: 'TWITTER',
     slotType: 'EVENING',
+    topicBadge: 'AI WORKFLOW ARCHITECTURE',
     caption: `Most businesses don't need another generic ChatGPT prompt.\n\nThey need deterministic AI workflows:\n1. Ingest lead inquiry\n2. Query inventory & pricing via API\n3. Deliver tailored quotation in 15 seconds\n\nThat's how modern businesses scale.\n\n#VeltrixHub #Automation`,
-    mediaUrls: [],
+    mediaUrls: ['/designs/flyers/flyer-nov15-deterministic-ai.svg'],
     scheduledFor: '2026-11-15T18:00:00.000Z',
     status: 'SCHEDULED',
     page: { pageName: 'Abiodun Builds (@AbiodunBuilds)', pageId: 'AbiodunBuilds' }
@@ -144,8 +153,9 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     socialPageId: 'AbiodunBuilds',
     channel: 'TWITTER',
     slotType: 'MORNING',
+    topicBadge: 'TYPESCRIPT PRO',
     caption: `TypeScript tip:\n\nStop reaching for 'any' when dealing with dynamic API responses.\n\nUse 'unknown' paired with a custom type guard. You get compiler safety without compromising flexibility.\n\nJunior devs rush with any; senior devs validate shapes.\n\n#TypeScript`,
-    mediaUrls: [],
+    mediaUrls: ['/designs/flyers/flyer-nov16-typescript-pro.svg'],
     scheduledFor: '2026-11-16T09:00:00.000Z',
     status: 'SCHEDULED',
     page: { pageName: 'Abiodun Builds (@AbiodunBuilds)', pageId: 'AbiodunBuilds' }
@@ -155,8 +165,9 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     socialPageId: '109283746520192',
     channel: 'FACEBOOK',
     slotType: 'MIDDAY',
+    topicBadge: 'WEBSITE MAINTENANCE & CARE',
     caption: `Did you know that an unmonitored website can go offline for days without the owner noticing?\n\nWith Veltrix Hub Website Maintenance, we provide 24/7 uptime monitoring, daily automated backups, and instant security patches so your business never misses a sale.\n\nFocus on running your business while we handle your digital infrastructure.`,
-    mediaUrls: [],
+    mediaUrls: ['/designs/flyers/flyer-nov16-website-uptime.svg'],
     scheduledFor: '2026-11-16T13:00:00.000Z',
     status: 'SCHEDULED',
     page: { pageName: 'Veltrix Hub Official', pageId: '109283746520192' }
@@ -166,8 +177,9 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     socialPageId: 'AbiodunBuilds',
     channel: 'TWITTER',
     slotType: 'EVENING',
+    topicBadge: 'LEARN WEB DEV',
     caption: `How to escape tutorial hell in 3 steps:\n\n1. Stop watching 10-hour build videos on YouTube\n2. Pick 1 real-world app (e.g. an invoice builder)\n3. Build it from scratch without templates. Google each error yourself.\n\nStruggle is where real learning happens.\n\n#100DaysOfCode #LearnInPublic`,
-    mediaUrls: [],
+    mediaUrls: ['/designs/flyers/flyer-nov16-tutorial-hell.svg'],
     scheduledFor: '2026-11-16T18:00:00.000Z',
     status: 'SCHEDULED',
     page: { pageName: 'Abiodun Builds (@AbiodunBuilds)', pageId: 'AbiodunBuilds' }
@@ -179,8 +191,9 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     socialPageId: 'AbiodunBuilds',
     channel: 'TWITTER',
     slotType: 'MORNING',
+    topicBadge: 'FRONTEND REALITY',
     caption: `Designers design on a 4K MacBook.\nReal customers visit on a $90 smartphone with a weak 3G connection in traffic.\n\nIf your web app isn't tested on slow networks and budget devices, it isn't production ready.\n\n#Frontend #MobileFirst`,
-    mediaUrls: [],
+    mediaUrls: ['/designs/flyers/flyer-nov17-mobile-first.svg'],
     scheduledFor: '2026-11-17T09:00:00.000Z',
     status: 'SCHEDULED',
     page: { pageName: 'Abiodun Builds (@AbiodunBuilds)', pageId: 'AbiodunBuilds' }
@@ -190,8 +203,9 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     socialPageId: '109283746520192',
     channel: 'FACEBOOK',
     slotType: 'MIDDAY',
+    topicBadge: 'CAC LEGAL REGISTRATION',
     caption: `Is your business legally registered with the CAC?\n\nOperating without CAC registration means any competitor can legally claim your business name tomorrow.\n\nVeltrix Hub handles complete CAC business registration, tax certificates, and official documents smoothly.\n\nProtect your brand name today. Send us a message on WhatsApp.`,
-    mediaUrls: [],
+    mediaUrls: ['/designs/flyers/flyer-nov17-cac-protect-name.svg'],
     scheduledFor: '2026-11-17T13:00:00.000Z',
     status: 'SCHEDULED',
     page: { pageName: 'Veltrix Hub Official', pageId: '109283746520192' }
@@ -201,8 +215,9 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     socialPageId: 'AbiodunBuilds',
     channel: 'TWITTER',
     slotType: 'EVENING',
+    topicBadge: 'WEB DEV ROADMAP 2026',
     caption: `If I had to learn web development from zero in 2026:\n\nMonth 1: HTML, CSS & Flexbox layout\nMonth 2: Pure JavaScript & DOM manipulation\nMonth 3: React & TypeScript\nMonth 4: Build 3 fullstack CRUD apps\n\nDon't jump between 10 frameworks. Master fundamentals first.\n\n#CodeNewbie #WebDev`,
-    mediaUrls: [],
+    mediaUrls: ['/designs/flyers/flyer-nov17-roadmap-2026.svg'],
     scheduledFor: '2026-11-17T18:00:00.000Z',
     status: 'SCHEDULED',
     page: { pageName: 'Abiodun Builds (@AbiodunBuilds)', pageId: 'AbiodunBuilds' }
@@ -214,8 +229,9 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     socialPageId: 'AbiodunBuilds',
     channel: 'TWITTER',
     slotType: 'MORNING',
+    topicBadge: 'MOBILE APP DEV',
     caption: `React Native with the New Architecture and Hermes engine is incredible.\n\n60 FPS animations, near-instant startup, and 85% shared code across iOS and Android.\n\nFor most startups, building two separate native apps is financial waste.\n\n#ReactNative #MobileAppDev`,
-    mediaUrls: [],
+    mediaUrls: ['/designs/flyers/flyer-nov18-react-native.svg'],
     scheduledFor: '2026-11-18T09:00:00.000Z',
     status: 'SCHEDULED',
     page: { pageName: 'Abiodun Builds (@AbiodunBuilds)', pageId: 'AbiodunBuilds' }
@@ -225,8 +241,9 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     socialPageId: '109283746520192',
     channel: 'FACEBOOK',
     slotType: 'MIDDAY',
+    topicBadge: 'AUTOMATED LEAD ACQUISITION',
     caption: `Automating customer inquiries:\n\nWhat if every prospect who messaged your business got their questions answered and booked a consultation within 30 seconds, even at 2 AM?\n\nAI customer automations by Veltrix Hub connect directly to WhatsApp and your CRM to capture sales 24/7.\n\nAsk us for a live demo.`,
-    mediaUrls: [],
+    mediaUrls: ['/designs/flyers/flyer-nov18-ai-quotes-2am.svg'],
     scheduledFor: '2026-11-18T13:00:00.000Z',
     status: 'SCHEDULED',
     page: { pageName: 'Veltrix Hub Official', pageId: '109283746520192' }
@@ -236,8 +253,9 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     socialPageId: 'AbiodunBuilds',
     channel: 'TWITTER',
     slotType: 'EVENING',
+    topicBadge: 'FOUNDER & ENGINEER',
     caption: `What building Veltrix Hub taught me as a Frontend Engineer:\n\nWriting clean code is only 50% of the job. The other 50% is understanding business problems, meeting deadlines, and delivering software that makes clients money.\n\nEngineers who understand business are unstoppable.\n\n#BuildInPublic`,
-    mediaUrls: [],
+    mediaUrls: ['/designs/flyers/flyer-nov18-engineer-founder.svg'],
     scheduledFor: '2026-11-18T18:00:00.000Z',
     status: 'SCHEDULED',
     page: { pageName: 'Abiodun Builds (@AbiodunBuilds)', pageId: 'AbiodunBuilds' }
@@ -249,8 +267,9 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     socialPageId: 'AbiodunBuilds',
     channel: 'TWITTER',
     slotType: 'MORNING',
+    topicBadge: 'STARTUP STRATEGY',
     caption: `Before building a mobile app, ask yourself:\n\nDoes your product really need push tokens, bluetooth, or offline storage?\n\nIf not, a high-performance Progressive Web App (PWA) gets you to market in 2 weeks for 1/3 the cost.\n\n#StartupAdvice #MobileDev`,
-    mediaUrls: [],
+    mediaUrls: ['/designs/flyers/flyer-nov19-pwa-vs-native.svg'],
     scheduledFor: '2026-11-19T09:00:00.000Z',
     status: 'SCHEDULED',
     page: { pageName: 'Abiodun Builds (@AbiodunBuilds)', pageId: 'AbiodunBuilds' }
@@ -260,8 +279,9 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     socialPageId: '109283746520192',
     channel: 'FACEBOOK',
     slotType: 'MIDDAY',
+    topicBadge: 'GRAPHIC DESIGN & ADS',
     caption: `Flyers that convert vs Flyers that get scrolled past:\n\nHigh-converting flyers have 1 bold headline, 3 clear benefits, an attractive offer, and a direct WhatsApp call-to-action.\n\nElevate your visual marketing with Veltrix Hub Graphic Design & Campaign Studio.`,
-    mediaUrls: [],
+    mediaUrls: ['/designs/flyers/flyer-nov19-flyers-convert.svg'],
     scheduledFor: '2026-11-19T13:00:00.000Z',
     status: 'SCHEDULED',
     page: { pageName: 'Veltrix Hub Official', pageId: '109283746520192' }
@@ -271,8 +291,9 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     socialPageId: 'AbiodunBuilds',
     channel: 'TWITTER',
     slotType: 'EVENING',
+    topicBadge: 'SOFTWARE ARCHITECTURE',
     caption: `Junior engineers debate frameworks.\nSenior engineers debate architecture.\nStaff engineers and founders focus on user experience and business outcomes.\n\nThe higher you climb, the simpler your solutions become.\n\n#SoftwareEngineering #TechCareer`,
-    mediaUrls: [],
+    mediaUrls: ['/designs/flyers/flyer-nov19-senior-code.svg'],
     scheduledFor: '2026-11-19T18:00:00.000Z',
     status: 'SCHEDULED',
     page: { pageName: 'Abiodun Builds (@AbiodunBuilds)', pageId: 'AbiodunBuilds' }
@@ -284,8 +305,9 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     socialPageId: 'AbiodunBuilds',
     channel: 'TWITTER',
     slotType: 'MORNING',
+    topicBadge: 'GET HIRED FAST',
     caption: `Stop building to-do apps to get hired as a frontend engineer.\n\nBuild one polished SaaS dashboard with:\n• User authentication\n• Dark/light theme\n• Data visualization charts\n• Responsive mobile UI\n\nEmployers want proof you can ship products.\n\n#WebDev #TechJobs`,
-    mediaUrls: [],
+    mediaUrls: ['/designs/flyers/flyer-nov20-saas-portfolio.svg'],
     scheduledFor: '2026-11-20T09:00:00.000Z',
     status: 'SCHEDULED',
     page: { pageName: 'Abiodun Builds (@AbiodunBuilds)', pageId: 'AbiodunBuilds' }
@@ -295,8 +317,9 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     socialPageId: '109283746520192',
     channel: 'FACEBOOK',
     slotType: 'MIDDAY',
+    topicBadge: 'STRATEGIC DIGITAL AUDIT',
     caption: `Ready to scale your business online before the end of the year?\n\nBook a strategic digital consultation with Veltrix Hub. We audit your existing online funnel, brand visibility, and lead generation channels to craft a clear roadmap for growth.\n\nSend us a DM or chat on WhatsApp to schedule your session.`,
-    mediaUrls: [],
+    mediaUrls: ['/designs/flyers/flyer-nov20-digital-audit.svg'],
     scheduledFor: '2026-11-20T13:00:00.000Z',
     status: 'SCHEDULED',
     page: { pageName: 'Veltrix Hub Official', pageId: '109283746520192' }
@@ -306,8 +329,9 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     socialPageId: 'AbiodunBuilds',
     channel: 'TWITTER',
     slotType: 'EVENING',
+    topicBadge: 'ENGINEERING MANAGEMENT',
     caption: `Never push code on Friday afternoon without automated CI/CD rollbacks in place.\n\n10 minutes of pipeline discipline saves you 10 hours of weekend firefighting.\n\n#DevOps #EngineeringManagement #WebDevelopment`,
-    mediaUrls: [],
+    mediaUrls: ['/designs/flyers/flyer-nov13-senior-mindset.svg'],
     scheduledFor: '2026-11-20T18:00:00.000Z',
     status: 'SCHEDULED',
     page: { pageName: 'Abiodun Builds (@AbiodunBuilds)', pageId: 'AbiodunBuilds' }
@@ -321,7 +345,7 @@ const INITIAL_HISTORICAL_PUBLISHED: PublishedPost[] = [
     pageName: 'Veltrix Hub Official',
     channel: 'FACEBOOK',
     caption: `5 signs your business website is losing you customers in 2026:\n1. Non-mobile responsive\n2. Takes longer than 3 seconds to load\n3. Missing WhatsApp conversion button\n4. Outdated contact numbers\n5. No SSL security certificate`,
-    mediaUrls: ['https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=600&q=80'],
+    mediaUrls: ['/designs/flyers/flyer-nov10-website-mistakes.svg'],
     contentPillar: 'Conversion Optimization',
     publishedAt: '2026-11-10T14:00:00.000Z',
     permalinkUrl: 'https://facebook.com/veltrixhub',
@@ -333,7 +357,7 @@ const INITIAL_HISTORICAL_PUBLISHED: PublishedPost[] = [
     pageName: 'Abiodun Builds (@AbiodunBuilds)',
     channel: 'TWITTER',
     caption: `Most React performance bottlenecks trace back to unnecessary state lifts rather than deep component trees. Keep state local, validate props early, and let the virtual DOM do what it was built for. #ReactJS`,
-    mediaUrls: [],
+    mediaUrls: ['/designs/flyers/flyer-nov11-react-state.svg'],
     contentPillar: 'Frontend Architecture',
     publishedAt: '2026-11-11T10:00:00.000Z',
     metrics: { reach: 3410, engagementRate: 6.2, reactions: 142, comments: 28, shares: 19 }
@@ -344,7 +368,7 @@ const INITIAL_HISTORICAL_PUBLISHED: PublishedPost[] = [
     pageName: 'Veltrix Hub Official',
     channel: 'FACEBOOK',
     caption: `CAC Registration isn't an expense; it's the foundation of your business trust. Open corporate bank accounts, bid for high-value tenders, and protect your name from competitors.`,
-    mediaUrls: [],
+    mediaUrls: ['/designs/flyers/flyer-nov12-cac-registration.svg'],
     contentPillar: 'CAC & Business Compliance',
     publishedAt: '2026-11-12T13:30:00.000Z',
     permalinkUrl: 'https://facebook.com/veltrixhub',
@@ -356,7 +380,7 @@ const INITIAL_HISTORICAL_PUBLISHED: PublishedPost[] = [
     pageName: 'Abiodun Builds (@AbiodunBuilds)',
     channel: 'TWITTER',
     caption: `The difference between a junior and senior engineer isn't how fast you write code. It's how much code you realize you don't need to write at all. Simplicity is the ultimate sophistication. #BuildInPublic`,
-    mediaUrls: [],
+    mediaUrls: ['/designs/flyers/flyer-nov13-senior-mindset.svg'],
     contentPillar: 'Engineering Leadership',
     publishedAt: '2026-11-13T17:45:00.000Z',
     metrics: { reach: 4150, engagementRate: 7.4, reactions: 210, comments: 45, shares: 38 }
@@ -368,9 +392,11 @@ export const ContentCalendarPage: React.FC = () => {
     typeof window !== 'undefined' && window.innerWidth < 768 ? 'timeline' : 'calendar'
   );
   const [currentDate, setCurrentDate] = useState(new Date(2026, 10, 14)); // November 2026
+
+  // Using _v3 cache key to ensure fresh topic-matched flyers load immediately
   const [scheduledPosts, setScheduledPosts] = useState<ScheduledPost[]>(() => {
     if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('veltrix_scheduled_posts_v2');
+      const saved = localStorage.getItem('veltrix_scheduled_posts_v3');
       if (saved) {
         try {
           return JSON.parse(saved);
@@ -384,7 +410,7 @@ export const ContentCalendarPage: React.FC = () => {
 
   const [publishedPosts, setPublishedPosts] = useState<PublishedPost[]>(() => {
     if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('veltrix_published_posts_v2');
+      const saved = localStorage.getItem('veltrix_published_posts_v3');
       if (saved) {
         try {
           return JSON.parse(saved);
@@ -403,25 +429,28 @@ export const ContentCalendarPage: React.FC = () => {
   // Selected Day View Modal
   const [selectedDay, setSelectedDay] = useState<number | null>(null);
 
+  // Fullscreen Lightbox Flyer Modal
+  const [lightboxFlyer, setLightboxFlyer] = useState<{ url: string; title: string; badge?: string } | null>(null);
+
   // Schedule Post Modal State
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedChannel, setSelectedChannel] = useState<'FACEBOOK' | 'TWITTER'>('TWITTER');
   const [newCaption, setNewCaption] = useState('');
   const [newDate, setNewDate] = useState('');
-  const [newMediaUrl, setNewMediaUrl] = useState('');
+  const [newMediaUrl, setNewMediaUrl] = useState('/designs/flyers/flyer-nov14-website-speed.svg');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [actionSuccess, setActionSuccess] = useState<string | null>(null);
 
   // Sync to localStorage
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      localStorage.setItem('veltrix_scheduled_posts_v2', JSON.stringify(scheduledPosts));
+      localStorage.setItem('veltrix_scheduled_posts_v3', JSON.stringify(scheduledPosts));
     }
   }, [scheduledPosts]);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      localStorage.setItem('veltrix_published_posts_v2', JSON.stringify(publishedPosts));
+      localStorage.setItem('veltrix_published_posts_v3', JSON.stringify(publishedPosts));
     }
   }, [publishedPosts]);
 
@@ -445,7 +474,6 @@ export const ContentCalendarPage: React.FC = () => {
         }
       }
     } catch (err) {
-      // Backend unavailable or Vercel Auth protected; gracefully maintain curated schedule
       console.info('Using loaded curated schedule for November 2026');
     } finally {
       setLoading(false);
@@ -487,7 +515,7 @@ export const ContentCalendarPage: React.FC = () => {
       pageName: post.page?.pageName || 'Facebook Page',
       caption: post.caption,
       mediaUrls: post.mediaUrls,
-      contentPillar: 'Social Broadcast',
+      contentPillar: post.topicBadge || 'Social Broadcast',
       publishedAt: new Date().toISOString(),
       channel: post.channel,
       metrics: { reach: 1, engagementRate: 100, reactions: 1 }
@@ -530,9 +558,10 @@ export const ContentCalendarPage: React.FC = () => {
       socialPageId: isTweet ? 'AbiodunBuilds' : '109283746520192',
       channel: selectedChannel,
       caption: newCaption,
-      mediaUrls: newMediaUrl ? [newMediaUrl] : [],
+      mediaUrls: newMediaUrl ? [newMediaUrl] : ['/designs/flyers/flyer-nov14-website-speed.svg'],
       scheduledFor: new Date(newDate).toISOString(),
       status: 'SCHEDULED',
+      topicBadge: isTweet ? '𝕏 TECH INSIGHT' : 'FACEBOOK BROADCAST',
       page: {
         pageName: isTweet ? 'Abiodun Builds (@AbiodunBuilds)' : 'Veltrix Hub Official',
         pageId: isTweet ? 'AbiodunBuilds' : '109283746520192'
@@ -550,7 +579,7 @@ export const ContentCalendarPage: React.FC = () => {
         body: JSON.stringify({
           caption: newCaption,
           scheduledFor: new Date(newDate).toISOString(),
-          mediaUrls: newMediaUrl ? [newMediaUrl] : []
+          mediaUrls: newPost.mediaUrls
         })
       });
     } catch (err) {
@@ -561,20 +590,19 @@ export const ContentCalendarPage: React.FC = () => {
     setIsModalOpen(false);
     setNewCaption('');
     setNewDate('');
-    setNewMediaUrl('');
     setIsSubmitting(false);
-    setActionSuccess(`New ${selectedChannel === 'TWITTER' ? '𝕏 post' : 'Facebook post'} scheduled successfully!`);
+    setActionSuccess(`New ${selectedChannel === 'TWITTER' ? '𝕏 post' : 'Facebook post'} scheduled with custom flyer!`);
     setTimeout(() => setActionSuccess(null), 4000);
   };
 
-  // Quick seed button to ensure 2 daily posts are always loaded
+  // Quick reset to the master 24 topic-matched flyer schedule
   const handleResetToCurated = () => {
-    if (window.confirm('Reset content calendar with the full 2 posts/day 𝕏 + Facebook schedule for November 2026?')) {
+    if (window.confirm('Reset content calendar with all 24 distinct topic-matched flyers for November 2026?')) {
       setScheduledPosts(INITIAL_CURATED_SCHEDULED);
       setPublishedPosts(INITIAL_HISTORICAL_PUBLISHED);
-      localStorage.setItem('veltrix_scheduled_posts_v2', JSON.stringify(INITIAL_CURATED_SCHEDULED));
-      localStorage.setItem('veltrix_published_posts_v2', JSON.stringify(INITIAL_HISTORICAL_PUBLISHED));
-      setActionSuccess('Content calendar reloaded with 2 posts/day for 𝕏 and Facebook!');
+      localStorage.setItem('veltrix_scheduled_posts_v3', JSON.stringify(INITIAL_CURATED_SCHEDULED));
+      localStorage.setItem('veltrix_published_posts_v3', JSON.stringify(INITIAL_HISTORICAL_PUBLISHED));
+      setActionSuccess('Content calendar reloaded with 24 unique, topic-matched flyers!');
       setTimeout(() => setActionSuccess(null), 3000);
     }
   };
@@ -649,11 +677,11 @@ export const ContentCalendarPage: React.FC = () => {
           <div className="flex items-center gap-2">
             <h1 className="text-xl font-bold text-white tracking-tight">Content Calendar</h1>
             <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-              2 Posts/Day Active
+              Unique Flyer per Post Active
             </span>
           </div>
           <p className="text-xs text-slate-400 mt-0.5">
-            Auto-publishing scheduled across <strong>Veltrix Hub Facebook</strong> and <strong>𝕏 (@AbiodunBuilds)</strong>.
+            Every post features its own dedicated flyer with the exact headline hook matching the topic.
           </p>
         </div>
 
@@ -686,10 +714,10 @@ export const ContentCalendarPage: React.FC = () => {
           <button
             onClick={handleResetToCurated}
             className="w-full sm:w-auto flex items-center justify-center gap-1.5 px-3 py-2 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-300 text-xs font-medium rounded-xl transition-all"
-            title="Reload 2 posts per day strategy"
+            title="Reload 24 unique topic flyers"
           >
             <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-            <span>2-Post/Day Template</span>
+            <span>Reload Topic Flyers</span>
           </button>
 
           {/* Schedule Button */}
@@ -719,7 +747,7 @@ export const ContentCalendarPage: React.FC = () => {
         <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden p-3.5 sm:p-6 shadow-xl">
           {/* Mobile Calendar Hint */}
           <div className="md:hidden mb-3 p-2.5 bg-emerald-500/10 border border-emerald-500/20 rounded-xl text-xs text-emerald-300 flex items-center justify-between">
-            <span>Tap any day cell to view or publish posts.</span>
+            <span>Tap any day cell to inspect its unique flyers.</span>
             <button
               onClick={() => setViewMode('timeline')}
               className="font-bold underline text-white px-2 py-0.5 bg-emerald-600 rounded-lg text-[11px]"
@@ -772,7 +800,7 @@ export const ContentCalendarPage: React.FC = () => {
                       }`}
                     >
                       <XLogo className="w-3 h-3" />
-                      <span>𝕏 (2/day)</span>
+                      <span>𝕏 Tech Cards</span>
                     </button>
                     <button
                       onClick={() => setPlatformFilter('FACEBOOK')}
@@ -783,7 +811,7 @@ export const ContentCalendarPage: React.FC = () => {
                       }`}
                     >
                       <Facebook className="w-3 h-3" />
-                      <span>Facebook</span>
+                      <span>Facebook Flyers</span>
                     </button>
                   </div>
 
@@ -814,7 +842,7 @@ export const ContentCalendarPage: React.FC = () => {
                 {blanksArray.map((_, i) => (
                   <div
                     key={`blank-${i}`}
-                    className="min-h-[110px] bg-slate-950/40 rounded-xl border border-slate-800/40 opacity-40"
+                    className="min-h-[120px] bg-slate-950/40 rounded-xl border border-slate-800/40 opacity-40"
                   />
                 ))}
 
@@ -827,7 +855,7 @@ export const ContentCalendarPage: React.FC = () => {
                     <div
                       key={day}
                       onClick={() => setSelectedDay(day)}
-                      className={`min-h-[115px] p-2 rounded-xl border transition-all flex flex-col justify-between cursor-pointer select-none ${
+                      className={`min-h-[120px] p-2 rounded-xl border transition-all flex flex-col justify-between cursor-pointer select-none ${
                         isToday
                           ? 'bg-slate-800/90 border-emerald-500 shadow-md shadow-emerald-500/10 ring-1 ring-emerald-500/40'
                           : totalPosts > 0
@@ -854,63 +882,66 @@ export const ContentCalendarPage: React.FC = () => {
                                 : 'bg-slate-800 text-slate-400'
                             }`}
                           >
-                            {totalPosts} post{totalPosts > 1 ? 's' : ''}
+                            {totalPosts} flyer{totalPosts > 1 ? 's' : ''}
                           </span>
                         )}
                       </div>
 
-                      {/* Post Mini Cards inside Cell */}
-                      <div className="space-y-1 overflow-y-auto max-h-[80px]">
-                        {/* Scheduled Posts in Cell */}
+                      {/* Post Mini Cards with Distinct Topic Flyer Badges */}
+                      <div className="space-y-1 overflow-y-auto max-h-[85px]">
                         {sched.map((post) => {
                           const isTweet = post.channel === 'TWITTER' || post.page?.pageId === 'AbiodunBuilds';
                           return (
                             <div
                               key={post.id}
-                              className={`p-1 rounded-md text-[10px] leading-tight flex items-center gap-1 truncate border ${
+                              className={`p-1 rounded-md text-[10px] leading-tight flex items-center gap-1.5 truncate border ${
                                 isTweet
                                   ? 'bg-white/10 text-slate-100 border-white/20'
                                   : 'bg-blue-500/10 text-blue-300 border-blue-500/30'
                               }`}
                               title={post.caption}
                             >
-                              {isTweet ? (
+                              {post.mediaUrls?.[0] ? (
+                                <img
+                                  src={post.mediaUrls[0]}
+                                  alt="Flyer thumb"
+                                  className="w-4 h-4 rounded object-cover shrink-0 border border-slate-700"
+                                />
+                              ) : isTweet ? (
                                 <XLogo className="w-2.5 h-2.5 shrink-0 text-white" />
                               ) : (
                                 <Facebook className="w-2.5 h-2.5 shrink-0 text-blue-400" />
                               )}
-                              <span className="truncate">
-                                {new Date(post.scheduledFor).toLocaleTimeString([], {
-                                  hour: '2-digit',
-                                  minute: '2-digit'
-                                })}{' '}
-                                - {post.caption.slice(0, 20)}...
+                              <span className="truncate font-medium">
+                                {post.topicBadge || (isTweet ? '𝕏 Tech Hook' : 'Facebook')}
                               </span>
                             </div>
                           );
                         })}
 
-                        {/* Published Posts in Cell */}
-                        {pub.map((post) => {
-                          const isTweet = post.channel === 'TWITTER' || post.pageName.includes('@');
-                          return (
-                            <div
-                              key={post.id}
-                              className="p-1 rounded-md bg-emerald-500/10 text-emerald-300 text-[10px] leading-tight flex items-center gap-1 truncate border border-emerald-500/20"
-                              title={post.caption}
-                            >
-                              <CheckCircle2 className="w-2.5 h-2.5 shrink-0 text-emerald-400" />
-                              <span className="truncate">Published ({post.metrics?.reach || '1.8k'})</span>
-                            </div>
-                          );
-                        })}
+                        {pub.map((post) => (
+                          <div
+                            key={post.id}
+                            className="p-1 rounded-md bg-emerald-500/10 text-emerald-300 text-[10px] leading-tight flex items-center gap-1.5 truncate border border-emerald-500/20"
+                            title={post.caption}
+                          >
+                            {post.mediaUrls?.[0] && (
+                              <img
+                                src={post.mediaUrls[0]}
+                                alt="Flyer thumb"
+                                className="w-4 h-4 rounded object-cover shrink-0 border border-emerald-500/30"
+                              />
+                            )}
+                            <span className="truncate">{post.contentPillar || 'Published'}</span>
+                          </div>
+                        ))}
                       </div>
 
                       {/* Bottom Cell Action */}
                       <div className="pt-1 text-[9px] text-slate-500 flex items-center justify-between">
                         <span>{isToday ? 'Today' : ''}</span>
-                        <span className="opacity-0 group-hover:opacity-100 text-emerald-400 font-semibold">
-                          View details →
+                        <span className="text-emerald-400 font-semibold opacity-80">
+                          {totalPosts} flyer{totalPosts > 1 ? 's' : ''} →
                         </span>
                       </div>
                     </div>
@@ -984,30 +1015,32 @@ export const ContentCalendarPage: React.FC = () => {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
             {/* Scheduled Posts */}
             {(statusFilter === 'ALL' || statusFilter === 'SCHEDULED') &&
               filteredScheduled.map((post) => {
                 const isTweet = post.channel === 'TWITTER' || post.page?.pageId === 'AbiodunBuilds';
+                const flyerUrl = post.mediaUrls?.[0];
 
                 return (
                   <div
                     key={post.id}
-                    className="bg-slate-900 border border-slate-800 hover:border-slate-700 rounded-2xl p-5 flex flex-col justify-between transition-all shadow-lg"
+                    className="bg-slate-900 border border-slate-800 hover:border-slate-700 rounded-2xl p-5 flex flex-col justify-between transition-all shadow-xl group"
                   >
                     <div>
+                      {/* Card Header with Topic Badge */}
                       <div className="flex items-center justify-between mb-3">
                         <span
-                          className={`px-2 py-0.5 rounded-md text-[11px] font-semibold flex items-center gap-1 border ${
+                          className={`px-2.5 py-0.5 rounded-md text-[11px] font-bold flex items-center gap-1.5 border ${
                             isTweet
                               ? 'bg-white/10 text-white border-white/20'
                               : 'bg-blue-500/10 text-blue-400 border border-blue-500/20'
                           }`}
                         >
                           <Clock className="w-3 h-3" />
-                          {isTweet ? '𝕏 SCHEDULED (2/DAY)' : 'FACEBOOK SCHEDULED'}
+                          <span>{post.topicBadge || (isTweet ? '𝕏 TECH POST' : 'FACEBOOK POST')}</span>
                         </span>
-                        <span className="text-xs text-slate-400">
+                        <span className="text-xs text-slate-400 font-medium">
                           {new Date(post.scheduledFor).toLocaleDateString([], {
                             month: 'short',
                             day: 'numeric',
@@ -1017,11 +1050,51 @@ export const ContentCalendarPage: React.FC = () => {
                         </span>
                       </div>
 
+                      {/* Unique Topic-Matched Flyer Preview Container */}
+                      {flyerUrl && (
+                        <div className="relative mb-4 rounded-xl overflow-hidden border border-slate-800 bg-slate-950 aspect-square group-hover:border-slate-700 transition-all shadow-inner">
+                          <img
+                            src={flyerUrl}
+                            alt="Topic-matched flyer"
+                            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                          />
+                          {/* Hover Overlay with Inspect / Download */}
+                          <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2 p-4">
+                            <button
+                              onClick={() =>
+                                setLightboxFlyer({
+                                  url: flyerUrl,
+                                  title: post.topicBadge || 'Veltrix Hub Flyer',
+                                  badge: post.channel
+                                })
+                              }
+                              className="px-3 py-1.5 bg-white text-slate-950 rounded-lg text-xs font-bold shadow flex items-center gap-1 hover:bg-slate-200"
+                            >
+                              <Maximize2 className="w-3.5 h-3.5" />
+                              <span>Inspect Flyer</span>
+                            </button>
+                            <a
+                              href={flyerUrl}
+                              download={`veltrix-${post.id}.svg`}
+                              className="p-1.5 bg-slate-800 hover:bg-slate-700 text-white rounded-lg text-xs font-semibold"
+                              title="Download Flyer SVG"
+                            >
+                              <Download className="w-4 h-4" />
+                            </a>
+                          </div>
+
+                          <div className="absolute bottom-2 left-2 right-2 bg-slate-950/80 backdrop-blur-sm rounded-lg px-2 py-1 text-[10px] text-slate-300 flex items-center justify-between">
+                            <span className="font-semibold text-emerald-400">Unique Flyer for this Hook</span>
+                            <span className="font-mono text-slate-400">1080 × 1080</span>
+                          </div>
+                        </div>
+                      )}
+
                       <p className="text-slate-200 text-xs leading-relaxed whitespace-pre-wrap max-h-36 overflow-y-auto mb-3 pr-1 font-sans">
                         {post.caption}
                       </p>
 
-                      {/* First Comment box for Facebook, or 280-char verified badge for X */}
+                      {/* First Comment box for Facebook, or 280-char badge for X */}
                       {isTweet ? (
                         <div className="mb-4 rounded-xl border border-slate-700 bg-slate-950/60 p-2.5 flex items-center justify-between text-[11px]">
                           <span className="flex items-center gap-1.5 font-bold text-white">
@@ -1058,16 +1131,6 @@ export const ContentCalendarPage: React.FC = () => {
                             <br />
                             <span className="text-emerald-400">WhatsApp: https://wa.me/2348087098270</span>
                           </p>
-                        </div>
-                      )}
-
-                      {post.mediaUrls && post.mediaUrls.length > 0 && (
-                        <div className="mb-4 rounded-xl overflow-hidden border border-slate-800 h-44 bg-slate-950">
-                          <img
-                            src={post.mediaUrls[0]}
-                            alt="Scheduled attachment"
-                            className="w-full h-full object-cover"
-                          />
                         </div>
                       )}
                     </div>
@@ -1157,62 +1220,80 @@ export const ContentCalendarPage: React.FC = () => {
 
             {/* Published Posts */}
             {(statusFilter === 'ALL' || statusFilter === 'PUBLISHED') &&
-              filteredPublished.map((post) => (
-                <div
-                  key={post.id}
-                  className="bg-slate-900 border border-slate-800/70 rounded-2xl p-5 flex flex-col justify-between transition-all opacity-90 hover:opacity-100 shadow-lg"
-                >
-                  <div>
-                    <div className="flex items-center justify-between mb-3">
-                      <span className="px-2 py-0.5 rounded-md text-[11px] font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 flex items-center gap-1">
-                        <CheckCircle2 className="w-3 h-3" />
-                        PUBLISHED
-                      </span>
-                      <span className="text-xs text-slate-400">
-                        {new Date(post.publishedAt).toLocaleDateString([], {
-                          month: 'short',
-                          day: 'numeric'
-                        })}
-                      </span>
+              filteredPublished.map((post) => {
+                const flyerUrl = post.mediaUrls?.[0];
+                return (
+                  <div
+                    key={post.id}
+                    className="bg-slate-900 border border-slate-800/70 rounded-2xl p-5 flex flex-col justify-between transition-all opacity-95 hover:opacity-100 shadow-xl group"
+                  >
+                    <div>
+                      <div className="flex items-center justify-between mb-3">
+                        <span className="px-2.5 py-0.5 rounded-md text-[11px] font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 flex items-center gap-1">
+                          <CheckCircle2 className="w-3 h-3" />
+                          <span>{post.contentPillar || 'PUBLISHED'}</span>
+                        </span>
+                        <span className="text-xs text-slate-400">
+                          {new Date(post.publishedAt).toLocaleDateString([], {
+                            month: 'short',
+                            day: 'numeric'
+                          })}
+                        </span>
+                      </div>
+
+                      {flyerUrl && (
+                        <div className="relative mb-4 rounded-xl overflow-hidden border border-slate-800 bg-slate-950 aspect-square group-hover:border-slate-700 transition-all">
+                          <img
+                            src={flyerUrl}
+                            alt="Published flyer"
+                            className="w-full h-full object-cover"
+                          />
+                          <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2 p-4">
+                            <button
+                              onClick={() =>
+                                setLightboxFlyer({
+                                  url: flyerUrl,
+                                  title: post.contentPillar || 'Published Flyer',
+                                  badge: post.channel
+                                })
+                              }
+                              className="px-3 py-1.5 bg-white text-slate-950 rounded-lg text-xs font-bold shadow flex items-center gap-1 hover:bg-slate-200"
+                            >
+                              <Maximize2 className="w-3.5 h-3.5" />
+                              <span>View Full Size</span>
+                            </button>
+                          </div>
+                        </div>
+                      )}
+
+                      <p className="text-slate-300 text-xs leading-relaxed line-clamp-3 mb-4">
+                        {post.caption}
+                      </p>
                     </div>
 
-                    <p className="text-slate-300 text-xs leading-relaxed line-clamp-4 mb-4">
-                      {post.caption}
-                    </p>
+                    <div className="pt-3 border-t border-slate-800/80 flex items-center justify-between text-xs">
+                      <span className="text-slate-400 font-medium">
+                        Audience Reach:{' '}
+                        <strong className="text-white">
+                          {post.metrics?.reach?.toLocaleString() || '1,840'}
+                        </strong>
+                      </span>
 
-                    {post.mediaUrls && post.mediaUrls.length > 0 && (
-                      <div className="mb-4 rounded-xl overflow-hidden border border-slate-800 h-36 bg-slate-950">
-                        <img
-                          src={post.mediaUrls[0]}
-                          alt="Published media"
-                          className="w-full h-full object-cover"
-                        />
-                      </div>
-                    )}
+                      {post.permalinkUrl && (
+                        <a
+                          href={post.permalinkUrl}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="flex items-center gap-1 text-emerald-400 hover:text-emerald-300 text-xs transition-colors"
+                        >
+                          <span>View on Meta</span>
+                          <ExternalLink className="w-3 h-3" />
+                        </a>
+                      )}
+                    </div>
                   </div>
-
-                  <div className="pt-3 border-t border-slate-800/80 flex items-center justify-between text-xs">
-                    <span className="text-slate-400 font-medium">
-                      Audience Reach:{' '}
-                      <strong className="text-white">
-                        {post.metrics?.reach?.toLocaleString() || '1,840'}
-                      </strong>
-                    </span>
-
-                    {post.permalinkUrl && (
-                      <a
-                        href={post.permalinkUrl}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="flex items-center gap-1 text-emerald-400 hover:text-emerald-300 text-xs transition-colors"
-                      >
-                        <span>View</span>
-                        <ExternalLink className="w-3 h-3" />
-                      </a>
-                    )}
-                  </div>
-                </div>
-              ))}
+                );
+              })}
           </div>
         </div>
       )}
@@ -1221,14 +1302,14 @@ export const ContentCalendarPage: React.FC = () => {
       {/* DAY DETAIL MODAL: OPENS WHEN ANY DAY IN THE CALENDAR GRID IS CLICKED */}
       {/* ===================================================================== */}
       {selectedDay !== null && (
-        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4">
-          <div className="bg-slate-900 border border-slate-800 w-full max-w-xl max-h-[90vh] overflow-y-auto rounded-2xl p-5 sm:p-6 shadow-2xl animate-fade-in space-y-4">
+        <div className="fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4">
+          <div className="bg-slate-900 border border-slate-800 w-full max-w-2xl max-h-[92vh] overflow-y-auto rounded-2xl p-5 sm:p-6 shadow-2xl animate-fade-in space-y-4">
             <div className="flex items-center justify-between border-b border-slate-800 pb-3">
               <div>
                 <h3 className="text-base sm:text-lg font-bold text-white flex items-center gap-2">
                   <CalendarIcon className="w-5 h-5 text-emerald-400" />
                   <span>
-                    Schedule for {monthYearLabel} {selectedDay}
+                    Schedule & Flyers for {monthYearLabel} {selectedDay}
                   </span>
                 </h3>
                 <p className="text-xs text-slate-400">
@@ -1245,7 +1326,7 @@ export const ContentCalendarPage: React.FC = () => {
             </div>
 
             {/* Posts for Selected Day */}
-            <div className="space-y-3">
+            <div className="space-y-4">
               {getPostsForDay(selectedDay).sched.length === 0 &&
               getPostsForDay(selectedDay).pub.length === 0 ? (
                 <div className="py-8 text-center text-slate-400 space-y-3">
@@ -1271,27 +1352,28 @@ export const ContentCalendarPage: React.FC = () => {
                 <>
                   {getPostsForDay(selectedDay).sched.map((post) => {
                     const isTweet = post.channel === 'TWITTER' || post.page?.pageId === 'AbiodunBuilds';
+                    const flyerUrl = post.mediaUrls?.[0];
+
                     return (
                       <div
                         key={post.id}
-                        className="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-2.5"
+                        className="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-3"
                       >
                         <div className="flex items-center justify-between text-xs">
                           <span
-                            className={`px-2 py-0.5 rounded font-semibold flex items-center gap-1 ${
+                            className={`px-2.5 py-1 rounded-md font-bold flex items-center gap-1.5 ${
                               isTweet
                                 ? 'bg-white/10 text-white border border-white/20'
                                 : 'bg-blue-500/10 text-blue-400 border border-blue-500/20'
                             }`}
                           >
-                            {isTweet ? <XLogo className="w-3 h-3" /> : <Facebook className="w-3 h-3" />}
+                            {isTweet ? <XLogo className="w-3.5 h-3.5" /> : <Facebook className="w-3.5 h-3.5" />}
                             <span>
-                              {isTweet
-                                ? '𝕏 (@AbiodunBuilds)'
-                                : post.page?.pageName || 'Veltrix Hub Official'}
+                              {post.topicBadge ||
+                                (isTweet ? '𝕏 (@AbiodunBuilds)' : post.page?.pageName || 'Facebook')}
                             </span>
                           </span>
-                          <span className="text-slate-400 font-mono">
+                          <span className="text-slate-400 font-mono text-xs">
                             {new Date(post.scheduledFor).toLocaleTimeString([], {
                               hour: '2-digit',
                               minute: '2-digit'
@@ -1299,14 +1381,54 @@ export const ContentCalendarPage: React.FC = () => {
                           </span>
                         </div>
 
-                        <p className="text-xs text-slate-200 whitespace-pre-wrap leading-relaxed">
-                          {post.caption}
-                        </p>
+                        {/* Side by side layout for Flyer and Caption */}
+                        <div className="flex flex-col sm:flex-row gap-3 items-start">
+                          {flyerUrl && (
+                            <div
+                              onClick={() =>
+                                setLightboxFlyer({
+                                  url: flyerUrl,
+                                  title: post.topicBadge || 'Flyer',
+                                  badge: post.channel
+                                })
+                              }
+                              className="w-full sm:w-28 sm:h-28 rounded-lg overflow-hidden border border-slate-800 bg-slate-900 shrink-0 cursor-pointer relative group"
+                            >
+                              <img src={flyerUrl} alt="Flyer" className="w-full h-full object-cover" />
+                              <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                <Maximize2 className="w-4 h-4 text-white" />
+                              </div>
+                            </div>
+                          )}
+
+                          <div className="flex-1 space-y-2">
+                            <p className="text-xs text-slate-200 whitespace-pre-wrap leading-relaxed">
+                              {post.caption}
+                            </p>
+                          </div>
+                        </div>
 
                         <div className="pt-2 flex items-center justify-between border-t border-slate-800/80">
-                          <span className="text-[11px] font-mono text-emerald-400">
-                            {post.caption.length} chars
-                          </span>
+                          {flyerUrl ? (
+                            <button
+                              onClick={() =>
+                                setLightboxFlyer({
+                                  url: flyerUrl,
+                                  title: post.topicBadge || 'Flyer',
+                                  badge: post.channel
+                                })
+                              }
+                              className="text-[11px] text-emerald-400 font-semibold hover:underline flex items-center gap-1"
+                            >
+                              <Eye className="w-3.5 h-3.5" />
+                              <span>View Full Flyer</span>
+                            </button>
+                          ) : (
+                            <span className="text-[11px] font-mono text-slate-500">
+                              {post.caption.length} chars
+                            </span>
+                          )}
+
                           <div className="flex items-center gap-2">
                             <button
                               onClick={() => {
@@ -1350,12 +1472,12 @@ export const ContentCalendarPage: React.FC = () => {
                   {getPostsForDay(selectedDay).pub.map((post) => (
                     <div
                       key={post.id}
-                      className="p-3.5 rounded-xl bg-slate-950/60 border border-emerald-500/20 text-xs space-y-1"
+                      className="p-3.5 rounded-xl bg-slate-950/60 border border-emerald-500/20 text-xs space-y-1.5"
                     >
                       <div className="flex items-center justify-between">
                         <span className="text-emerald-400 font-semibold flex items-center gap-1">
                           <CheckCircle2 className="w-3.5 h-3.5" />
-                          <span>Published Record</span>
+                          <span>Published Record ({post.contentPillar})</span>
                         </span>
                         <span className="text-slate-400">Reach: {post.metrics?.reach || '1,840'}</span>
                       </div>
@@ -1395,6 +1517,61 @@ export const ContentCalendarPage: React.FC = () => {
       )}
 
       {/* ===================================================================== */}
+      {/* FULLSCREEN LIGHTBOX FLYER MODAL: INSPECT & DOWNLOAD 1080x1080 FLYER */}
+      {/* ===================================================================== */}
+      {lightboxFlyer && (
+        <div className="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-3 sm:p-6 animate-fade-in">
+          <div className="relative bg-slate-900 border border-slate-800 rounded-3xl max-w-xl w-full p-4 sm:p-6 shadow-2xl flex flex-col items-center space-y-4">
+            <div className="w-full flex items-center justify-between pb-3 border-b border-slate-800">
+              <div>
+                <h3 className="text-sm sm:text-base font-bold text-white flex items-center gap-2">
+                  <Sparkles className="w-4 h-4 text-emerald-400" />
+                  <span>{lightboxFlyer.title}</span>
+                </h3>
+                <p className="text-[11px] text-slate-400">1080 × 1080 High-Resolution Vector Flyer</p>
+              </div>
+              <button
+                onClick={() => setLightboxFlyer(null)}
+                className="p-1.5 text-slate-400 hover:text-white rounded-lg hover:bg-slate-800"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* Flyer Image Container */}
+            <div className="w-full aspect-square rounded-2xl overflow-hidden border border-slate-800 bg-slate-950 shadow-2xl">
+              <img
+                src={lightboxFlyer.url}
+                alt={lightboxFlyer.title}
+                className="w-full h-full object-contain"
+              />
+            </div>
+
+            {/* Action Bar */}
+            <div className="w-full flex items-center justify-between gap-3 pt-2">
+              <span className="text-xs text-slate-400">Official Veltrix Hub Brand Template</span>
+              <div className="flex items-center gap-2">
+                <a
+                  href={lightboxFlyer.url}
+                  download="veltrix-flyer.svg"
+                  className="flex items-center gap-2 px-4 py-2.5 bg-emerald-500 hover:bg-emerald-600 text-white rounded-xl text-xs font-semibold shadow-lg shadow-emerald-500/20 transition-all active:scale-95"
+                >
+                  <Download className="w-4 h-4" />
+                  <span>Download Flyer (SVG)</span>
+                </a>
+                <button
+                  onClick={() => setLightboxFlyer(null)}
+                  className="px-4 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl text-xs font-medium"
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ===================================================================== */}
       {/* SCHEDULE POST MODAL */}
       {/* ===================================================================== */}
       {isModalOpen && (
@@ -1404,10 +1581,10 @@ export const ContentCalendarPage: React.FC = () => {
               <div>
                 <h3 className="text-base sm:text-lg font-bold text-white flex items-center gap-2">
                   <CalendarIcon className="w-5 h-5 text-emerald-400" />
-                  <span>Schedule Content</span>
+                  <span>Schedule Content with Flyer</span>
                 </h3>
                 <p className="text-xs text-slate-400 mt-0.5">
-                  Plan automated broadcasts to Facebook and 𝕏.
+                  Plan automated broadcasts with matching visual flyers.
                 </p>
               </div>
               <button
@@ -1427,7 +1604,10 @@ export const ContentCalendarPage: React.FC = () => {
                 <div className="grid grid-cols-2 gap-2">
                   <button
                     type="button"
-                    onClick={() => setSelectedChannel('TWITTER')}
+                    onClick={() => {
+                      setSelectedChannel('TWITTER');
+                      setNewMediaUrl('/designs/flyers/flyer-nov14-react-perf.svg');
+                    }}
                     className={`flex items-center justify-center gap-2 p-2.5 rounded-xl border text-xs font-semibold transition-all ${
                       selectedChannel === 'TWITTER'
                         ? 'bg-white text-slate-950 border-white shadow'
@@ -1440,7 +1620,10 @@ export const ContentCalendarPage: React.FC = () => {
 
                   <button
                     type="button"
-                    onClick={() => setSelectedChannel('FACEBOOK')}
+                    onClick={() => {
+                      setSelectedChannel('FACEBOOK');
+                      setNewMediaUrl('/designs/flyers/flyer-nov14-website-speed.svg');
+                    }}
                     className={`flex items-center justify-center gap-2 p-2.5 rounded-xl border text-xs font-semibold transition-all ${
                       selectedChannel === 'FACEBOOK'
                         ? 'bg-blue-600 text-white border-blue-500 shadow'
@@ -1453,7 +1636,30 @@ export const ContentCalendarPage: React.FC = () => {
                 </div>
               </div>
 
-              {/* Quick Topic Prompts */}
+              {/* Flyer Template Selection */}
+              <div>
+                <label className="block text-xs font-semibold text-slate-300 mb-1.5">
+                  Flyer Visual Template
+                </label>
+                <select
+                  value={newMediaUrl}
+                  onChange={(e) => setNewMediaUrl(e.target.value)}
+                  className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-emerald-500"
+                >
+                  <option value="/designs/flyers/flyer-nov14-website-speed.svg">Website Speed & Conversion Flyer</option>
+                  <option value="/designs/flyers/flyer-nov12-cac-registration.svg">CAC Business Registration Flyer</option>
+                  <option value="/designs/flyers/flyer-nov15-branding-trust.svg">Corporate Branding & Trust Flyer</option>
+                  <option value="/designs/flyers/flyer-nov16-website-uptime.svg">24/7 Website Maintenance Flyer</option>
+                  <option value="/designs/flyers/flyer-nov18-ai-quotes-2am.svg">AI 24/7 Customer Lead Qualifier Flyer</option>
+                  <option value="/designs/flyers/flyer-nov19-flyers-convert.svg">Graphic Design & Creative Ads Flyer</option>
+                  <option value="/designs/flyers/flyer-nov20-digital-audit.svg">Strategic Digital Growth Consultation</option>
+                  <option value="/designs/flyers/flyer-nov14-react-perf.svg">React.js Architecture Tech Card</option>
+                  <option value="/designs/flyers/flyer-nov16-typescript-pro.svg">TypeScript Pro Tech Card</option>
+                  <option value="/designs/flyers/flyer-nov17-mobile-first.svg">Mobile-First Testing Card</option>
+                </select>
+              </div>
+
+              {/* Caption */}
               <div>
                 <div className="flex items-center justify-between mb-1.5">
                   <label className="text-xs font-semibold text-slate-300">
@@ -1496,22 +1702,6 @@ export const ContentCalendarPage: React.FC = () => {
                   required
                 />
               </div>
-
-              {/* Media URL */}
-              {selectedChannel === 'FACEBOOK' && (
-                <div>
-                  <label className="block text-xs font-semibold text-slate-300 mb-1.5">
-                    Image Attachment URL (Optional)
-                  </label>
-                  <input
-                    type="url"
-                    value={newMediaUrl}
-                    onChange={(e) => setNewMediaUrl(e.target.value)}
-                    placeholder="https://images.unsplash.com/..."
-                    className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2.5 text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:border-emerald-500"
-                  />
-                </div>
-              )}
 
               <div className="pt-2 flex items-center justify-end gap-3">
                 <button

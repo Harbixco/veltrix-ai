@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1080" width="1080" height="1080">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" />
+      <stop offset="100%" stop-color="#F8FAFC" />
+    </linearGradient>
+
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#F5691C" />
+      <stop offset="100%" stop-color="#FB923C" />
+    </linearGradient>
+
+    <linearGradient id="btnGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#10B981" />
+      <stop offset="100%" stop-color="#059669" />
+    </linearGradient>
+
+    <filter id="cardShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="16" stdDeviation="24" flood-color="#000000" flood-opacity="0.35" />
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1080" height="1080" fill="url(#bgGrad)" />
+
+  <!-- Geometric Grid Pattern Overlay -->
+  <g opacity="0.04">
+    <line x1="0" y1="0" x2="0" y2="1080" stroke="#FFFFFF" stroke-width="1.5" /><line x1="90" y1="0" x2="90" y2="1080" stroke="#FFFFFF" stroke-width="1.5" /><line x1="180" y1="0" x2="180" y2="1080" stroke="#FFFFFF" stroke-width="1.5" /><line x1="270" y1="0" x2="270" y2="1080" stroke="#FFFFFF" stroke-width="1.5" /><line x1="360" y1="0" x2="360" y2="1080" stroke="#FFFFFF" stroke-width="1.5" /><line x1="450" y1="0" x2="450" y2="1080" stroke="#FFFFFF" stroke-width="1.5" /><line x1="540" y1="0" x2="540" y2="1080" stroke="#FFFFFF" stroke-width="1.5" /><line x1="630" y1="0" x2="630" y2="1080" stroke="#FFFFFF" stroke-width="1.5" /><line x1="720" y1="0" x2="720" y2="1080" stroke="#FFFFFF" stroke-width="1.5" /><line x1="810" y1="0" x2="810" y2="1080" stroke="#FFFFFF" stroke-width="1.5" /><line x1="900" y1="0" x2="900" y2="1080" stroke="#FFFFFF" stroke-width="1.5" /><line x1="990" y1="0" x2="990" y2="1080" stroke="#FFFFFF" stroke-width="1.5" />
+    <line x1="0" y1="0" x2="1080" y2="0" stroke="#FFFFFF" stroke-width="1.5" /><line x1="0" y1="90" x2="1080" y2="90" stroke="#FFFFFF" stroke-width="1.5" /><line x1="0" y1="180" x2="1080" y2="180" stroke="#FFFFFF" stroke-width="1.5" /><line x1="0" y1="270" x2="1080" y2="270" stroke="#FFFFFF" stroke-width="1.5" /><line x1="0" y1="360" x2="1080" y2="360" stroke="#FFFFFF" stroke-width="1.5" /><line x1="0" y1="450" x2="1080" y2="450" stroke="#FFFFFF" stroke-width="1.5" /><line x1="0" y1="540" x2="1080" y2="540" stroke="#FFFFFF" stroke-width="1.5" /><line x1="0" y1="630" x2="1080" y2="630" stroke="#FFFFFF" stroke-width="1.5" /><line x1="0" y1="720" x2="1080" y2="720" stroke="#FFFFFF" stroke-width="1.5" /><line x1="0" y1="810" x2="1080" y2="810" stroke="#FFFFFF" stroke-width="1.5" /><line x1="0" y1="900" x2="1080" y2="900" stroke="#FFFFFF" stroke-width="1.5" /><line x1="0" y1="990" x2="1080" y2="990" stroke="#FFFFFF" stroke-width="1.5" />
+  </g>
+
+  <!-- Ambient Glowing Blobs -->
+  <circle cx="950" cy="180" r="260" fill="#F5691C" opacity="0.08" />
+  <circle cx="120" cy="880" r="220" fill="#10B981" opacity="0.1" />
+
+  <path d="M 0 0 L 260 0 Q 130 130 0 260 Z" fill="url(#accentGrad)" opacity="0.9" />
+
+  <!-- ================= TOP HEADER BAR ================= -->
+  <g transform="translate(60, 50)">
+    <!-- Logo Badge -->
+    <rect x="0" y="0" width="60" height="60" rx="16" fill="url(#accentGrad)" />
+    <text x="30" y="42" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="32" font-weight="900" fill="#FFFFFF" text-anchor="middle">V</text>
+
+    <!-- Brand Typography -->
+    <text x="75" y="32" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="24" font-weight="900" fill="#0B132B" letter-spacing="-0.5">VELTRIX HUB</text>
+    <text x="75" y="52" font-family="system-ui, sans-serif" font-size="12" font-weight="700" fill="#F5691C" letter-spacing="2">OFFICIAL CORPORATE AFFAIRS REGISTRATION</text>
+
+    <!-- Topic Badge (Top Right) -->
+    <g transform="translate(960, 15)">
+      <rect x="-380" y="0" width="380" height="38" rx="19" fill="#F1F5F9" stroke="#E2E8F0" stroke-width="1.5" />
+      <text x="-190" y="24" font-family="system-ui, sans-serif" font-size="12" font-weight="800" fill="#F5691C" letter-spacing="1" text-anchor="middle">CAC & BUSINESS COMPLIANCE</text>
+    </g>
+  </g>
+
+  <!-- ================= HEADLINE HOOK (DYNAMIC PER POST) ================= -->
+  <g transform="translate(60, 160)">
+    <!-- Category label -->
+    <text x="0" y="0" font-family="system-ui, sans-serif" font-size="14" font-weight="800" fill="#F5691C" letter-spacing="2.5">
+      🎯 CLIENT CONVERSION HOOK
+    </text>
+
+    <!-- Dynamic Headline ForeignObject for Wrap -->
+    <foreignObject x="0" y="15" width="960" height="230">
+      <div xmlns="http://www.w3.org/1999/xhtml" style="font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif; font-size: 46px; font-weight: 900; line-height: 1.18; color: #0B132B; letter-spacing: -1.2px;">
+        CAC Registration isn't an expense. It's the <span style="color: #F5691C; text-decoration: underline; text-decoration-color: #F5691C80;">foundation of business trust.</span>
+      </div>
+    </foreignObject>
+  </g>
+
+  <!-- ================= CONTENT FOCUS CARD ================= -->
+  <g transform="translate(60, 410)">
+    <rect x="0" y="0" width="960" height="390" rx="28" fill="#F1F5F9" stroke="#E2E8F0" stroke-width="2" filter="url(#cardShadow)" />
+
+    
+
+    <!-- Bullets Container -->
+    <g transform="translate(45, 45)">
+      
+        <g transform="translate(0, 0)">
+          <circle cx="20" cy="20" r="16" fill="#F5691C25" stroke="#F5691C" stroke-width="2" />
+          <text x="20" y="26" font-family="system-ui, sans-serif" font-size="16" font-weight="900" fill="#F5691C" text-anchor="middle">✓</text>
+          <foreignObject x="55" y="3" width="800" height="60">
+            <div xmlns="http://www.w3.org/1999/xhtml" style="font-family: system-ui, sans-serif; font-size: 21px; font-weight: 700; color: #0B132B; line-height: 1.35;">
+              Open verified corporate business bank accounts
+            </div>
+          </foreignObject>
+        </g>
+      
+        <g transform="translate(0, 65)">
+          <circle cx="20" cy="20" r="16" fill="#F5691C25" stroke="#F5691C" stroke-width="2" />
+          <text x="20" y="26" font-family="system-ui, sans-serif" font-size="16" font-weight="900" fill="#F5691C" text-anchor="middle">✓</text>
+          <foreignObject x="55" y="3" width="800" height="60">
+            <div xmlns="http://www.w3.org/1999/xhtml" style="font-family: system-ui, sans-serif; font-size: 21px; font-weight: 700; color: #0B132B; line-height: 1.35;">
+              Protect your business name from competitor theft
+            </div>
+          </foreignObject>
+        </g>
+      
+        <g transform="translate(0, 130)">
+          <circle cx="20" cy="20" r="16" fill="#F5691C25" stroke="#F5691C" stroke-width="2" />
+          <text x="20" y="26" font-family="system-ui, sans-serif" font-size="16" font-weight="900" fill="#F5691C" text-anchor="middle">✓</text>
+          <foreignObject x="55" y="3" width="800" height="60">
+            <div xmlns="http://www.w3.org/1999/xhtml" style="font-family: system-ui, sans-serif; font-size: 21px; font-weight: 700; color: #0B132B; line-height: 1.35;">
+              Qualify for corporate contracts and federal grants
+            </div>
+          </foreignObject>
+        </g>
+      
+    </g>
+  </g>
+
+  <!-- ================= BOTTOM CONTACT / CALL TO ACTION RIBBON ================= -->
+  <g transform="translate(60, 890)">
+    <!-- Main CTA Bar -->
+    <rect x="0" y="0" width="960" height="130" rx="24" fill="#0B132B" stroke="#E2E8F0" stroke-width="2" />
+
+    <!-- WhatsApp CTA Button -->
+    <g transform="translate(30, 28)">
+      <rect x="0" y="0" width="460" height="74" rx="20" fill="url(#btnGrad)" filter="url(#cardShadow)" />
+      <text x="230" y="44" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="18" font-weight="800" fill="#FFFFFF" text-anchor="middle">
+        💬 Direct WhatsApp: +234 808 709 8270
+      </text>
+    </g>
+
+    <!-- Web & Social Badges -->
+    <g transform="translate(520, 42)">
+      <text x="0" y="16" font-family="system-ui, sans-serif" font-size="16" font-weight="800" fill="#FFFFFF">🌐 www.veltrixhub.ng</text>
+      <text x="0" y="42" font-family="system-ui, sans-serif" font-size="13" font-weight="700" fill="#94A3B8">
+        Official CAC Registered • Pan-African Growth
+      </text>
+    </g>
+  </g>
+</svg>

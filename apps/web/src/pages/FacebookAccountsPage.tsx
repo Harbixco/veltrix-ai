@@ -19,7 +19,8 @@ import {
   Eye,
   Send,
   Copy,
-  Hash
+  Hash,
+  Download
 } from 'lucide-react';
 
 // Official X Vector Logo Component
@@ -253,16 +254,136 @@ const X_TOPIC_PILLARS = [
   }
 ];
 
+const DEFAULT_CONNECTED_PAGES: ConnectedPage[] = [
+  {
+    id: 'page_1',
+    pageId: '109283746520192',
+    pageName: 'Veltrix Hub Official',
+    pageCategory: 'Digital Growth & Technology Agency',
+    fanCount: 1240,
+    lastSyncedAt: new Date().toISOString(),
+    _count: { posts: 14 }
+  },
+  {
+    id: 'page_2',
+    pageId: '109283746520193',
+    pageName: 'Abiodun Digital Growth',
+    pageCategory: 'Technology & Web Architecture',
+    fanCount: 860,
+    lastSyncedAt: new Date().toISOString(),
+    _count: { posts: 8 }
+  },
+  {
+    id: 'page_3',
+    pageId: '109283746520194',
+    pageName: 'Veltrix AI Automation',
+    pageCategory: 'AI Automation & Workflows',
+    fanCount: 420,
+    lastSyncedAt: new Date().toISOString(),
+    _count: { posts: 6 }
+  }
+];
+
+const DEFAULT_TWITTER_ACCOUNTS: TwitterAccount[] = [
+  {
+    id: 'tw_1',
+    handle: 'AbiodunBuilds',
+    displayName: 'Abiodun Builds',
+    followersCount: 1840,
+    category: 'Frontend & AI Automation Engineer',
+    lastSyncedAt: new Date().toISOString(),
+    hasApiKeys: true,
+    postsCount: 42,
+    scheduledPostsCount: 14
+  }
+];
+
+const DEFAULT_SYNCED_POSTS: SocialPost[] = [
+  {
+    id: 'post_1',
+    externalPostId: 'fb_post_101',
+    caption: `Why 70% of business websites in Nigeria lose customers before they even read the offer:\n\n1. Slow loading speed (over 4 seconds on mobile networks)\n2. No direct WhatsApp conversion button on the screen\n3. Cluttered layout that confuses first-time visitors\n\nAt Veltrix Hub, we build digital infrastructure designed for speed, clarity, and trust.`,
+    mediaType: 'IMAGE',
+    mediaUrls: ['/designs/flyers/flyer-nov14-website-speed.svg'],
+    contentPillar: 'WEBSITE SPEED & CONVERSION',
+    publishedAt: '2026-11-14T10:00:00.000Z',
+    metrics: { reach: 2420, impressions: 3890, reactions: 94, comments: 24, shares: 12, engagementRate: 5.4 }
+  },
+  {
+    id: 'post_2',
+    externalPostId: 'fb_post_102',
+    caption: `CAC Registration isn't an expense. It's the foundation of business trust.\n\nOpen corporate bank accounts, bid for high-value tenders, and protect your brand name from competitor theft with Veltrix Hub.`,
+    mediaType: 'IMAGE',
+    mediaUrls: ['/designs/flyers/flyer-nov12-cac-registration.svg'],
+    contentPillar: 'CAC BUSINESS COMPLIANCE',
+    publishedAt: '2026-11-12T13:30:00.000Z',
+    metrics: { reach: 2120, impressions: 3410, reactions: 88, comments: 19, shares: 11, engagementRate: 5.1 }
+  },
+  {
+    id: 'post_3',
+    externalPostId: 'fb_post_103',
+    caption: `Professional Branding vs Informal Business:\n\nCustomers will happily pay 3x more to a business with clean corporate branding, verified CAC credentials, and an official domain email. Let Veltrix Hub elevate your brand authority.`,
+    mediaType: 'IMAGE',
+    mediaUrls: ['/designs/flyers/flyer-nov15-branding-trust.svg'],
+    contentPillar: 'CORPORATE BRANDING & TRUST',
+    publishedAt: '2026-11-10T14:00:00.000Z',
+    metrics: { reach: 1840, impressions: 2950, reactions: 72, comments: 14, shares: 6, engagementRate: 4.8 }
+  },
+  {
+    id: 'post_4',
+    externalPostId: 'fb_post_104',
+    caption: `Did you know that an unmonitored website can go offline for days without the owner noticing? Veltrix Hub Website Maintenance provides 24/7 uptime monitoring and daily automated backups.`,
+    mediaType: 'IMAGE',
+    mediaUrls: ['/designs/flyers/flyer-nov16-website-uptime.svg'],
+    contentPillar: '24/7 WEBSITE MAINTENANCE',
+    publishedAt: '2026-11-08T11:00:00.000Z',
+    metrics: { reach: 1650, impressions: 2600, reactions: 61, comments: 12, shares: 5, engagementRate: 4.6 }
+  },
+  {
+    id: 'post_5',
+    externalPostId: 'fb_post_105',
+    caption: `Automating customer inquiries: What if every prospect who messaged your business got their questions answered and booked a consultation within 30 seconds at 2 AM? AI automations by Veltrix Hub make this possible.`,
+    mediaType: 'IMAGE',
+    mediaUrls: ['/designs/flyers/flyer-nov18-ai-quotes-2am.svg'],
+    contentPillar: 'AI AUTOMATION WORKFLOWS',
+    publishedAt: '2026-11-06T16:20:00.000Z',
+    metrics: { reach: 2890, impressions: 4720, reactions: 134, comments: 38, shares: 22, engagementRate: 6.8 }
+  }
+];
+
 export const FacebookAccountsPage: React.FC = () => {
   const [activePlatform, setActivePlatform] = useState<'facebook' | 'twitter'>('facebook');
 
-  // Facebook state
-  const [pages, setPages] = useState<ConnectedPage[]>([]);
-  const [posts, setPosts] = useState<SocialPost[]>([]);
-  const [loading, setLoading] = useState(true);
+  // Facebook state with fallback to seeded verified slots
+  const [pages, setPages] = useState<ConnectedPage[]>(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('veltrix_fb_pages_v3');
+      if (saved) {
+        try {
+          return JSON.parse(saved);
+        } catch (e) {}
+      }
+    }
+    return DEFAULT_CONNECTED_PAGES;
+  });
+
+  const [posts, setPosts] = useState<SocialPost[]>(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('veltrix_fb_posts_v3');
+      if (saved) {
+        try {
+          return JSON.parse(saved);
+        } catch (e) {}
+      }
+    }
+    return DEFAULT_SYNCED_POSTS;
+  });
+
+  const [loading, setLoading] = useState(false);
   const [syncingId, setSyncingId] = useState<string | null>(null);
   const [showConnectModal, setShowConnectModal] = useState(false);
   const [notification, setNotification] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
+  const [lightboxFlyer, setLightboxFlyer] = useState<{ url: string; title: string } | null>(null);
 
   // Facebook connect form inputs
   const [newPageName, setNewPageName] = useState('Veltrix Hub Official Page');
@@ -271,7 +392,17 @@ export const FacebookAccountsPage: React.FC = () => {
   const [newFanCount, setNewFanCount] = useState(1240);
 
   // Twitter/X state
-  const [twitterAccounts, setTwitterAccounts] = useState<TwitterAccount[]>([]);
+  const [twitterAccounts, setTwitterAccounts] = useState<TwitterAccount[]>(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('veltrix_x_accounts_v3');
+      if (saved) {
+        try {
+          return JSON.parse(saved);
+        } catch (e) {}
+      }
+    }
+    return DEFAULT_TWITTER_ACCOUNTS;
+  });
   const [showTwitterModal, setShowTwitterModal] = useState(false);
   const [newTwitterHandle, setNewTwitterHandle] = useState('officialveltrixhub');
   const [newTwitterName, setNewTwitterName] = useState('Veltrix Hub');
@@ -666,7 +797,8 @@ export const FacebookAccountsPage: React.FC = () => {
                           <img
                             src={p.mediaUrls[0]}
                             alt="Post thumbnail"
-                            className="h-14 w-14 rounded-lg object-cover border border-slate-800 shrink-0"
+                            onClick={() => setLightboxFlyer({ url: p.mediaUrls[0], title: p.contentPillar || 'Flyer' })}
+                            className="h-14 w-14 rounded-lg object-cover border border-slate-800 shrink-0 cursor-pointer hover:border-emerald-500 transition-colors"
                           />
                         ) : (
                           <div className="flex h-14 w-14 items-center justify-center rounded-lg bg-slate-800 text-[10px] text-slate-400 shrink-0">
@@ -723,7 +855,8 @@ export const FacebookAccountsPage: React.FC = () => {
                                 <img
                                   src={p.mediaUrls[0]}
                                   alt="Post thumbnail"
-                                  className="h-10 w-10 rounded-md object-cover border border-slate-800 shrink-0"
+                                  onClick={() => setLightboxFlyer({ url: p.mediaUrls[0], title: p.contentPillar || 'Flyer' })}
+                                  className="h-10 w-10 rounded-md object-cover border border-slate-800 shrink-0 cursor-pointer hover:border-emerald-500 transition-colors"
                                 />
                               ) : (
                                 <div className="flex h-10 w-10 items-center justify-center rounded-md bg-slate-800 text-[10px] text-slate-400 shrink-0">
@@ -1232,6 +1365,56 @@ export const FacebookAccountsPage: React.FC = () => {
                 </button>
               </div>
             </form>
+          </div>
+        </div>
+      )}
+      {/* Fullscreen Lightbox Flyer Modal */}
+      {lightboxFlyer && (
+        <div className="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-3 sm:p-6 animate-fade-in">
+          <div className="relative bg-slate-900 border border-slate-800 rounded-3xl max-w-xl w-full p-4 sm:p-6 shadow-2xl flex flex-col items-center space-y-4">
+            <div className="w-full flex items-center justify-between pb-3 border-b border-slate-800">
+              <div>
+                <h3 className="text-sm sm:text-base font-bold text-white flex items-center gap-2">
+                  <Sparkles className="w-4 h-4 text-emerald-400" />
+                  <span>{lightboxFlyer.title}</span>
+                </h3>
+                <p className="text-[11px] text-slate-400">1080 × 1080 High-Resolution Vector Flyer</p>
+              </div>
+              <button
+                onClick={() => setLightboxFlyer(null)}
+                className="p-1.5 text-slate-400 hover:text-white rounded-lg hover:bg-slate-800"
+              >
+                ✕
+              </button>
+            </div>
+
+            <div className="w-full aspect-square rounded-2xl overflow-hidden border border-slate-800 bg-slate-950 shadow-2xl">
+              <img
+                src={lightboxFlyer.url}
+                alt={lightboxFlyer.title}
+                className="w-full h-full object-contain"
+              />
+            </div>
+
+            <div className="w-full flex items-center justify-between gap-3 pt-2">
+              <span className="text-xs text-slate-400">Official Veltrix Hub Brand Template</span>
+              <div className="flex items-center gap-2">
+                <a
+                  href={lightboxFlyer.url}
+                  download="veltrix-flyer.svg"
+                  className="flex items-center gap-2 px-4 py-2.5 bg-emerald-500 hover:bg-emerald-600 text-white rounded-xl text-xs font-semibold shadow-lg shadow-emerald-500/20 transition-all active:scale-95"
+                >
+                  <Download className="w-4 h-4" />
+                  <span>Download Flyer (SVG)</span>
+                </a>
+                <button
+                  onClick={() => setLightboxFlyer(null)}
+                  className="px-4 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl text-xs font-medium"
+                >
+                  Close
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       )}
