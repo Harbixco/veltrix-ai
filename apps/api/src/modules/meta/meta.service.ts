@@ -139,6 +139,34 @@ export class MetaService {
   }
 
   /**
+   * Updates or replaces the Page Access Token for direct Graph API publishing
+   */
+  async updatePageToken(organizationId: string, pageId: string, rawToken: string) {
+    const trimmed = rawToken.trim();
+    if (!trimmed) {
+      throw new Error('Page Access Token cannot be empty.');
+    }
+
+    const encryptedToken = encryptToken(trimmed);
+
+    // Update parent SocialAccount if exists
+    await prisma.socialAccount.updateMany({
+      where: { organizationId, accountId: pageId },
+      data: { encryptedToken }
+    });
+
+    // Update SocialPage
+    const updated = await prisma.socialPage.update({
+      where: {
+        organizationId_pageId: { organizationId, pageId }
+      },
+      data: { encryptedToken }
+    });
+
+    return updated;
+  }
+
+  /**
    * Synchronizes historical posts and metrics for a connected Facebook Page
    */
   async syncPagePosts(organizationId: string, pageId: string): Promise<MetaPageSyncResult> {

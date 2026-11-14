@@ -80,6 +80,36 @@ export async function syncPage(req: AuthenticatedRequest, res: Response, next: N
   }
 }
 
+export async function updatePageToken(req: AuthenticatedRequest, res: Response, next: NextFunction) {
+  try {
+    const pageId = String(req.params.pageId);
+    const { rawToken } = req.body;
+
+    if (!rawToken) {
+      return res.status(400).json({
+        success: false,
+        error: { code: 'VALIDATION_ERROR', message: 'Page Access Token is required' }
+      });
+    }
+
+    const page = await metaService.updatePageToken(req.user!.organizationId, pageId, rawToken);
+
+    res.json({
+      success: true,
+      data: {
+        message: 'Page Access Token updated successfully. Direct publishing is now authorized.',
+        pageId: page.pageId,
+        pageName: page.pageName
+      }
+    });
+  } catch (error: any) {
+    res.status(400).json({
+      success: false,
+      error: { code: 'TOKEN_UPDATE_ERROR', message: error.message }
+    });
+  }
+}
+
 export async function disconnectPage(req: AuthenticatedRequest, res: Response, next: NextFunction) {
   try {
     const pageId = String(req.params.pageId);

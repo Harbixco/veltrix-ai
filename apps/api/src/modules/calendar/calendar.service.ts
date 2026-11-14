@@ -179,44 +179,110 @@ export class CalendarService {
 
     let publishedExternalId = `post_${Date.now()}`;
     let permalinkUrl = `https://facebook.com/${post.page.pageId}/posts/${publishedExternalId}`;
+    let isLivePublished = false;
 
-    // Attempt live Meta Graph API call if token is present and valid
-    if (post.page.encryptedToken) {
-      const decryptedToken = decryptToken(post.page.encryptedToken);
-      if (
-        decryptedToken &&
-        !decryptedToken.startsWith('simulated_') &&
-        !decryptedToken.startsWith('test_') &&
-        !decryptedToken.startsWith('mock_')
-      ) {
-        try {
-          const hasHttpImage =
-            post.mediaUrls &&
-            post.mediaUrls.length > 0 &&
-            post.mediaUrls[0].startsWith('http');
+    // Direct Meta Graph API publishing (Metricool workflow)
+    if (!post.page.encryptedToken) {
+      throw new Error(
+        'No access token found for this Facebook page. Please update your Page Access Token in Social Accounts to enable direct publishing.'
+      );
+    }
 
-          const endpoint = hasHttpImage
-            ? `https://graph.facebook.com/v19.0/${post.page.pageId}/photos`
-            : `https://graph.facebook.com/v19.0/${post.page.pageId}/feed`;
+    const decryptedToken = decryptToken(post.page.encryptedToken);
 
-          const payload = hasHttpImage
-            ? { caption: post.caption, url: post.mediaUrls[0], access_token: decryptedToken }
-            : { message: post.caption, access_token: decryptedToken };
+    if (
+      !decryptedToken ||
+      decryptedToken.startsWith('simulated_') ||
+      decryptedToken.startsWith('test_') ||
+      decryptedToken.startsWith('mock_')
+    ) {
+      throw new Error(
+        'Direct publishing to Facebook requires a live Meta Page Access Token (EAAG...). Currently, this page has a placeholder token. Please update your token in Social Accounts to post directly like Metricool.'
+      );
+    }
 
-          const response = await fetch(endpoint, {
+    try {
+      const hasMedia = post.mediaUrls && post.mediaUrls.length > 0 && Boolean(post.mediaUrls[0]);
+
+      if (hasMedia) {
+        const media = post.mediaUrls[0];
+        if (media.startsWith('data:image/')) {
+          // Base64 flyer multipart upload via FormData
+          const [header, base64Data] = media.split(';base64,');
+          const mimeType = header ? header.replace('data:', '') : 'image/jpeg';
+          const buffer = Buffer.from(base64Data, 'base64');
+          const blob = new Blob([buffer], { type: mimeType });
+
+          const formData = new FormData();
+          formData.append('source', blob, 'flyer.jpg');
+          if (post.caption) {
+            formData.append('caption', post.caption);
+          }
+          formData.append('access_token', decryptedToken);
+
+          const response = await fetch(`https://graph.facebook.com/v19.0/${post.page.pageId}/photos`, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
+            body: formData
           });
-          const result = await response.json();
+
+          const result = (await response.json()) as any;
+          if (result.error) {
+            throw new Error(`Meta Graph API Error: ${result.error.message || 'Failed to upload photo'} (Code: ${result.error.code || 'unknown'})`);
+          }
+
           if (result.id) {
             publishedExternalId = result.id;
             permalinkUrl = `https://facebook.com/${publishedExternalId}`;
+            isLivePublished = true;
           }
-        } catch (apiErr) {
-          console.warn('[Meta Publishing Warning] Live Graph API call failed:', apiErr);
+        } else if (media.startsWith('http')) {
+          // Public image URL
+          const response = await fetch(`https://graph.facebook.com/v19.0/${post.page.pageId}/photos`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              url: media,
+              caption: post.caption,
+              access_token: decryptedToken
+            })
+          });
+
+          const result = (await response.json()) as any;
+          if (result.error) {
+            throw new Error(`Meta Graph API Error: ${result.error.message || 'Failed to publish photo'} (Code: ${result.error.code || 'unknown'})`);
+          }
+
+          if (result.id) {
+            publishedExternalId = result.id;
+            permalinkUrl = `https://facebook.com/${publishedExternalId}`;
+            isLivePublished = true;
+          }
+        }
+      } else {
+        // Text-only post via /feed
+        const response = await fetch(`https://graph.facebook.com/v19.0/${post.page.pageId}/feed`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            message: post.caption,
+            access_token: decryptedToken
+          })
+        });
+
+        const result = (await response.json()) as any;
+        if (result.error) {
+          throw new Error(`Meta Graph API Error: ${result.error.message || 'Failed to publish post'} (Code: ${result.error.code || 'unknown'})`);
+        }
+
+        if (result.id) {
+          publishedExternalId = result.id;
+          permalinkUrl = `https://facebook.com/${publishedExternalId}`;
+          isLivePublished = true;
         }
       }
+    } catch (apiErr: any) {
+      console.error('[Meta Direct Publish Error]', apiErr);
+      throw apiErr;
     }
 
     // 1. Update ScheduledPost status
@@ -272,6 +338,7 @@ export class CalendarService {
 
     return {
       success: true,
+      livePublished: isLivePublished,
       scheduledPost: updatedScheduled,
       publishedPost,
       permalinkUrl

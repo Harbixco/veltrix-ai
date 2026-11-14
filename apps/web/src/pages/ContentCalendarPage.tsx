@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import {
   Upload,
   Sun,
@@ -24,7 +25,9 @@ import {
   Check,
   X,
   Download,
-  Maximize2
+  Maximize2,
+  Key,
+  RefreshCw
 } from 'lucide-react';
 
 // Official X Vector Logo Component
@@ -523,6 +526,13 @@ export const ContentCalendarPage: React.FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [actionSuccess, setActionSuccess] = useState<string | null>(null);
 
+  // Direct publishing state (Metricool mode)
+  const [publishingId, setPublishingId] = useState<string | null>(null);
+  const [directPublishNotice, setDirectPublishNotice] = useState<{
+    post: ScheduledPost;
+    message: string;
+  } | null>(null);
+
   // Sync to localStorage with safe try-catch
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -847,27 +857,14 @@ export const ContentCalendarPage: React.FC = () => {
     }
   };
 
-  // Publish immediate handler
-  const handlePublishNow = async (postId: string) => {
-    const post = scheduledPosts.find((p) => p.id === postId);
-    if (!post) return;
-
-    if (post.channel === 'TWITTER' || post.page?.pageId === 'AbiodunBuilds') {
-      window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(post.caption)}`, '_blank');
-      setActionSuccess('Opening 𝕏 Tweet Composer with pre-filled content!');
-      setTimeout(() => setActionSuccess(null), 3000);
-      return;
-    }
-
-    // Facebook Post Assisted Flow:
-    // 1. Copy caption to clipboard
+  // Helper for manual fallback when Meta direct API token is missing
+  const handleManualFallbackPost = async (post: ScheduledPost) => {
     try {
       await navigator.clipboard.writeText(post.caption);
     } catch (e) {
       console.warn('Clipboard write failed:', e);
     }
 
-    // 2. Download flyer if attached so user has it instantly ready to drop into Facebook
     const hasFlyer = post.mediaUrls && post.mediaUrls.length > 0 && post.mediaUrls[0];
     if (hasFlyer) {
       try {
@@ -882,25 +879,13 @@ export const ContentCalendarPage: React.FC = () => {
       }
     }
 
-    // 3. Open Facebook in new tab
     const fbUrl = post.page?.pageId && !isNaN(Number(post.page.pageId))
       ? `https://facebook.com/${post.page.pageId}`
       : 'https://www.facebook.com';
     window.open(fbUrl, '_blank');
 
-    // 4. Mark as published on backend
-    try {
-      const token = localStorage.getItem('veltrix_token');
-      await fetch(`/api/v1/calendar/publish-now/${postId}`, {
-        method: 'POST',
-        headers: { Authorization: token ? `Bearer ${token}` : '' }
-      });
-    } catch (err) {
-      // Offline fallback
-    }
-
-    // 5. Move to published list
-    const updatedScheduled = scheduledPosts.filter((p) => p.id !== postId);
+    // Move to published locally
+    const updatedScheduled = scheduledPosts.filter((p) => p.id !== post.id);
     const newPublished: PublishedPost = {
       id: `pub_${Date.now()}`,
       socialPageId: post.socialPageId,
@@ -910,18 +895,86 @@ export const ContentCalendarPage: React.FC = () => {
       contentPillar: post.topicBadge || 'Social Broadcast',
       publishedAt: new Date().toISOString(),
       channel: post.channel,
-      metrics: { reach: 1, engagementRate: 100, reactions: 1 }
+      metrics: { reach: 1, engagementRate: 0, reactions: 0 }
     };
-
     setScheduledPosts(updatedScheduled);
     setPublishedPosts([newPublished, ...publishedPosts]);
-
-    if (hasFlyer) {
-      setActionSuccess('📋 Caption copied & flyer downloaded! Facebook opened — paste (Ctrl+V) & attach flyer to post.');
-    } else {
-      setActionSuccess('📋 Caption copied to clipboard & Facebook opened! Simply paste (Ctrl+V) to post.');
-    }
+    setDirectPublishNotice(null);
+    setActionSuccess('📋 Caption copied & flyer downloaded! Opened Facebook to paste & finish.');
     setTimeout(() => setActionSuccess(null), 5000);
+  };
+
+  // Publish immediate handler (Direct Facebook API publishing like Metricool)
+  const handlePublishNow = async (postId: string) => {
+    const post = scheduledPosts.find((p) => p.id === postId);
+    if (!post) return;
+
+    if (post.channel === 'TWITTER' || post.page?.pageId === 'AbiodunBuilds') {
+      window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(post.caption)}`, '_blank');
+      setActionSuccess('Opening 𝕏 Tweet Composer with pre-filled content!');
+      setTimeout(() => setActionSuccess(null), 3000);
+      return;
+    }
+
+    // Direct Facebook Publishing (Metricool Mode)
+    setPublishingId(postId);
+    setActionSuccess('Publishing directly to Facebook Page via Meta Graph API...');
+
+    try {
+      const token = localStorage.getItem('veltrix_token');
+      const res = await fetch(`/api/v1/calendar/publish-now/${postId}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: token ? `Bearer ${token}` : ''
+        }
+      });
+
+      const data = await res.json();
+
+      if (!res.ok || data.error) {
+        const errorMsg =
+          data.error?.message ||
+          data.message ||
+          'Meta Graph API rejected the direct publish request.';
+        setDirectPublishNotice({ post, message: errorMsg });
+        setActionSuccess(null);
+        return;
+      }
+
+      // Success: Directly Published on Facebook!
+      const updatedScheduled = scheduledPosts.filter((p) => p.id !== postId);
+      const newPublished: PublishedPost = {
+        id: data.publishedPost?.id || `pub_${Date.now()}`,
+        socialPageId: post.socialPageId,
+        pageName: post.page?.pageName || 'Facebook Page',
+        caption: post.caption,
+        mediaUrls: post.mediaUrls,
+        contentPillar: post.topicBadge || 'Social Broadcast',
+        publishedAt: new Date().toISOString(),
+        channel: post.channel,
+        metrics: { reach: 1, engagementRate: 100, reactions: 1 }
+      };
+
+      setScheduledPosts(updatedScheduled);
+      setPublishedPosts([newPublished, ...publishedPosts]);
+
+      if (data.permalinkUrl) {
+        setActionSuccess(`🎉 Published directly to Facebook! Post is live on your Page timeline.`);
+      } else {
+        setActionSuccess('🎉 Published directly to your Facebook Page timeline!');
+      }
+      setTimeout(() => setActionSuccess(null), 6000);
+    } catch (err: any) {
+      console.error('Publish error:', err);
+      setDirectPublishNotice({
+        post,
+        message: err.message || 'Network connection failed while calling Meta Graph API'
+      });
+      setActionSuccess(null);
+    } finally {
+      setPublishingId(null);
+    }
   };
 
   // Cancel scheduled post
@@ -1633,11 +1686,21 @@ export const ContentCalendarPage: React.FC = () => {
 
                             <button
                               onClick={() => handlePublishNow(post.id)}
-                              className="flex-1 sm:flex-initial flex items-center justify-center gap-1.5 px-3.5 py-2 bg-[#1877F2] hover:bg-[#166fe5] text-white text-xs font-semibold rounded-xl transition-colors min-h-[38px] active:scale-95 shadow-sm"
-                              title="Copy caption, download flyer & open Facebook"
+                              disabled={publishingId === post.id}
+                              className="flex-1 sm:flex-initial flex items-center justify-center gap-1.5 px-3.5 py-2 bg-[#1877F2] hover:bg-[#166fe5] text-white text-xs font-semibold rounded-xl transition-colors min-h-[38px] active:scale-95 shadow-sm disabled:opacity-50"
+                              title="Direct Meta publish like Metricool"
                             >
-                              <Facebook className="w-3.5 h-3.5" />
-                              <span>Post to Facebook</span>
+                              {publishingId === post.id ? (
+                                <>
+                                  <RefreshCw className="w-3.5 h-3.5 animate-spin" />
+                                  <span>Publishing...</span>
+                                </>
+                              ) : (
+                                <>
+                                  <Facebook className="w-3.5 h-3.5" />
+                                  <span>Publish to Facebook</span>
+                                </>
+                              )}
                             </button>
                           </>
                         )}
@@ -1997,11 +2060,21 @@ export const ContentCalendarPage: React.FC = () => {
                             ) : (
                               <button
                                 onClick={() => handlePublishNow(post.id)}
-                                className="px-3 py-1 text-xs font-semibold bg-[#1877F2] hover:bg-[#166fe5] text-white rounded-lg flex items-center gap-1.5 shadow-sm"
-                                title="Copy caption, download flyer & open Facebook"
+                                disabled={publishingId === post.id}
+                                className="px-3 py-1.5 text-xs font-semibold bg-[#1877F2] hover:bg-[#166fe5] text-white rounded-lg flex items-center gap-1.5 shadow-sm disabled:opacity-50"
+                                title="Direct Meta publish like Metricool"
                               >
-                                <Facebook className="w-3 h-3" />
-                                <span>Post to Facebook</span>
+                                {publishingId === post.id ? (
+                                  <>
+                                    <RefreshCw className="w-3 h-3 animate-spin" />
+                                    <span>Publishing...</span>
+                                  </>
+                                ) : (
+                                  <>
+                                    <Facebook className="w-3 h-3" />
+                                    <span>Publish to Facebook</span>
+                                  </>
+                                )}
                               </button>
                             )}
                           </div>
@@ -2261,6 +2334,75 @@ export const ContentCalendarPage: React.FC = () => {
                 </button>
               </div>
             </form>
+          </div>
+        </div>
+      )}
+      {/* ========================================================================= */}
+      {/* DIRECT PUBLISHING NOTICE MODAL (METRICOOL REQUIREMENT) */}
+      {/* ========================================================================= */}
+      {directPublishNotice && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
+          <div className="w-full max-w-lg rounded-2xl border border-blue-500/30 bg-[#0B0F19] p-6 shadow-2xl space-y-4">
+            <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+              <div className="flex items-center gap-2.5">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-600 text-white shadow-lg shadow-blue-600/30">
+                  <Facebook className="h-5 w-5" />
+                </div>
+                <div>
+                  <h3 className="font-heading text-sm font-bold text-white">Direct Facebook Publishing</h3>
+                  <p className="text-[11px] text-slate-400">Meta Graph API Authentication Notice</p>
+                </div>
+              </div>
+              <button
+                onClick={() => setDirectPublishNotice(null)}
+                className="text-slate-400 hover:text-white text-lg p-1"
+              >
+                ✕
+              </button>
+            </div>
+
+            <div className="rounded-xl bg-amber-500/10 border border-amber-500/20 p-3.5 text-xs text-amber-200 space-y-2">
+              <div className="font-semibold text-amber-400 flex items-center gap-1.5">
+                <AlertCircle className="w-4 h-4 flex-shrink-0" />
+                <span>Meta API Notice:</span>
+              </div>
+              <p className="text-[11px] text-amber-300 leading-relaxed font-mono">
+                {directPublishNotice.message}
+              </p>
+            </div>
+
+            <div className="rounded-xl bg-slate-900 border border-slate-800 p-4 text-xs text-slate-300 space-y-2">
+              <p className="font-semibold text-white flex items-center gap-1.5">
+                <Sparkles className="w-3.5 h-3.5 text-blue-400" />
+                <span>How Metricool & Veltrix publish directly:</span>
+              </p>
+              <p className="text-[11px] text-slate-400 leading-relaxed">
+                Metricool posts directly without human intervention because it is authorized with a genuine <strong>Meta Page Access Token</strong> (starts with <code className="text-blue-300 font-mono">EAAG...</code>).
+              </p>
+              <p className="text-[11px] text-slate-400 leading-relaxed">
+                Once you paste your Page Access Token in <strong>Social Accounts</strong>, every click on <strong>Publish</strong> will send your posts & flyers directly to your Facebook Page timeline automatically!
+              </p>
+            </div>
+
+            <div className="flex flex-col sm:flex-row items-center gap-2.5 pt-2 border-t border-slate-800">
+              <Link
+                to="/facebook-accounts"
+                onClick={() => setDirectPublishNotice(null)}
+                className="w-full sm:flex-1 flex items-center justify-center gap-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white py-2.5 text-xs font-semibold shadow-lg shadow-blue-600/30 transition-all text-center"
+              >
+                <Key className="w-3.5 h-3.5" />
+                <span>Update Token in Social Accounts</span>
+              </Link>
+              <button
+                type="button"
+                onClick={() => handleManualFallbackPost(directPublishNotice.post)}
+                className="w-full sm:flex-initial flex items-center justify-center gap-1.5 rounded-xl border border-slate-700 bg-slate-800 hover:bg-slate-700 text-slate-200 px-4 py-2.5 text-xs font-medium transition-colors"
+                title="Copy caption, download flyer & open Facebook to post right now"
+              >
+                <Copy className="w-3.5 h-3.5" />
+                <span>Post Manually Right Now</span>
+              </button>
+            </div>
           </div>
         </div>
       )}

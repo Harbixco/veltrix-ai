@@ -22,7 +22,8 @@ import {
   Send,
   Copy,
   Hash,
-  Download
+  Download,
+  Key
 } from 'lucide-react';
 
 // Official X Vector Logo Component
@@ -392,6 +393,12 @@ export const FacebookAccountsPage: React.FC = () => {
   const [newPageId, setNewPageId] = useState('109823471928374');
   const [newPageCategory, setNewPageCategory] = useState('Digital Growth & Technology Agency');
   const [newFanCount, setNewFanCount] = useState(1240);
+  const [newRawToken, setNewRawToken] = useState('');
+
+  // Token update modal state (Metricool Direct Publishing)
+  const [showTokenModal, setShowTokenModal] = useState<{ pageId: string; pageName: string } | null>(null);
+  const [tokenInput, setTokenInput] = useState('');
+  const [isSubmittingToken, setIsSubmittingToken] = useState(false);
 
   // Twitter/X state
   const [twitterAccounts, setTwitterAccounts] = useState<TwitterAccount[]>(() => {
@@ -470,20 +477,68 @@ export const FacebookAccountsPage: React.FC = () => {
           pageName: newPageName,
           pageCategory: newPageCategory,
           fanCount: newFanCount,
-          rawToken: `mock_eaag_${Date.now()}`
+          rawToken: newRawToken.trim() || `mock_eaag_${Date.now()}`
         })
       });
 
       const data = await res.json();
       if (data.success) {
         setShowConnectModal(false);
-        setNotification({ type: 'success', message: `Page "${newPageName}" connected successfully!` });
+        setNewRawToken('');
+        setNotification({
+          type: 'success',
+          message: newRawToken.trim()
+            ? `Page "${newPageName}" connected with live Meta token! Direct publishing active.`
+            : `Page "${newPageName}" connected successfully!`
+        });
         fetchPagesAndPosts();
       } else {
         setNotification({ type: 'error', message: data.error?.message || 'Failed to connect page' });
       }
     } catch (err: any) {
       setNotification({ type: 'error', message: err.message || 'Connection failed' });
+    }
+  };
+
+  // Direct publishing token update handler (Metricool workflow)
+  const handleUpdateTokenSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!showTokenModal) return;
+
+    setIsSubmittingToken(true);
+    const token = localStorage.getItem('veltrix_token');
+
+    try {
+      const res = await fetch(`/api/v1/meta/pages/${showTokenModal.pageId}/token`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          rawToken: tokenInput.trim()
+        })
+      });
+
+      const data = await res.json();
+      if (res.ok && data.success) {
+        setShowTokenModal(null);
+        setTokenInput('');
+        setNotification({
+          type: 'success',
+          message: `Live Meta Page Access Token saved for "${showTokenModal.pageName}"! Direct publishing like Metricool is now fully enabled.`
+        });
+        fetchPagesAndPosts();
+      } else {
+        setNotification({
+          type: 'error',
+          message: data.error?.message || 'Failed to update token. Please verify the token string.'
+        });
+      }
+    } catch (err: any) {
+      setNotification({ type: 'error', message: err.message || 'Connection failed' });
+    } finally {
+      setIsSubmittingToken(false);
     }
   };
 
@@ -743,6 +798,17 @@ export const FacebookAccountsPage: React.FC = () => {
                       </div>
 
                       <div className="flex items-center gap-2 pt-2 border-t border-slate-800/80">
+                        <button
+                          onClick={() => {
+                            setShowTokenModal({ pageId: page.pageId, pageName: page.pageName });
+                            setTokenInput('');
+                          }}
+                          className="flex items-center justify-center gap-1.5 rounded-lg border border-blue-500/30 bg-blue-500/10 px-3 py-2 text-xs font-semibold text-blue-400 hover:bg-blue-500/20 transition-colors shadow-sm"
+                          title="Connect or update live Meta Page Access Token for direct Metricool-style publishing"
+                        >
+                          <Key className="h-3.5 w-3.5" />
+                          <span>Token</span>
+                        </button>
                         <button
                           onClick={() => handleSyncPage(page.pageId)}
                           disabled={isSyncing}
@@ -1275,6 +1341,23 @@ export const FacebookAccountsPage: React.FC = () => {
                 />
               </div>
 
+              <div>
+                <label className="block text-xs font-medium text-slate-300 mb-1">
+                  Meta Page Access Token (<span className="text-blue-400 font-mono">EAAG...</span>)
+                  <span className="text-emerald-400 text-[10px] ml-1.5">(Required for Direct Publishing like Metricool)</span>
+                </label>
+                <textarea
+                  rows={2}
+                  value={newRawToken}
+                  onChange={(e) => setNewRawToken(e.target.value)}
+                  className="w-full rounded-lg border border-slate-800 bg-slate-900 px-3 py-2 text-xs text-white focus:border-blue-500 focus:outline-none font-mono"
+                  placeholder="EAAG... (get from Meta Graph API Explorer or Meta Business Suite)"
+                />
+                <p className="text-[10px] text-slate-500 mt-1">
+                  Get your live Page Access Token from <a href="https://developers.facebook.com/tools/explorer/" target="_blank" rel="noreferrer" className="text-blue-400 hover:underline">Meta Graph API Explorer ↗</a> with <code className="text-slate-300">pages_manage_posts</code> permission.
+                </p>
+              </div>
+
               <div className="rounded-lg bg-blue-500/10 border border-blue-500/20 p-2.5 text-[11px] text-slate-400">
                 <span className="font-semibold text-blue-400">AES-256 Encryption: </span>
                 Tokens are cryptographically encrypted before persistence to MongoDB Atlas.
@@ -1293,6 +1376,90 @@ export const FacebookAccountsPage: React.FC = () => {
                   className="flex-1 rounded-lg bg-blue-600 py-2 text-xs font-semibold text-white shadow-lg shadow-blue-600/30 hover:bg-blue-500"
                 >
                   Confirm Connection
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* ========================================================================= */}
+      {/* UPDATE FACEBOOK PAGE ACCESS TOKEN MODAL (METRICOOL DIRECT POSTING) */}
+      {/* ========================================================================= */}
+      {showTokenModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
+          <div className="w-full max-w-md rounded-2xl border border-blue-500/30 bg-[#0B0F19] p-6 shadow-2xl space-y-4">
+            <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+              <div className="flex items-center gap-2.5">
+                <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-blue-600 text-white shadow-lg shadow-blue-600/30">
+                  <Key className="h-4 w-4" />
+                </div>
+                <div>
+                  <h3 className="font-heading text-sm font-bold text-white">Direct Facebook Publishing Token</h3>
+                  <p className="text-[11px] text-slate-400">{showTokenModal.pageName} (ID: {showTokenModal.pageId})</p>
+                </div>
+              </div>
+              <button
+                onClick={() => setShowTokenModal(null)}
+                className="text-slate-400 hover:text-white text-lg p-1"
+              >
+                ✕
+              </button>
+            </div>
+
+            <div className="rounded-xl bg-blue-500/10 border border-blue-500/20 p-3 text-xs text-slate-300 space-y-2">
+              <div className="font-semibold text-blue-400 flex items-center gap-1.5">
+                <Sparkles className="w-3.5 h-3.5" />
+                <span>Publish directly to your timeline (Same as Metricool)</span>
+              </div>
+              <p className="text-[11px] text-slate-400 leading-relaxed">
+                Metricool publishes directly by sending your post caption & flyer directly to Meta's Graph API using your Facebook Page's live <strong>Meta Page Access Token</strong> (starts with <code className="text-blue-300 font-mono">EAAG...</code>).
+              </p>
+              <div className="pt-1 text-[11px] text-slate-400 border-t border-blue-500/10">
+                <strong className="text-slate-200">How to get your Page Access Token in 30 seconds:</strong>
+                <ol className="list-decimal list-inside space-y-1 mt-1 text-slate-300">
+                  <li>Open the <a href="https://developers.facebook.com/tools/explorer/" target="_blank" rel="noreferrer" className="text-blue-400 underline font-semibold">Meta Graph API Explorer ↗</a></li>
+                  <li>In <em>Permissions</em>, add <code className="text-amber-300">pages_manage_posts</code> & <code className="text-amber-300">pages_read_engagement</code></li>
+                  <li>Under <em>User or Page</em> dropdown, select <strong>{showTokenModal.pageName}</strong></li>
+                  <li>Copy the generated Token (<code className="text-emerald-300">EAAG...</code>) and paste it below:</li>
+                </ol>
+              </div>
+            </div>
+
+            <form onSubmit={handleUpdateTokenSubmit} className="space-y-3">
+              <div>
+                <label className="block text-xs font-medium text-slate-300 mb-1">
+                  Live Meta Page Access Token (<span className="text-blue-400 font-mono">EAAG...</span>)
+                </label>
+                <textarea
+                  required
+                  rows={3}
+                  value={tokenInput}
+                  onChange={(e) => setTokenInput(e.target.value)}
+                  className="w-full rounded-lg border border-slate-800 bg-slate-900 px-3 py-2 text-xs text-white focus:border-blue-500 focus:outline-none font-mono"
+                  placeholder="Paste your live Page Access Token here..."
+                />
+              </div>
+
+              <div className="rounded-lg bg-slate-900/80 border border-slate-800 p-2.5 text-[11px] text-slate-400 flex items-center gap-2">
+                <Shield className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" />
+                <span>Token is encrypted with AES-256-GCM before saving to MongoDB Atlas.</span>
+              </div>
+
+              <div className="flex items-center gap-3 pt-2">
+                <button
+                  type="button"
+                  onClick={() => setShowTokenModal(null)}
+                  className="flex-1 rounded-lg border border-slate-800 bg-slate-900 py-2 text-xs font-medium text-slate-300 hover:bg-slate-800"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  disabled={isSubmittingToken || !tokenInput.trim()}
+                  className="flex-1 rounded-lg bg-blue-600 py-2 text-xs font-semibold text-white shadow-lg shadow-blue-600/30 hover:bg-blue-500 disabled:opacity-50"
+                >
+                  {isSubmittingToken ? 'Saving Token...' : 'Save & Enable Direct Posting'}
                 </button>
               </div>
             </form>

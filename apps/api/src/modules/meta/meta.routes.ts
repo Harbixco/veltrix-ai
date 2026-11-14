@@ -3,6 +3,7 @@ import {
   getPages,
   getOAuthUrl,
   connectPage,
+  updatePageToken,
   syncPage,
   disconnectPage,
   getRecentPosts
@@ -17,6 +18,7 @@ router.use(authenticate, tenantGuard);
 router.get('/pages', getPages);
 router.get('/oauth-url', getOAuthUrl);
 router.post('/connect-page', connectPage);
+router.post('/pages/:pageId/token', updatePageToken);
 router.post('/sync/:pageId', syncPage);
 router.delete('/pages/:pageId', disconnectPage);
 router.get('/posts', getRecentPosts);
