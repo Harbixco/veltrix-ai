@@ -859,8 +859,37 @@ export const ContentCalendarPage: React.FC = () => {
       return;
     }
 
+    // Facebook Post Assisted Flow:
+    // 1. Copy caption to clipboard
     try {
-      setActionSuccess('Publishing to connected Facebook Page via Graph API...');
+      await navigator.clipboard.writeText(post.caption);
+    } catch (e) {
+      console.warn('Clipboard write failed:', e);
+    }
+
+    // 2. Download flyer if attached so user has it instantly ready to drop into Facebook
+    const hasFlyer = post.mediaUrls && post.mediaUrls.length > 0 && post.mediaUrls[0];
+    if (hasFlyer) {
+      try {
+        const a = document.createElement('a');
+        a.href = post.mediaUrls[0];
+        a.download = `facebook-flyer-${post.slotType || 'slot'}.png`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+      } catch (e) {
+        console.warn('Flyer auto-download failed:', e);
+      }
+    }
+
+    // 3. Open Facebook in new tab
+    const fbUrl = post.page?.pageId && !isNaN(Number(post.page.pageId))
+      ? `https://facebook.com/${post.page.pageId}`
+      : 'https://www.facebook.com';
+    window.open(fbUrl, '_blank');
+
+    // 4. Mark as published on backend
+    try {
       const token = localStorage.getItem('veltrix_token');
       await fetch(`/api/v1/calendar/publish-now/${postId}`, {
         method: 'POST',
@@ -870,7 +899,7 @@ export const ContentCalendarPage: React.FC = () => {
       // Offline fallback
     }
 
-    // Move to published list
+    // 5. Move to published list
     const updatedScheduled = scheduledPosts.filter((p) => p.id !== postId);
     const newPublished: PublishedPost = {
       id: `pub_${Date.now()}`,
@@ -886,8 +915,13 @@ export const ContentCalendarPage: React.FC = () => {
 
     setScheduledPosts(updatedScheduled);
     setPublishedPosts([newPublished, ...publishedPosts]);
-    setActionSuccess('Post published successfully to Meta Graph API!');
-    setTimeout(() => setActionSuccess(null), 4000);
+
+    if (hasFlyer) {
+      setActionSuccess('📋 Caption copied & flyer downloaded! Facebook opened — paste (Ctrl+V) & attach flyer to post.');
+    } else {
+      setActionSuccess('📋 Caption copied to clipboard & Facebook opened! Simply paste (Ctrl+V) to post.');
+    }
+    setTimeout(() => setActionSuccess(null), 5000);
   };
 
   // Cancel scheduled post
@@ -1599,10 +1633,11 @@ export const ContentCalendarPage: React.FC = () => {
 
                             <button
                               onClick={() => handlePublishNow(post.id)}
-                              className="flex-1 sm:flex-initial flex items-center justify-center gap-1.5 px-3.5 py-2 bg-emerald-500 hover:bg-emerald-600 text-white text-xs font-medium rounded-xl transition-colors min-h-[38px] active:scale-95"
+                              className="flex-1 sm:flex-initial flex items-center justify-center gap-1.5 px-3.5 py-2 bg-[#1877F2] hover:bg-[#166fe5] text-white text-xs font-semibold rounded-xl transition-colors min-h-[38px] active:scale-95 shadow-sm"
+                              title="Copy caption, download flyer & open Facebook"
                             >
-                              <Send className="w-3.5 h-3.5" />
-                              <span>Publish</span>
+                              <Facebook className="w-3.5 h-3.5" />
+                              <span>Post to Facebook</span>
                             </button>
                           </>
                         )}
@@ -1962,9 +1997,11 @@ export const ContentCalendarPage: React.FC = () => {
                             ) : (
                               <button
                                 onClick={() => handlePublishNow(post.id)}
-                                className="px-3 py-1 text-xs font-semibold bg-emerald-500 hover:bg-emerald-600 text-white rounded-lg"
+                                className="px-3 py-1 text-xs font-semibold bg-[#1877F2] hover:bg-[#166fe5] text-white rounded-lg flex items-center gap-1.5 shadow-sm"
+                                title="Copy caption, download flyer & open Facebook"
                               >
-                                Publish Now
+                                <Facebook className="w-3 h-3" />
+                                <span>Post to Facebook</span>
                               </button>
                             )}
                           </div>

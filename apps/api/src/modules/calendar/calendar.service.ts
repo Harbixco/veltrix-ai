@@ -183,15 +183,30 @@ export class CalendarService {
     // Attempt live Meta Graph API call if token is present and valid
     if (post.page.encryptedToken) {
       const decryptedToken = decryptToken(post.page.encryptedToken);
-      if (decryptedToken && !decryptedToken.startsWith('simulated_') && !decryptedToken.startsWith('test_')) {
+      if (
+        decryptedToken &&
+        !decryptedToken.startsWith('simulated_') &&
+        !decryptedToken.startsWith('test_') &&
+        !decryptedToken.startsWith('mock_')
+      ) {
         try {
-          const response = await fetch(`https://graph.facebook.com/v19.0/${post.page.pageId}/feed`, {
+          const hasHttpImage =
+            post.mediaUrls &&
+            post.mediaUrls.length > 0 &&
+            post.mediaUrls[0].startsWith('http');
+
+          const endpoint = hasHttpImage
+            ? `https://graph.facebook.com/v19.0/${post.page.pageId}/photos`
+            : `https://graph.facebook.com/v19.0/${post.page.pageId}/feed`;
+
+          const payload = hasHttpImage
+            ? { caption: post.caption, url: post.mediaUrls[0], access_token: decryptedToken }
+            : { message: post.caption, access_token: decryptedToken };
+
+          const response = await fetch(endpoint, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              message: post.caption,
-              access_token: decryptedToken
-            })
+            body: JSON.stringify(payload)
           });
           const result = await response.json();
           if (result.id) {
@@ -199,7 +214,7 @@ export class CalendarService {
             permalinkUrl = `https://facebook.com/${publishedExternalId}`;
           }
         } catch (apiErr) {
-          console.warn('[Meta Publishing Warning] Live Graph API failed, falling back to simulated receipt:', apiErr);
+          console.warn('[Meta Publishing Warning] Live Graph API call failed:', apiErr);
         }
       }
     }
