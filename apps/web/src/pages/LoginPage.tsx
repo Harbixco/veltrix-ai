@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Sparkles, ArrowRight, Lock, Mail, Eye, EyeOff, ShieldCheck, Check } from 'lucide-react';
+import { Sparkles, ArrowRight, Lock, Mail, Eye, EyeOff } from 'lucide-react';
 
 export const LoginPage: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -9,22 +9,12 @@ export const LoginPage: React.FC = () => {
   const [rememberMe, setRememberMe] = useState(true);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const [filledFeedback, setFilledFeedback] = useState(false);
 
   const navigate = useNavigate();
   const location = useLocation();
 
   // Get destination route if redirected by ProtectedRoute
   const from = (location.state as any)?.from?.pathname || '/';
-
-  // Quick fill helper for admin
-  const handleQuickFill = () => {
-    setEmail('admin@veltrixhub.com');
-    setPassword('VeltrixHub2026!Secure');
-    setError('');
-    setFilledFeedback(true);
-    setTimeout(() => setFilledFeedback(false), 2000);
-  };
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -60,7 +50,7 @@ export const LoginPage: React.FC = () => {
         return;
       }
     } catch (err: any) {
-      // Backend is currently starting up, offline, or behind Vercel Auth proxy
+      // Backend is starting up, offline, or behind Vercel Auth proxy
       // Verify against master admin credentials
       const cleanEmail = email.trim().toLowerCase();
       const isValidAdmin =
@@ -80,7 +70,7 @@ export const LoginPage: React.FC = () => {
         localStorage.setItem('veltrix_user', JSON.stringify(adminSession));
         navigate(from, { replace: true });
       } else {
-        setError('Invalid credentials. Please enter the authorized Veltrix Hub admin email and password.');
+        setError('Invalid credentials. Please enter your authorized email and password.');
       }
     } finally {
       setLoading(false);
@@ -107,31 +97,6 @@ export const LoginPage: React.FC = () => {
           </p>
         </div>
 
-        {/* Quick Fill One-Tap Helper */}
-        <div className="p-3 bg-slate-900/90 rounded-xl border border-slate-800 flex items-center justify-between gap-2">
-          <div className="flex items-center gap-2">
-            <ShieldCheck className="h-4 w-4 text-emerald-400 shrink-0" />
-            <div className="text-[11px] text-slate-300">
-              <span className="text-slate-400">Admin Account: </span>
-              <span className="font-mono text-emerald-300 font-semibold">admin@veltrixhub.com</span>
-            </div>
-          </div>
-          <button
-            type="button"
-            onClick={handleQuickFill}
-            className="flex items-center gap-1 px-2.5 py-1 text-[11px] font-semibold text-emerald-400 bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/30 rounded-lg transition-colors shrink-0"
-          >
-            {filledFeedback ? (
-              <>
-                <Check className="h-3 w-3" />
-                <span>Filled!</span>
-              </>
-            ) : (
-              <span>Auto-Fill</span>
-            )}
-          </button>
-        </div>
-
         {/* Error Alert */}
         {error && (
           <div className="rounded-xl bg-rose-500/10 border border-rose-500/20 p-3 text-xs text-rose-300 text-center animate-fade-in leading-relaxed">
@@ -140,7 +105,7 @@ export const LoginPage: React.FC = () => {
         )}
 
         {/* Login Form */}
-        <form onSubmit={handleLogin} className="space-y-4">
+        <form onSubmit={handleLogin} autoComplete="off" className="space-y-4">
           <div>
             <label className="block text-xs font-semibold text-slate-300 mb-1.5">
               Email Address
@@ -150,10 +115,11 @@ export const LoginPage: React.FC = () => {
               <input
                 type="email"
                 required
+                autoComplete="off"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="w-full rounded-xl border border-slate-800 bg-slate-900/90 pl-10 pr-3 py-2.5 text-xs text-white placeholder-slate-500 focus:border-emerald-500 focus:outline-none transition-colors"
-                placeholder="admin@veltrixhub.com"
+                placeholder="name@company.com"
               />
             </div>
           </div>
@@ -167,6 +133,7 @@ export const LoginPage: React.FC = () => {
               <input
                 type={showPassword ? 'text' : 'password'}
                 required
+                autoComplete="new-password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="w-full rounded-xl border border-slate-800 bg-slate-900/90 pl-10 pr-10 py-2.5 text-xs text-white placeholder-slate-500 focus:border-emerald-500 focus:outline-none transition-colors"
