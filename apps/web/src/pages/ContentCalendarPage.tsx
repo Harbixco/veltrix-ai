@@ -171,7 +171,7 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
   },
   {
     id: 'sched_nov14_fb',
-    socialPageId: '109283746520192',
+    socialPageId: '112352500475248',
     channel: 'FACEBOOK',
     slotType: 'MIDDAY',
     topicBadge: 'WEBSITE SPEED & CONVERSION',
@@ -179,7 +179,7 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     mediaUrls: [],
     scheduledFor: '2026-11-14T13:00:00.000Z',
     status: 'SCHEDULED',
-    page: { pageName: 'Veltrix Hub Official', pageId: '109283746520192' }
+    page: { pageName: 'Veltrixhq', pageId: '112352500475248' }
   },
   {
     id: 'sched_nov14_x2',
@@ -209,7 +209,7 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
   },
   {
     id: 'sched_nov15_fb',
-    socialPageId: '109283746520192',
+    socialPageId: '112352500475248',
     channel: 'FACEBOOK',
     slotType: 'MIDDAY',
     topicBadge: 'CORPORATE BRANDING & TRUST',
@@ -217,7 +217,7 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     mediaUrls: [],
     scheduledFor: '2026-11-15T13:00:00.000Z',
     status: 'SCHEDULED',
-    page: { pageName: 'Veltrix Hub Official', pageId: '109283746520192' }
+    page: { pageName: 'Veltrixhq', pageId: '112352500475248' }
   },
   {
     id: 'sched_nov15_x2',
@@ -247,7 +247,7 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
   },
   {
     id: 'sched_nov16_fb',
-    socialPageId: '109283746520192',
+    socialPageId: '112352500475248',
     channel: 'FACEBOOK',
     slotType: 'MIDDAY',
     topicBadge: 'WEBSITE MAINTENANCE & CARE',
@@ -255,7 +255,7 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     mediaUrls: [],
     scheduledFor: '2026-11-16T13:00:00.000Z',
     status: 'SCHEDULED',
-    page: { pageName: 'Veltrix Hub Official', pageId: '109283746520192' }
+    page: { pageName: 'Veltrixhq', pageId: '112352500475248' }
   },
   {
     id: 'sched_nov16_x2',
@@ -285,7 +285,7 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
   },
   {
     id: 'sched_nov17_fb',
-    socialPageId: '109283746520192',
+    socialPageId: '112352500475248',
     channel: 'FACEBOOK',
     slotType: 'MIDDAY',
     topicBadge: 'CAC LEGAL REGISTRATION',
@@ -293,7 +293,7 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     mediaUrls: [],
     scheduledFor: '2026-11-17T13:00:00.000Z',
     status: 'SCHEDULED',
-    page: { pageName: 'Veltrix Hub Official', pageId: '109283746520192' }
+    page: { pageName: 'Veltrixhq', pageId: '112352500475248' }
   },
   {
     id: 'sched_nov17_x2',
@@ -323,7 +323,7 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
   },
   {
     id: 'sched_nov18_fb',
-    socialPageId: '109283746520192',
+    socialPageId: '112352500475248',
     channel: 'FACEBOOK',
     slotType: 'MIDDAY',
     topicBadge: 'AUTOMATED LEAD ACQUISITION',
@@ -331,7 +331,7 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     mediaUrls: [],
     scheduledFor: '2026-11-18T13:00:00.000Z',
     status: 'SCHEDULED',
-    page: { pageName: 'Veltrix Hub Official', pageId: '109283746520192' }
+    page: { pageName: 'Veltrixhq', pageId: '112352500475248' }
   },
   {
     id: 'sched_nov18_x2',
@@ -361,7 +361,7 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
   },
   {
     id: 'sched_nov19_fb',
-    socialPageId: '109283746520192',
+    socialPageId: '112352500475248',
     channel: 'FACEBOOK',
     slotType: 'MIDDAY',
     topicBadge: 'GRAPHIC DESIGN & ADS',
@@ -369,7 +369,7 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     mediaUrls: [],
     scheduledFor: '2026-11-19T13:00:00.000Z',
     status: 'SCHEDULED',
-    page: { pageName: 'Veltrix Hub Official', pageId: '109283746520192' }
+    page: { pageName: 'Veltrixhq', pageId: '112352500475248' }
   },
   {
     id: 'sched_nov19_x2',
@@ -399,7 +399,7 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
   },
   {
     id: 'sched_nov20_fb',
-    socialPageId: '109283746520192',
+    socialPageId: '112352500475248',
     channel: 'FACEBOOK',
     slotType: 'MIDDAY',
     topicBadge: 'STRATEGIC DIGITAL AUDIT',
@@ -407,7 +407,7 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     mediaUrls: [],
     scheduledFor: '2026-11-20T13:00:00.000Z',
     status: 'SCHEDULED',
-    page: { pageName: 'Veltrix Hub Official', pageId: '109283746520192' }
+    page: { pageName: 'Veltrixhq', pageId: '112352500475248' }
   },
   {
     id: 'sched_nov20_x2',
@@ -426,8 +426,8 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
 const INITIAL_HISTORICAL_PUBLISHED: PublishedPost[] = [
   {
     id: 'pub_nov10',
-    socialPageId: '109283746520192',
-    pageName: 'Veltrix Hub Official',
+    socialPageId: '112352500475248',
+    pageName: 'Veltrixhq',
     channel: 'FACEBOOK',
     caption: `5 signs your business website is losing you customers in 2026:\n1. Non-mobile responsive\n2. Takes longer than 3 seconds to load\n3. Missing WhatsApp conversion button\n4. Outdated contact numbers\n5. No SSL security certificate`,
     mediaUrls: [],
@@ -449,8 +449,8 @@ const INITIAL_HISTORICAL_PUBLISHED: PublishedPost[] = [
   },
   {
     id: 'pub_nov12',
-    socialPageId: '109283746520192',
-    pageName: 'Veltrix Hub Official',
+    socialPageId: '112352500475248',
+    pageName: 'Veltrixhq',
     channel: 'FACEBOOK',
     caption: `CAC Registration isn't an expense; it's the foundation of your business trust. Open corporate bank accounts, bid for high-value tenders, and protect your name from competitors.`,
     mediaUrls: [],
@@ -1005,7 +1005,7 @@ export const ContentCalendarPage: React.FC = () => {
 
     const newPost: ScheduledPost = {
       id: `sched_${Date.now()}`,
-      socialPageId: isTweet ? 'AbiodunBuilds' : '109283746520192',
+      socialPageId: isTweet ? 'AbiodunBuilds' : '112352500475248',
       channel: selectedChannel,
       caption: newCaption,
       mediaUrls: newMediaUrl ? [newMediaUrl] : ['/designs/flyers/flyer-nov14-website-speed.svg'],
@@ -1013,8 +1013,8 @@ export const ContentCalendarPage: React.FC = () => {
       status: 'SCHEDULED',
       topicBadge: isTweet ? '𝕏 TECH INSIGHT' : 'FACEBOOK BROADCAST',
       page: {
-        pageName: isTweet ? 'Abiodun Builds (@AbiodunBuilds)' : 'Veltrix Hub Official',
-        pageId: isTweet ? 'AbiodunBuilds' : '109283746520192'
+        pageName: isTweet ? 'Abiodun Builds (@AbiodunBuilds)' : 'Veltrixhq',
+        pageId: isTweet ? 'AbiodunBuilds' : '112352500475248'
       }
     };
 
@@ -1634,7 +1634,7 @@ export const ContentCalendarPage: React.FC = () => {
                         ) : (
                           <>
                             <Facebook className="w-3.5 h-3.5 text-blue-400" />
-                            <span>{post.page?.pageName || 'Veltrix Hub Official'}</span>
+                            <span>{post.page?.pageName || 'Veltrixhq'}</span>
                           </>
                         )}
                       </span>

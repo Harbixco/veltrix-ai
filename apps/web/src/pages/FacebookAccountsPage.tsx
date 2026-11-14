@@ -260,30 +260,30 @@ const X_TOPIC_PILLARS = [
 const DEFAULT_CONNECTED_PAGES: ConnectedPage[] = [
   {
     id: 'page_1',
-    pageId: '109283746520192',
-    pageName: 'Veltrix Hub Official',
-    pageCategory: 'Digital Growth & Technology Agency',
-    fanCount: 1240,
+    pageId: '112352500475248',
+    pageName: 'Veltrixhq',
+    pageCategory: 'Web Designer & Digital Agency',
+    fanCount: 339,
     lastSyncedAt: new Date().toISOString(),
     _count: { posts: 14 }
   },
   {
     id: 'page_2',
-    pageId: '109283746520193',
-    pageName: 'Abiodun Digital Growth',
-    pageCategory: 'Technology & Web Architecture',
-    fanCount: 860,
+    pageId: '346737768799053',
+    pageName: 'Veltrixtv',
+    pageCategory: 'Digital creator',
+    fanCount: 29,
     lastSyncedAt: new Date().toISOString(),
     _count: { posts: 8 }
   },
   {
     id: 'page_3',
-    pageId: '109283746520194',
-    pageName: 'Veltrix AI Automation',
-    pageCategory: 'AI Automation & Workflows',
-    fanCount: 420,
+    pageId: '877966495409902',
+    pageName: 'Personal Growth Hub',
+    pageCategory: 'Education website',
+    fanCount: 8,
     lastSyncedAt: new Date().toISOString(),
-    _count: { posts: 6 }
+    _count: { posts: 4 }
   }
 ];
 
