@@ -307,7 +307,7 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     carePillars: 'Reliability + Emotion',
     caption: 'Customers ask "How much?" and disappear. Here is the real reason:\n\nWhen a customer asks for your price and gets just a bare number with no context, they compare you solely on cheapness.\n\nIf your response takes more than 15 minutes, they have already messaged three of your competitors.\n\nAnd if you do not follow up within 24 hours, the lead is permanently dead.\n\nWe built Veltrix AI to fix this: instant 20-second replies, automated value positioning, and scheduled follow-ups on WhatsApp.',
     firstComment: 'Want to test the AI live on your own phone? Send a test message to our demo number on WhatsApp:\nhttps://wa.me/2348087098270',
-    mediaUrls: [],
+    mediaUrls: ['/designs/executive-portrait-nov16.jpg'],
     scheduledFor: '2026-11-16T18:00:00.000Z',
     status: 'SCHEDULED',
     page: { pageName: 'Veltrixhq', pageId: '112352500475248' }
@@ -857,7 +857,7 @@ export const ContentCalendarPage: React.FC = () => {
   // Cache key v7 (strictly real posts, deduplicated, zero dummy data)
   const [scheduledPosts, setScheduledPosts] = useState<ScheduledPost[]>(() => {
     if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('veltrix_scheduled_posts_v8');
+      const saved = localStorage.getItem('veltrix_scheduled_posts_v11');
       if (saved) {
         try {
           const parsed = JSON.parse(saved);
@@ -874,7 +874,7 @@ export const ContentCalendarPage: React.FC = () => {
 
   const [publishedPosts, setPublishedPosts] = useState<PublishedPost[]>(() => {
     if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('veltrix_published_posts_v8');
+      const saved = localStorage.getItem('veltrix_published_posts_v11');
       if (saved) {
         try {
           const parsed = JSON.parse(saved);
@@ -992,7 +992,7 @@ export const ContentCalendarPage: React.FC = () => {
         });
 
         if (data.publishedCount > 0) {
-          setActionSuccess(`🎉 Auto-Publisher successfully published ${data.publishedCount} post(s)!`);
+          setActionSuccess(`Auto-Publisher successfully published ${data.publishedCount} post(s)!`);
           setTimeout(() => setActionSuccess(null), 4000);
           fetchCalendarData();
         } else if (isManual) {
@@ -1031,7 +1031,7 @@ export const ContentCalendarPage: React.FC = () => {
       if (res.ok && data.success) {
         setIsTokenModalOpen(false);
         setQuickTokenInput('');
-        setActionSuccess(`🎉 Meta Page Token verified & saved! ${data.publishResult?.publishedCount || 0} due posts published to Facebook!`);
+        setActionSuccess(`Meta Page Token verified & saved! ${data.publishResult?.publishedCount || 0} due posts published to Facebook!`);
         setTimeout(() => setActionSuccess(null), 5000);
         fetchCalendarData();
       } else {
@@ -1048,7 +1048,7 @@ export const ContentCalendarPage: React.FC = () => {
   useEffect(() => {
     if (typeof window !== 'undefined') {
       try {
-        localStorage.setItem('veltrix_scheduled_posts_v8', JSON.stringify(scheduledPosts));
+        localStorage.setItem('veltrix_scheduled_posts_v11', JSON.stringify(scheduledPosts));
       } catch (err) {
         console.warn('Storage quota exceeded, preserving in-memory state:', err);
       }
@@ -1058,7 +1058,7 @@ export const ContentCalendarPage: React.FC = () => {
   useEffect(() => {
     if (typeof window !== 'undefined') {
       try {
-        localStorage.setItem('veltrix_published_posts_v8', JSON.stringify(publishedPosts));
+        localStorage.setItem('veltrix_published_posts_v11', JSON.stringify(publishedPosts));
       } catch (err) {
         console.warn('Storage quota exceeded, preserving in-memory state:', err);
       }
@@ -1090,6 +1090,14 @@ export const ContentCalendarPage: React.FC = () => {
             const channel: 'TWITTER' | 'FACEBOOK' = isTwitter ? 'TWITTER' : 'FACEBOOK';
             const slotKey = getFlyerSlotKey(p.scheduledFor, channel);
 
+            // Match with curated post by time or ID to preserve rich C.A.R.E. metadata & format
+            const curated = INITIAL_CURATED_SCHEDULED.find((cur) => {
+              if (cur.id === p.id) return true;
+              const pTime = new Date(p.scheduledFor).getTime();
+              const curTime = new Date(cur.scheduledFor).getTime();
+              return cur.channel === channel && Math.abs(curTime - pTime) < 3600000;
+            });
+
             let cleanMediaUrls = Array.isArray(p.mediaUrls)
               ? p.mediaUrls.filter(
                   (u: string) => !u.includes('/designs/flyers/') && !u.includes('veltrix-design')
@@ -1111,11 +1119,16 @@ export const ContentCalendarPage: React.FC = () => {
               id: p.id,
               socialPageId: p.socialPageId || (isTwitter ? 'AbiodunBuilds' : '153585724815630'),
               caption: p.caption,
-              mediaUrls: cleanMediaUrls,
+              mediaUrls: cleanMediaUrls.length > 0 ? cleanMediaUrls : (curated?.mediaUrls || []),
               scheduledFor: p.scheduledFor,
               status: p.status || 'SCHEDULED',
               channel,
-              topicBadge: p.topicBadge || (isTwitter ? '𝕏 TECH POST' : 'FACEBOOK BROADCAST'),
+              slotType: p.slotType || curated?.slotType,
+              formatType: p.formatType || curated?.formatType,
+              carePillars: p.carePillars || curated?.carePillars,
+              firstComment: p.firstComment || curated?.firstComment,
+              isManual: p.isManual ?? curated?.isManual,
+              topicBadge: p.topicBadge || curated?.topicBadge || (isTwitter ? 'Tech Insight' : 'Facebook Broadcast'),
               page: p.page || {
                 pageName: isTwitter ? 'Abiodun Builds (@AbiodunBuilds)' : 'Veltrix Hub',
                 pageId: isTwitter ? 'AbiodunBuilds' : '153585724815630'
@@ -1493,7 +1506,7 @@ export const ContentCalendarPage: React.FC = () => {
     setScheduledPosts(updatedScheduled);
     setPublishedPosts([newPublished, ...publishedPosts]);
     setDirectPublishNotice(null);
-    setActionSuccess('📋 Caption copied & flyer downloaded! Opened Facebook to paste & finish.');
+    setActionSuccess('Caption copied & flyer downloaded! Opened Facebook to paste & finish.');
     setTimeout(() => setActionSuccess(null), 5000);
   };
 
@@ -1504,7 +1517,7 @@ export const ContentCalendarPage: React.FC = () => {
 
     if (post.channel === 'TWITTER' || post.page?.pageId === 'AbiodunBuilds') {
       setPublishingId(postId);
-      setActionSuccess('Publishing to 𝕏 (Twitter)...');
+      setActionSuccess('Publishing to Twitter (X)...');
       try {
         const token = localStorage.getItem('veltrix_token');
         const res = await fetch(`/api/v1/calendar/publish-now/${postId}`, {
@@ -1542,9 +1555,9 @@ export const ContentCalendarPage: React.FC = () => {
 
         if (data.permalinkUrl && data.permalinkUrl.includes('intent/tweet')) {
           window.open(data.permalinkUrl, '_blank');
-          setActionSuccess('Post published to 𝕏 queue & opened composer!');
+          setActionSuccess('Post published to Twitter queue & opened composer!');
         } else {
-          setActionSuccess('🎉 Published directly to 𝕏 (Twitter)!');
+          setActionSuccess('Published directly to Twitter (X)!');
         }
       } catch (err: any) {
         window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(post.caption)}`, '_blank');
@@ -1609,9 +1622,9 @@ export const ContentCalendarPage: React.FC = () => {
       });
 
       if (data.permalinkUrl) {
-        setActionSuccess(`🎉 Published directly to Facebook! Post & First Comment are live on your Page timeline.`);
+        setActionSuccess(`Published directly to Facebook! Post and First Comment are live on your Page.`);
       } else {
-        setActionSuccess('🎉 Published directly to Facebook! Post & First Comment are live on your Page timeline.');
+        setActionSuccess('Published directly to Facebook! Post and First Comment are live on your Page.');
       }
       setTimeout(() => setActionSuccess(null), 6000);
     } catch (err: any) {
@@ -1703,8 +1716,8 @@ export const ContentCalendarPage: React.FC = () => {
       }
       setScheduledPosts(INITIAL_CURATED_SCHEDULED);
       setPublishedPosts(INITIAL_HISTORICAL_PUBLISHED);
-      localStorage.setItem('veltrix_scheduled_posts_v8', JSON.stringify(INITIAL_CURATED_SCHEDULED));
-      localStorage.setItem('veltrix_published_posts_v8', JSON.stringify(INITIAL_HISTORICAL_PUBLISHED));
+      localStorage.setItem('veltrix_scheduled_posts_v11', JSON.stringify(INITIAL_CURATED_SCHEDULED));
+      localStorage.setItem('veltrix_published_posts_v11', JSON.stringify(INITIAL_HISTORICAL_PUBLISHED));
       setActionSuccess('Content calendar reloaded cleanly!');
       setTimeout(() => setActionSuccess(null), 3000);
     }
@@ -1981,7 +1994,7 @@ export const ContentCalendarPage: React.FC = () => {
                                   )}
                                   <span>
                                     {isTweet
-                                      ? '𝕏 Tech Insight'
+                                      ? 'Tech Insight'
                                       : isMorning
                                       ? '09:00 AM (Automated)'
                                       : isMidday
@@ -1989,23 +2002,6 @@ export const ContentCalendarPage: React.FC = () => {
                                       : '06:00 PM (Automated)'}
                                   </span>
                                 </span>
-
-                                {/* Format Badge */}
-                                {post.formatType === 'RED_BACKGROUND' && (
-                                  <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-rose-500/20 text-rose-300 border border-rose-500/40">
-                                    🟥 Red Background
-                                  </span>
-                                )}
-                                {post.formatType === 'MANUAL_PROOF' && (
-                                  <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-purple-500/20 text-purple-300 border border-purple-500/40">
-                                    📸 Real Proof / Chat
-                                  </span>
-                                )}
-                                {post.formatType === 'PICTURE' && (
-                                  <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-blue-500/20 text-blue-300 border border-blue-500/40">
-                                    🖼️ 10/10 Executive Picture
-                                  </span>
-                                )}
                               </div>
 
                               <span className="text-slate-400 font-mono text-[11px]">
@@ -2015,6 +2011,40 @@ export const ContentCalendarPage: React.FC = () => {
                                 })}
                               </span>
                             </div>
+
+                            {/* Prominent Format Requirement Notification Banner */}
+                            {post.formatType === 'RED_BACKGROUND' && (
+                              <div className="px-3.5 py-2.5 rounded-xl bg-rose-500/15 border border-rose-500/40 text-rose-200 text-xs font-semibold flex items-center justify-between">
+                                <span>FORMAT REQUIREMENT: Solid Red Background Text Card</span>
+                                <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 bg-rose-500/30 rounded text-rose-100">
+                                  RED BACKGROUND
+                                </span>
+                              </div>
+                            )}
+                            {post.formatType === 'MANUAL_PROOF' && (
+                              <div className="px-3.5 py-2.5 rounded-xl bg-purple-500/15 border border-purple-500/40 text-purple-200 text-xs font-semibold flex items-center justify-between">
+                                <span>FORMAT REQUIREMENT: Post manually with unedited chat screenshot</span>
+                                <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 bg-purple-500/30 rounded text-purple-100">
+                                  MANUAL SCREENSHOT
+                                </span>
+                              </div>
+                            )}
+                            {post.formatType === 'PICTURE' && (
+                              <div className="px-3.5 py-2.5 rounded-xl bg-blue-500/15 border border-blue-500/40 text-blue-200 text-xs font-semibold flex items-center justify-between">
+                                <span>FORMAT REQUIREMENT: Attach 10/10 executive portrait image</span>
+                                <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 bg-blue-500/30 rounded text-blue-100">
+                                  EXECUTIVE IMAGE
+                                </span>
+                              </div>
+                            )}
+                            {post.formatType === 'TEXT_ONLY' && (
+                              <div className="px-3.5 py-2.5 rounded-xl bg-slate-800/80 border border-slate-700/60 text-slate-300 text-xs font-semibold flex items-center justify-between">
+                                <span>FORMAT REQUIREMENT: Post as clean text-only update</span>
+                                <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 bg-slate-700/50 rounded text-slate-200">
+                                  TEXT ONLY
+                                </span>
+                              </div>
+                            )}
 
                             {/* C.A.R.E. Pillar indicator */}
                             {post.carePillars && (
@@ -2565,7 +2595,7 @@ export const ContentCalendarPage: React.FC = () => {
               )}
 
               <div className="p-3 rounded-xl bg-slate-950/70 border border-slate-800 text-[11px] text-slate-400 space-y-1.5">
-                <p className="font-semibold text-slate-200">💡 How to get a Long-Lived / Permanent Token:</p>
+                <p className="font-semibold text-slate-200">How to get a Long-Lived / Permanent Token:</p>
                 <p>1. In <a href="https://developers.facebook.com/tools/explorer/" target="_blank" rel="noreferrer" className="text-blue-400 hover:underline">Meta Graph API Explorer</a>, select your Meta App and Page.</p>
                 <p>2. Under Permissions, add: <code className="text-slate-200 font-mono">pages_manage_posts</code>, <code className="text-slate-200 font-mono">pages_read_engagement</code>, <code className="text-slate-200 font-mono">pages_show_list</code>.</p>
                 <p>3. Generate the token and paste it here. Saving will automatically trigger publishing for today&apos;s pending posts!</p>
