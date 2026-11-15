@@ -481,8 +481,14 @@ export const ContentCalendarPage: React.FC = () => {
   const [statusFilter, setStatusFilter] = useState<'ALL' | 'SCHEDULED' | 'PUBLISHED'>('ALL');
   const [platformFilter, setPlatformFilter] = useState<'ALL' | 'FACEBOOK' | 'TWITTER'>('ALL');
 
-  // Selected Day View Modal
+  // Selected Day View Modal (for desktop grid inspection)
   const [selectedDay, setSelectedDay] = useState<number | null>(null);
+
+  // Active day for Mobile Daily Calendar view (displays strictly for the day on mobile)
+  const [mobileDay, setMobileDay] = useState<number>(() => {
+    const today = new Date();
+    return today.getMonth() === 10 && today.getFullYear() === 2026 ? today.getDate() : 15;
+  });
 
   // Fullscreen Lightbox Flyer Modal
   const [lightboxFlyer, setLightboxFlyer] = useState<{ url: string; title: string; badge?: string } | null>(null);
@@ -507,7 +513,7 @@ export const ContentCalendarPage: React.FC = () => {
   useEffect(() => {
     if (typeof window !== 'undefined') {
       try {
-        localStorage.setItem('veltrix_scheduled_posts_v6', JSON.stringify(scheduledPosts));
+        localStorage.setItem('veltrix_scheduled_posts_v7', JSON.stringify(scheduledPosts));
       } catch (err) {
         console.warn('Storage quota exceeded, preserving in-memory state:', err);
       }
@@ -517,7 +523,7 @@ export const ContentCalendarPage: React.FC = () => {
   useEffect(() => {
     if (typeof window !== 'undefined') {
       try {
-        localStorage.setItem('veltrix_published_posts_v6', JSON.stringify(publishedPosts));
+        localStorage.setItem('veltrix_published_posts_v7', JSON.stringify(publishedPosts));
       } catch (err) {
         console.warn('Storage quota exceeded, preserving in-memory state:', err);
       }
@@ -1301,18 +1307,400 @@ export const ContentCalendarPage: React.FC = () => {
       {/* Main View Area */}
       {viewMode === 'calendar' ? (
         <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden p-3.5 sm:p-6 shadow-xl">
-          {/* Mobile Calendar Hint */}
-          <div className="md:hidden mb-3 p-2.5 bg-emerald-500/10 border border-emerald-500/20 rounded-xl text-xs text-emerald-300 flex items-center justify-between">
-            <span>Tap any day cell to inspect its unique flyers.</span>
-            <button
-              onClick={() => setViewMode('timeline')}
-              className="font-bold underline text-white px-2 py-0.5 bg-emerald-600 rounded-lg text-[11px]"
-            >
-              Timeline View
-            </button>
+          {/* ===================================================================== */}
+          {/* MOBILE DAILY CALENDAR (SHOWN ONLY ON MOBILE TO AVOID CONFUSION)      */}
+          {/* ===================================================================== */}
+          <div className="md:hidden space-y-4">
+            {/* Mobile Header: Daily Date Navigator */}
+            <div className="bg-slate-950/80 border border-slate-800 rounded-2xl p-4 space-y-3">
+              <div className="flex items-center justify-between">
+                <div>
+                  <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider block">
+                    Daily Schedule
+                  </span>
+                  <div className="flex items-center gap-2 mt-0.5">
+                    <h3 className="text-base font-bold text-white">
+                      {new Date(year, month, mobileDay).toLocaleDateString('default', {
+                        weekday: 'short',
+                        month: 'short',
+                        day: 'numeric'
+                      })}
+                    </h3>
+                    {isCurrentMonth && mobileDay === todayDate.getDate() && (
+                      <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
+                        Today
+                      </span>
+                    )}
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-1.5">
+                  <button
+                    onClick={() => setMobileDay((d) => Math.max(1, d - 1))}
+                    disabled={mobileDay <= 1}
+                    className="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 disabled:opacity-40 transition-colors"
+                    title="Previous Day"
+                  >
+                    <ChevronLeft className="w-4 h-4" />
+                  </button>
+                  {isCurrentMonth && mobileDay !== todayDate.getDate() && (
+                    <button
+                      onClick={() => setMobileDay(todayDate.getDate())}
+                      className="px-2.5 py-1.5 text-xs font-semibold rounded-xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 hover:bg-emerald-500/20"
+                    >
+                      Today
+                    </button>
+                  )}
+                  <button
+                    onClick={() => setMobileDay((d) => Math.min(daysInMonth, d + 1))}
+                    disabled={mobileDay >= daysInMonth}
+                    className="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 disabled:opacity-40 transition-colors"
+                    title="Next Day"
+                  >
+                    <ChevronRight className="w-4 h-4" />
+                  </button>
+                </div>
+              </div>
+
+              {/* Horizontal Scrollable Day Strip */}
+              <div className="flex items-center gap-1.5 overflow-x-auto pb-1 no-scrollbar pt-1 border-t border-slate-800/80">
+                {daysArray.map((day) => {
+                  const { sched: dSched, pub: dPub } = getPostsForDay(day);
+                  const count = dSched.length + dPub.length;
+                  const isSelected = day === mobileDay;
+                  const isTodayDay = isCurrentMonth && day === todayDate.getDate();
+
+                  return (
+                    <button
+                      key={day}
+                      onClick={() => setMobileDay(day)}
+                      className={`flex flex-col items-center justify-center min-w-[44px] py-1.5 rounded-xl text-xs font-semibold transition-all relative shrink-0 ${
+                        isSelected
+                          ? 'bg-emerald-500 text-white shadow-md shadow-emerald-500/30 font-bold scale-105 ring-1 ring-white/20'
+                          : isTodayDay
+                          ? 'bg-slate-800 text-emerald-300 border border-emerald-500/50'
+                          : 'bg-slate-900 text-slate-400 hover:text-white border border-slate-800'
+                      }`}
+                    >
+                      <span className="text-[10px] uppercase opacity-75">
+                        {new Date(year, month, day).toLocaleDateString('default', { weekday: 'narrow' })}
+                      </span>
+                      <span className="text-sm">{day}</span>
+                      {count > 0 && (
+                        <span
+                          className={`w-1.5 h-1.5 rounded-full mt-0.5 ${
+                            isSelected ? 'bg-white' : 'bg-emerald-400'
+                          }`}
+                        />
+                      )}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Mobile Filter Tabs */}
+            <div className="flex items-center gap-1.5 bg-slate-950 p-1 rounded-xl border border-slate-800 text-xs">
+              <button
+                onClick={() => setPlatformFilter('ALL')}
+                className={`flex-1 py-1.5 rounded-lg font-medium transition-all text-center ${
+                  platformFilter === 'ALL'
+                    ? 'bg-slate-700 text-white font-bold'
+                    : 'text-slate-400 hover:text-white'
+                }`}
+              >
+                All ({getPostsForDay(mobileDay).sched.length + getPostsForDay(mobileDay).pub.length})
+              </button>
+              <button
+                onClick={() => setPlatformFilter('FACEBOOK')}
+                className={`flex-1 py-1.5 rounded-lg font-medium transition-all text-center flex items-center justify-center gap-1 ${
+                  platformFilter === 'FACEBOOK'
+                    ? 'bg-[#1877F2] text-white font-bold shadow'
+                    : 'text-slate-400 hover:text-white'
+                }`}
+              >
+                <Facebook className="w-3 h-3" />
+                <span>Facebook</span>
+              </button>
+              <button
+                onClick={() => setPlatformFilter('TWITTER')}
+                className={`flex-1 py-1.5 rounded-lg font-medium transition-all text-center flex items-center justify-center gap-1 ${
+                  platformFilter === 'TWITTER'
+                    ? 'bg-white text-slate-950 font-bold shadow'
+                    : 'text-slate-400 hover:text-white'
+                }`}
+              >
+                <XLogo className="w-3 h-3" />
+                <span>𝕏 Twitter</span>
+              </button>
+            </div>
+
+            {/* Posts For This Selected Day */}
+            <div className="space-y-3">
+              {(() => {
+                const { sched: mobileSched, pub: mobilePub } = getPostsForDay(mobileDay);
+                const hasAny = mobileSched.length > 0 || mobilePub.length > 0;
+
+                if (!hasAny) {
+                  return (
+                    <div className="bg-slate-950/60 border border-slate-800 rounded-2xl p-6 text-center space-y-3">
+                      <div className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center mx-auto text-slate-400">
+                        <CalendarIcon className="w-5 h-5" />
+                      </div>
+                      <p className="text-xs text-slate-300 font-medium">
+                        No posts scheduled for {new Date(year, month, mobileDay).toLocaleDateString('default', { month: 'short', day: 'numeric' })}.
+                      </p>
+                      <button
+                        onClick={() => {
+                          setNewDate(
+                            `${year}-${String(month + 1).padStart(2, '0')}-${String(mobileDay).padStart(2, '0')}T09:00`
+                          );
+                          setIsModalOpen(true);
+                        }}
+                        className="inline-flex items-center gap-1.5 px-4 py-2 bg-emerald-500 hover:bg-emerald-600 text-white text-xs font-semibold rounded-xl shadow-lg shadow-emerald-500/20"
+                      >
+                        <Plus className="w-3.5 h-3.5" />
+                        <span>Add Post to Day {mobileDay}</span>
+                      </button>
+                    </div>
+                  );
+                }
+
+                return (
+                  <>
+                    {mobileSched.map((post) => {
+                      const isTweet = post.channel === 'TWITTER' || post.page?.pageId === 'AbiodunBuilds';
+                      const flyerUrl = resolveFlyerForPost(post);
+
+                      return (
+                        <div
+                          key={post.id}
+                          className={`p-4 rounded-2xl border bg-slate-950/80 transition-all space-y-3 ${
+                            isTweet ? 'border-slate-800' : 'border-blue-500/30'
+                          }`}
+                        >
+                          {/* Card Header */}
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-1.5">
+                              <span
+                                className={`px-2.5 py-1 rounded-lg text-xs font-bold flex items-center gap-1.5 border ${
+                                  isTweet
+                                    ? 'bg-white/10 text-white border-white/20'
+                                    : isMorningPost(post)
+                                    ? 'bg-amber-500/10 text-amber-300 border-amber-500/30'
+                                    : 'bg-blue-500/10 text-blue-400 border-blue-500/30'
+                                }`}
+                              >
+                                {isTweet ? (
+                                  <XLogo className="w-3 h-3" />
+                                ) : isMorningPost(post) ? (
+                                  <Sun className="w-3 h-3 text-amber-400" />
+                                ) : (
+                                  <Moon className="w-3 h-3 text-blue-400" />
+                                )}
+                                <span>
+                                  {isTweet
+                                    ? '𝕏 Tech Hook'
+                                    : isMorningPost(post)
+                                    ? '9:00 AM Morning'
+                                    : '6:00 PM Evening'}
+                                </span>
+                              </span>
+                              {!isTweet && (
+                                <span className="text-[10px] px-1.5 py-0.5 rounded font-mono font-bold bg-slate-800 text-slate-300 border border-slate-700">
+                                  {isMorningPost(post) ? '09:00 AM' : '06:00 PM'}
+                                </span>
+                              )}
+                            </div>
+
+                            <span className="text-slate-400 font-mono text-[11px]">
+                              {new Date(post.scheduledFor).toLocaleTimeString([], {
+                                hour: '2-digit',
+                                minute: '2-digit'
+                              })}
+                            </span>
+                          </div>
+
+                          {/* Flyer Thumbnail (if attached) */}
+                          {!isTweet && flyerUrl && (
+                            <div
+                              onClick={() =>
+                                setLightboxFlyer({
+                                  url: flyerUrl,
+                                  title: post.topicBadge || 'Facebook Flyer',
+                                  badge: post.channel
+                                })
+                              }
+                              className="w-full h-44 rounded-xl overflow-hidden border border-slate-800 bg-slate-900 cursor-pointer relative group"
+                            >
+                              <img src={flyerUrl} alt="Flyer" className="w-full h-full object-cover" />
+                              <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                <Maximize2 className="w-5 h-5 text-white" />
+                              </div>
+                            </div>
+                          )}
+
+                          {/* Caption */}
+                          <p className="text-xs text-slate-200 whitespace-pre-wrap leading-relaxed line-clamp-4">
+                            {post.caption}
+                          </p>
+
+                          {/* Card Footer Actions */}
+                          <div className="pt-2.5 flex flex-wrap items-center justify-between gap-2 border-t border-slate-800/80">
+                            {isTweet ? (
+                              <span className="text-[11px] font-mono text-slate-400">
+                                {post.caption.length} / 280 chars
+                              </span>
+                            ) : flyerUrl ? (
+                              <div className="flex items-center gap-2">
+                                <button
+                                  onClick={() =>
+                                    setLightboxFlyer({
+                                      url: flyerUrl,
+                                      title: post.topicBadge || 'Flyer',
+                                      badge: post.channel
+                                    })
+                                  }
+                                  className="text-[11px] text-blue-400 font-semibold hover:underline flex items-center gap-1"
+                                >
+                                  <Eye className="w-3.5 h-3.5" />
+                                  <span>View Flyer</span>
+                                </button>
+                                <button
+                                  onClick={() => handleRemovePostFlyer(post.id)}
+                                  className="text-[11px] text-rose-400 font-semibold hover:underline flex items-center gap-1"
+                                >
+                                  <Trash2 className="w-3 h-3" />
+                                  <span>Remove</span>
+                                </button>
+                              </div>
+                            ) : (
+                              <label
+                                className={`cursor-pointer text-[11px] font-semibold flex items-center gap-1.5 px-2.5 py-1 rounded-lg border transition-all ${
+                                  isMorningPost(post)
+                                    ? 'text-amber-300 bg-amber-500/10 border-amber-500/30'
+                                    : 'text-blue-300 bg-blue-500/10 border-blue-500/30'
+                                }`}
+                              >
+                                <Upload className="w-3 h-3" />
+                                <span>Upload {isMorningPost(post) ? '9:00 AM' : '6:00 PM'} Flyer</span>
+                                <input
+                                  type="file"
+                                  accept="image/*"
+                                  className="hidden"
+                                  onChange={(e) => handleSinglePostFlyerUpload(post.id, e)}
+                                />
+                              </label>
+                            )}
+
+                            <div className="flex items-center gap-2">
+                              <button
+                                onClick={() => {
+                                  navigator.clipboard.writeText(post.caption);
+                                  setActionSuccess('Caption copied to clipboard!');
+                                  setTimeout(() => setActionSuccess(null), 2500);
+                                }}
+                                className="px-2.5 py-1 text-xs text-slate-300 bg-slate-800 hover:bg-slate-700 rounded-lg"
+                              >
+                                Copy
+                              </button>
+                              {isTweet ? (
+                                <button
+                                  onClick={() => {
+                                    window.open(
+                                      `https://twitter.com/intent/tweet?text=${encodeURIComponent(
+                                        post.caption
+                                      )}`,
+                                      '_blank'
+                                    );
+                                  }}
+                                  className="px-3 py-1 text-xs font-bold bg-white text-slate-950 hover:bg-slate-200 rounded-lg flex items-center gap-1"
+                                >
+                                  <XLogo className="w-3 h-3" />
+                                  <span>Tweet on 𝕏</span>
+                                </button>
+                              ) : (
+                                <button
+                                  onClick={() => handlePublishNow(post.id)}
+                                  disabled={publishingId === post.id}
+                                  className="px-3 py-1.5 text-xs font-semibold bg-[#1877F2] hover:bg-[#166fe5] text-white rounded-lg flex items-center gap-1.5 shadow-sm disabled:opacity-50"
+                                >
+                                  {publishingId === post.id ? (
+                                    <>
+                                      <RefreshCw className="w-3 h-3 animate-spin" />
+                                      <span>Publishing...</span>
+                                    </>
+                                  ) : (
+                                    <>
+                                      <Facebook className="w-3 h-3" />
+                                      <span>Publish to Facebook</span>
+                                    </>
+                                  )}
+                                </button>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
+
+                    {/* Published Posts for this Day */}
+                    {mobilePub.map((post) => (
+                      <div
+                        key={post.id}
+                        className="p-3.5 rounded-xl bg-slate-950/60 border border-emerald-500/20 text-xs space-y-2"
+                      >
+                        <div className="flex items-center justify-between">
+                          <span className="text-emerald-400 font-semibold flex items-center gap-1.5">
+                            <CheckCircle2 className="w-3.5 h-3.5" />
+                            <span>
+                              {post.channel === 'TWITTER' ? 'Published to 𝕏' : 'Published to Facebook'}
+                            </span>
+                          </span>
+                          {post.permalinkUrl ? (
+                            <a
+                              href={post.permalinkUrl}
+                              target="_blank"
+                              rel="noreferrer"
+                              className="flex items-center gap-1 text-emerald-400 hover:text-emerald-300 font-medium"
+                            >
+                              <span>View Live</span>
+                              <ExternalLink className="w-3 h-3" />
+                            </a>
+                          ) : (
+                            <span className="text-slate-400">Live</span>
+                          )}
+                        </div>
+                        <p className="text-slate-300 line-clamp-2 leading-relaxed">{post.caption}</p>
+                      </div>
+                    ))}
+
+                    {/* Add Post Button for this Day */}
+                    <button
+                      onClick={() => {
+                        setNewDate(
+                          `${year}-${String(month + 1).padStart(2, '0')}-${String(mobileDay).padStart(
+                            2,
+                            '0'
+                          )}T09:00`
+                        );
+                        setIsModalOpen(true);
+                      }}
+                      className="w-full flex items-center justify-center gap-1.5 py-2.5 text-xs font-semibold text-emerald-400 bg-emerald-500/10 hover:bg-emerald-500/20 rounded-xl border border-emerald-500/30 transition-colors"
+                    >
+                      <Plus className="w-3.5 h-3.5" />
+                      <span>Add Post to Day {mobileDay}</span>
+                    </button>
+                  </>
+                );
+              })()}
+            </div>
           </div>
 
-          <div className="overflow-x-auto no-scrollbar">
+          {/* ===================================================================== */}
+          {/* DESKTOP MONTH CALENDAR GRID (SHOWN ON md: AND ABOVE SCREENS)          */}
+          {/* ===================================================================== */}
+          <div className="hidden md:block overflow-x-auto no-scrollbar">
             <div className="min-w-[640px] md:min-w-0">
               {/* Calendar Controls */}
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4 sm:mb-6">
