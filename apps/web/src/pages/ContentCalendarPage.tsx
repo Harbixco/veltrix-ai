@@ -156,6 +156,59 @@ export function compressImageFile(file: File, maxWidth = 1080, maxHeight = 1080,
   });
 }
 
+/**
+ * Generates and downloads a crisp 1080x1080 high-resolution solid red background text graphic
+ * matching the Facebook red status template (pure #d91b42 background with bold white centered text).
+ */
+export function downloadRedCardImage(text: string, filename = 'veltrix-red-card') {
+  if (typeof window === 'undefined') return;
+  const canvas = document.createElement('canvas');
+  canvas.width = 1080;
+  canvas.height = 1080;
+  const ctx = canvas.getContext('2d');
+  if (!ctx) return;
+
+  // Solid vibrant red canvas
+  ctx.fillStyle = '#d91b42';
+  ctx.fillRect(0, 0, 1080, 1080);
+
+  // Bold white typography
+  ctx.fillStyle = '#ffffff';
+  ctx.font = 'bold 50px system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+
+  // Word wrap for readability
+  const words = text.split(' ');
+  const lines: string[] = [];
+  let currentLine = '';
+  const maxWidth = 900;
+  for (const word of words) {
+    const testLine = currentLine ? `${currentLine} ${word}` : word;
+    if (ctx.measureText(testLine).width > maxWidth) {
+      lines.push(currentLine);
+      currentLine = word;
+    } else {
+      currentLine = testLine;
+    }
+  }
+  if (currentLine) lines.push(currentLine);
+
+  const lineHeight = 74;
+  const totalHeight = lines.length * lineHeight;
+  let startY = (1080 - totalHeight) / 2 + lineHeight / 2;
+
+  for (const line of lines) {
+    ctx.fillText(line, 540, startY);
+    startY += lineHeight;
+  }
+
+  const link = document.createElement('a');
+  link.download = `${filename}.png`;
+  link.href = canvas.toDataURL('image/png');
+  link.click();
+}
+
 // ============================================================================
 // CURATED MASTER CONTENT CALENDAR FOR NOVEMBER 2026
 // All posts start clean with mediaUrls: [] (manual upload for Facebook, text-only for Twitter)
@@ -260,8 +313,8 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     formatType: 'RED_BACKGROUND',
     topicBadge: 'REPETITIVE TASKS',
     carePillars: 'Curiosity + Alignment',
-    caption: 'Most business owners spend 3 hours a day answering the exact same 5 questions on WhatsApp. Why are you still doing this manually in 2026?',
-    firstComment: 'We connect an AI assistant directly to your WhatsApp to qualify leads and answer FAQs 24/7. Test a live demo here:\nhttps://wa.me/2348087098270',
+    caption: 'If your business takes more than 15 minutes to reply to a WhatsApp inquiry, you are quietly handing your paying customers over to your competitors.',
+    firstComment: 'We build custom AI assistants that answer inquiries, qualify leads, and handle pricing on WhatsApp in under 20 seconds. Test a live demo with Veltrix Hub here:\nhttps://wa.me/2348087098270',
     mediaUrls: [],
     scheduledFor: '2026-11-16T09:00:00.000Z',
     status: 'SCHEDULED',
@@ -275,7 +328,7 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     formatType: 'TEXT_ONLY',
     topicBadge: 'AUTOMATION LEVERAGE',
     carePillars: 'Curiosity + Alignment',
-    caption: 'Most business owners spend 3 hours a day answering the exact same 5 questions on WhatsApp.\n\nWhy are you still doing this manually in 2026?\n\nAutomate the repetitive inquiries. Focus on closing the high-value deals.',
+    caption: 'If your business takes 15 minutes to reply to an inquiry, you are giving away deals to faster competitors.\n\nSpeed is not just customer service. Speed is conversion rate optimization.\n\nAutomate the first response.',
     mediaUrls: [],
     scheduledFor: '2026-11-16T09:00:00.000Z',
     status: 'SCHEDULED',
@@ -336,8 +389,8 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     formatType: 'RED_BACKGROUND',
     topicBadge: 'WEBSITE SPEED',
     carePillars: 'Curiosity + Alignment',
-    caption: 'Having a slow website in 2026 is like locking your shop door and wondering why nobody is buying.',
-    firstComment: 'Check how fast your site loads on mobile networks. Send your website link to Veltrix Hub for a free technical speed audit:\nhttps://wa.me/2348087098270',
+    caption: 'A slow website on mobile is quietly bleeding your sales. If your page takes more than 3 seconds to load in Nigerian traffic, visitors leave before seeing your prices.',
+    firstComment: 'We engineer sub-second web platforms designed to load instantly on mobile networks. Send your link to Veltrix Hub for a free technical speed audit:\nhttps://wa.me/2348087098270',
     mediaUrls: [],
     scheduledFor: '2026-11-17T09:00:00.000Z',
     status: 'SCHEDULED',
@@ -410,10 +463,10 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     channel: 'FACEBOOK',
     slotType: 'MORNING',
     formatType: 'RED_BACKGROUND',
-    topicBadge: 'COMMISSION OPPORTUNITY',
-    carePillars: 'Curiosity + Emotion',
-    caption: 'Find people who need websites, e-commerce stores, or AI automation. Bring the job, take your cut. Think like an entrepreneur.',
-    firstComment: 'We pay direct commission on every closed web or automation project you refer to Veltrix Hub. Send us a message on WhatsApp to join our partner circle:\nhttps://wa.me/2348087098270',
+    topicBadge: 'AUTOMATION LEVERAGE',
+    carePillars: 'Emotion + Alignment',
+    caption: 'Most founders work 14 hours a day not because they have too many clients, but because they have zero automated systems handling repetitive questions.',
+    firstComment: 'Automate your customer replies, order capture, and lead qualification so you can focus strictly on closing high-value deals. Talk to our team on WhatsApp:\nhttps://wa.me/2348087098270',
     mediaUrls: [],
     scheduledFor: '2026-11-18T09:00:00.000Z',
     status: 'SCHEDULED',
@@ -426,8 +479,8 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     slotType: 'MORNING',
     formatType: 'TEXT_ONLY',
     topicBadge: 'TECH LEVERAGE',
-    carePillars: 'Curiosity + Emotion',
-    caption: 'You do not need to write code to make money in software.\n\nSpot businesses with terrible websites and manual customer service bottlenecks. Connect them to high-caliber builders. Earn on the deal.\n\nThink like an entrepreneur.',
+    carePillars: 'Emotion + Alignment',
+    caption: 'Most business owners work 14 hours a day because they act like human routers, manually copying and pasting the same information.\n\nBuild deterministic systems. Protect your cognitive bandwidth.',
     mediaUrls: [],
     scheduledFor: '2026-11-18T09:00:00.000Z',
     status: 'SCHEDULED',
@@ -486,10 +539,10 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     channel: 'FACEBOOK',
     slotType: 'MORNING',
     formatType: 'RED_BACKGROUND',
-    topicBadge: 'LIVE BOT TEST',
+    topicBadge: 'CONVERSION TIMING',
     carePillars: 'Curiosity + Reliability',
-    caption: 'I just automated our business WhatsApp and handed it over to AI. If you doubt me, go and test it yourself: +2348087098270',
-    firstComment: 'The AI answers FAQs, explains services, and qualifies leads in real-time. Test it right now:\nhttps://wa.me/2348087098270',
+    caption: 'Customers never buy from the best product. They buy from the business that answers their questions first with zero friction.',
+    firstComment: 'Give your brand a 24/7 automated assistant that qualifies leads and schedules appointments around the clock. Start a conversation with Veltrix Hub:\nhttps://wa.me/2348087098270',
     mediaUrls: [],
     scheduledFor: '2026-11-19T09:00:00.000Z',
     status: 'SCHEDULED',
@@ -501,9 +554,9 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     channel: 'TWITTER',
     slotType: 'MORNING',
     formatType: 'TEXT_ONLY',
-    topicBadge: 'AI IN PRODUCTION',
+    topicBadge: 'SPEED WINS DEALS',
     carePillars: 'Curiosity + Reliability',
-    caption: 'We connected an LLM directly to client APIs and WhatsApp.\n\nIt answers inquiries, qualifies budget, and schedules discovery calls in under 20 seconds.\n\nTest the live bot right now on WhatsApp: +2348087098270',
+    caption: 'The company that replies in 20 seconds wins 70% of inbound sales deals over the company that replies in 20 minutes.\n\nFriction is the biggest conversion killer in modern commerce.',
     mediaUrls: [],
     scheduledFor: '2026-11-19T09:00:00.000Z',
     status: 'SCHEDULED',
@@ -562,10 +615,10 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     channel: 'FACEBOOK',
     slotType: 'MORNING',
     formatType: 'RED_BACKGROUND',
-    topicBadge: 'CAC REGISTRATION',
+    topicBadge: 'BRAND PROTECTION',
     carePillars: 'Curiosity + Alignment',
-    caption: 'Operating a business without CAC registration means any competitor can legally take your business name tomorrow.',
-    firstComment: 'Veltrix Hub handles full CAC business name and company registration, status reports, and tax IDs. Inquire on WhatsApp:\nhttps://wa.me/2348087098270',
+    caption: 'Operating an unregistered business means any competitor can legally take your brand name tomorrow and lock you out of corporate contracts.',
+    firstComment: 'Veltrix Hub handles full CAC business name and company registration, status reports, and tax IDs. Protect your brand this week on WhatsApp:\nhttps://wa.me/2348087098270',
     mediaUrls: [],
     scheduledFor: '2026-11-20T09:00:00.000Z',
     status: 'SCHEDULED',
@@ -640,8 +693,8 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     formatType: 'RED_BACKGROUND',
     topicBadge: 'WEBSITE REVENUE',
     carePillars: 'Curiosity + Alignment',
-    caption: 'If your website has not brought you a single paying client this month, it is not a website. It is just an expensive digital picture.',
-    firstComment: 'Turn your website into an active lead generator. Book a free review on WhatsApp:\nhttps://wa.me/2348087098270',
+    caption: 'Your business website should be your best salesperson, not an expensive digital flyer that brings zero phone calls and zero revenue.',
+    firstComment: 'We design websites engineered with direct WhatsApp triggers and conversion architecture. Request a site review from Veltrix Hub:\nhttps://wa.me/2348087098270',
     mediaUrls: [],
     scheduledFor: '2026-11-21T09:00:00.000Z',
     status: 'SCHEDULED',
@@ -714,10 +767,10 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     channel: 'FACEBOOK',
     slotType: 'MORNING',
     formatType: 'RED_BACKGROUND',
-    topicBadge: 'AUTOMATION STRATEGY',
+    topicBadge: 'SCALABLE INFRASTRUCTURE',
     carePillars: 'Emotion + Alignment',
-    caption: 'The goal of automation is not to work less. The goal is to spend your energy on strategy while systems handle the repetitive routine.',
-    firstComment: 'Plan your week ahead with automated workflows. Talk to Veltrix Hub:\nhttps://wa.me/2348087098270',
+    caption: 'The difference between an exhausted vendor and a scalable business is whether your revenue stops the moment you turn off your phone to sleep.',
+    firstComment: 'Build digital infrastructure that captures leads and processes inquiries 24 hours a day. Prepare your business for the week with Veltrix Hub:\nhttps://wa.me/2348087098270',
     mediaUrls: [],
     scheduledFor: '2026-11-22T09:00:00.000Z',
     status: 'SCHEDULED',
@@ -729,9 +782,9 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     channel: 'TWITTER',
     slotType: 'MORNING',
     formatType: 'TEXT_ONLY',
-    topicBadge: 'FOUNDER BANDWIDTH',
+    topicBadge: 'FOUNDER LEVERAGE',
     carePillars: 'Emotion + Alignment',
-    caption: 'The goal of automation is not to be lazy.\n\nIt is to protect your highest-leverage asset: your mental bandwidth.\n\nLet bots answer the FAQs. You close the deals.',
+    caption: 'If your revenue stops the moment you fall asleep, you do not own a scalable company.\n\nBuild digital infrastructure that captures leads and qualifies prospects around the clock.',
     mediaUrls: [],
     scheduledFor: '2026-11-22T09:00:00.000Z',
     status: 'SCHEDULED',
@@ -857,7 +910,7 @@ export const ContentCalendarPage: React.FC = () => {
   // Cache key v7 (strictly real posts, deduplicated, zero dummy data)
   const [scheduledPosts, setScheduledPosts] = useState<ScheduledPost[]>(() => {
     if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('veltrix_scheduled_posts_v11');
+      const saved = localStorage.getItem('veltrix_scheduled_posts_v12');
       if (saved) {
         try {
           const parsed = JSON.parse(saved);
@@ -874,7 +927,7 @@ export const ContentCalendarPage: React.FC = () => {
 
   const [publishedPosts, setPublishedPosts] = useState<PublishedPost[]>(() => {
     if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('veltrix_published_posts_v11');
+      const saved = localStorage.getItem('veltrix_published_posts_v12');
       if (saved) {
         try {
           const parsed = JSON.parse(saved);
@@ -1048,7 +1101,7 @@ export const ContentCalendarPage: React.FC = () => {
   useEffect(() => {
     if (typeof window !== 'undefined') {
       try {
-        localStorage.setItem('veltrix_scheduled_posts_v11', JSON.stringify(scheduledPosts));
+        localStorage.setItem('veltrix_scheduled_posts_v12', JSON.stringify(scheduledPosts));
       } catch (err) {
         console.warn('Storage quota exceeded, preserving in-memory state:', err);
       }
@@ -1058,7 +1111,7 @@ export const ContentCalendarPage: React.FC = () => {
   useEffect(() => {
     if (typeof window !== 'undefined') {
       try {
-        localStorage.setItem('veltrix_published_posts_v11', JSON.stringify(publishedPosts));
+        localStorage.setItem('veltrix_published_posts_v12', JSON.stringify(publishedPosts));
       } catch (err) {
         console.warn('Storage quota exceeded, preserving in-memory state:', err);
       }
@@ -1716,8 +1769,8 @@ export const ContentCalendarPage: React.FC = () => {
       }
       setScheduledPosts(INITIAL_CURATED_SCHEDULED);
       setPublishedPosts(INITIAL_HISTORICAL_PUBLISHED);
-      localStorage.setItem('veltrix_scheduled_posts_v11', JSON.stringify(INITIAL_CURATED_SCHEDULED));
-      localStorage.setItem('veltrix_published_posts_v11', JSON.stringify(INITIAL_HISTORICAL_PUBLISHED));
+      localStorage.setItem('veltrix_scheduled_posts_v12', JSON.stringify(INITIAL_CURATED_SCHEDULED));
+      localStorage.setItem('veltrix_published_posts_v12', JSON.stringify(INITIAL_HISTORICAL_PUBLISHED));
       setActionSuccess('Content calendar reloaded cleanly!');
       setTimeout(() => setActionSuccess(null), 3000);
     }
@@ -2073,10 +2126,55 @@ export const ContentCalendarPage: React.FC = () => {
                             </div>
                           )}
 
-                          {/* Caption */}
-                          <p className="text-xs text-slate-200 whitespace-pre-wrap leading-relaxed line-clamp-4">
-                            {post.caption}
-                          </p>
+                          {/* Caption or Visual Red Background Design Card */}
+                          {post.formatType === 'RED_BACKGROUND' ? (
+                            <div className="space-y-2">
+                              <div className="relative w-full aspect-[16/10] bg-[#d91b42] rounded-2xl p-6 sm:p-8 flex items-center justify-center text-center shadow-xl border border-red-500/40 overflow-hidden group select-all">
+                                <div className="absolute inset-0 bg-gradient-to-br from-red-600 via-[#d91b42] to-red-700 opacity-95 pointer-events-none" />
+                                
+                                {/* Bold White Centered Text (Exact layout as template: NO hashtags, NO icons) */}
+                                <p className="relative z-10 text-white font-bold text-sm sm:text-base md:text-lg leading-snug tracking-tight max-w-md mx-auto drop-shadow-sm font-sans">
+                                  {post.caption}
+                                </p>
+
+                                {/* Action Overlay: Copy text or Download 1080x1080 PNG */}
+                                <div className="absolute bottom-2.5 right-2.5 z-20 flex items-center gap-1.5 opacity-90 sm:opacity-0 group-hover:opacity-100 transition-opacity">
+                                  <button
+                                    type="button"
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      navigator.clipboard.writeText(post.caption);
+                                      setActionSuccess('Red background text copied! Paste into Facebook red canvas.');
+                                      setTimeout(() => setActionSuccess(null), 3000);
+                                    }}
+                                    className="px-2.5 py-1 bg-black/70 hover:bg-black/90 backdrop-blur-md text-white text-[10px] font-semibold rounded-lg border border-white/20 transition-all flex items-center gap-1"
+                                    title="Copy Text to paste into Facebook Red Canvas"
+                                  >
+                                    <Copy className="w-3 h-3" />
+                                    <span>Copy Text</span>
+                                  </button>
+                                  <button
+                                    type="button"
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      downloadRedCardImage(post.caption, `red-card-${post.id}`);
+                                      setActionSuccess('1080x1080 Red graphic downloaded!');
+                                      setTimeout(() => setActionSuccess(null), 3000);
+                                    }}
+                                    className="px-2.5 py-1 bg-white hover:bg-slate-100 text-[#d91b42] text-[10px] font-bold rounded-lg shadow transition-all flex items-center gap-1"
+                                    title="Download 1080x1080 High-Res PNG Image"
+                                  >
+                                    <Download className="w-3 h-3" />
+                                    <span>Save PNG</span>
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                          ) : (
+                            <p className="text-xs text-slate-200 whitespace-pre-wrap leading-relaxed line-clamp-4">
+                              {post.caption}
+                            </p>
+                          )}
 
                           {/* Auto First Comment Preview */}
                             {post.firstComment && (
