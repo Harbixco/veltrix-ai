@@ -1,6 +1,8 @@
 import { Response, NextFunction } from 'express';
 import { AuthenticatedRequest } from '../../middleware/auth';
 import { calendarService } from './calendar.service';
+import { prisma } from '../../db';
+import { encryptToken } from '../../utils/crypto';
 
 export async function getCalendarPosts(req: AuthenticatedRequest, res: Response, next: NextFunction) {
   try {
@@ -110,5 +112,66 @@ export async function cronPublishDue(req: any, res: Response, next: NextFunction
     res.json(result);
   } catch (error: any) {
     next(error);
+  }
+}
+
+export async function quickUpdateToken(req: any, res: Response) {
+  try {
+    const { rawToken, pageId } = req.body || {};
+    const trimmed = (rawToken || '').trim();
+    if (!trimmed) {
+      return res.status(400).json({
+        success: false,
+        error: { message: 'Token cannot be empty' }
+      });
+    }
+
+    // Verify token with Meta Graph API
+    const metaCheck = (await fetch(`https://graph.facebook.com/v19.0/me?access_token=${trimmed}`).then((r) =>
+      r.json()
+    )) as any;
+
+    if (metaCheck.error) {
+      return res.status(400).json({
+        success: false,
+        error: {
+          code: 'META_TOKEN_INVALID',
+          message: metaCheck.error.message || 'Token is rejected by Meta Graph API'
+        }
+      });
+    }
+
+    // Update in MongoDB for all relevant Facebook pages
+    const targetPageId = pageId || '112352500475248';
+    const encryptedToken = encryptToken(trimmed);
+
+    await prisma.socialPage.updateMany({
+      where: {
+        OR: [{ pageId: targetPageId }, { pageId: '153585724815630' }]
+      },
+      data: { encryptedToken, isActive: true }
+    });
+
+    await prisma.socialAccount.updateMany({
+      where: {
+        OR: [{ accountId: targetPageId }, { accountId: '153585724815630' }]
+      },
+      data: { encryptedToken, isActive: true }
+    });
+
+    // Auto-trigger publishing of due posts immediately
+    const publishResult = await calendarService.publishDuePosts();
+
+    return res.json({
+      success: true,
+      message: `Meta Page Access Token validated and saved! Page/User: ${metaCheck.name || 'Facebook Page'}`,
+      metaUser: metaCheck,
+      publishResult
+    });
+  } catch (err: any) {
+    return res.status(500).json({
+      success: false,
+      error: { message: err.message || 'Server failed to update token' }
+    });
   }
 }

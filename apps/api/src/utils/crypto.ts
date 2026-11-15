@@ -33,23 +33,38 @@ export function encryptToken(plainText: string): string {
  * Decrypts encrypted tokens from MongoDB for secure API requests
  */
 export function decryptToken(cipherText: string): string {
-  if (!cipherText || !cipherText.includes(':')) return '';
-  try {
-    const parts = cipherText.split(':');
-    if (parts.length !== 3) return '';
-
-    const iv = Buffer.from(parts[0], 'hex');
-    const tag = Buffer.from(parts[1], 'hex');
-    const encryptedText = parts[2];
-
-    const decipher = crypto.createDecipheriv(ALGORITHM, getEncryptionKey(), iv);
-    decipher.setAuthTag(tag);
-
-    let decrypted = decipher.update(encryptedText, 'hex', 'utf8');
-    decrypted += decipher.final('utf8');
-    return decrypted;
-  } catch (error) {
-    console.error('[Crypto Error] Failed to decrypt token:', error);
-    return '';
+  if (!cipherText) return '';
+  // If already a plain token (not encrypted with iv:tag format)
+  if (!cipherText.includes(':')) {
+    return cipherText;
   }
+
+  const parts = cipherText.split(':');
+  if (parts.length !== 3) return cipherText;
+
+  const iv = Buffer.from(parts[0], 'hex');
+  const key = getEncryptionKey();
+
+  // Try format 1: iv:tag:encryptedText (where tag is 32 hex chars)
+  // Try format 2: iv:encryptedText:tag (where tag is 32 hex chars at the end)
+  const candidateFormats = [
+    { tag: parts[1], text: parts[2] },
+    { tag: parts[2], text: parts[1] }
+  ];
+
+  for (const { tag, text } of candidateFormats) {
+    if (tag.length !== 32) continue;
+    try {
+      const decipher = crypto.createDecipheriv(ALGORITHM, key, iv);
+      decipher.setAuthTag(Buffer.from(tag, 'hex'));
+      let decrypted = decipher.update(text, 'hex', 'utf8');
+      decrypted += decipher.final('utf8');
+      if (decrypted) return decrypted;
+    } catch {
+      // try next candidate format
+    }
+  }
+
+  console.warn('[Crypto Warning] Could not decrypt token with known formats');
+  return '';
 }

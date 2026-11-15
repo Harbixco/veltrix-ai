@@ -566,6 +566,121 @@ export const ContentCalendarPage: React.FC = () => {
     message: string;
   } | null>(null);
 
+  // Auto-Publisher Countdown & Status State
+  const [nowTime, setNowTime] = useState<number>(Date.now());
+  const [isTriggeringAutoPublish, setIsTriggeringAutoPublish] = useState<boolean>(false);
+  const [autoPublishStatus, setAutoPublishStatus] = useState<{
+    lastRun?: string;
+    publishedCount?: number;
+    error?: string | null;
+  }>({});
+  const [isTokenModalOpen, setIsTokenModalOpen] = useState<boolean>(false);
+  const [quickTokenInput, setQuickTokenInput] = useState<string>('');
+  const [isSubmittingQuickToken, setIsSubmittingQuickToken] = useState<boolean>(false);
+  const [quickTokenError, setQuickTokenError] = useState<string | null>(null);
+
+  // Ticking 1-second timer for live countdown
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setNowTime(Date.now());
+    }, 1000);
+    return () => clearInterval(timer);
+  }, []);
+
+  // Calculate next scheduled or overdue post
+  const { overduePosts, nextUpcomingPost, countdownText } = React.useMemo(() => {
+    const activeScheduled = scheduledPosts.filter((p) => p.status === 'SCHEDULED');
+    const overdue = activeScheduled.filter((p) => new Date(p.scheduledFor).getTime() <= nowTime);
+    const upcoming = activeScheduled
+      .filter((p) => new Date(p.scheduledFor).getTime() > nowTime)
+      .sort((a, b) => new Date(a.scheduledFor).getTime() - new Date(b.scheduledFor).getTime());
+
+    const nextPost = upcoming[0] || null;
+    let cdText = '00:00:00';
+
+    if (nextPost) {
+      const diffMs = Math.max(0, new Date(nextPost.scheduledFor).getTime() - nowTime);
+      const hours = Math.floor(diffMs / (1000 * 60 * 60));
+      const mins = Math.floor((diffMs / (1000 * 60)) % 60);
+      const secs = Math.floor((diffMs / 1000) % 60);
+      cdText = `${String(hours).padStart(2, '0')}:${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+    }
+
+    return {
+      overduePosts: overdue,
+      nextUpcomingPost: nextPost,
+      countdownText: cdText
+    };
+  }, [scheduledPosts, nowTime]);
+
+  // Trigger Auto-Publisher
+  const triggerAutoPublish = async (isManual = false) => {
+    if (isTriggeringAutoPublish) return;
+    setIsTriggeringAutoPublish(true);
+    try {
+      const res = await fetch('/api/v1/calendar/cron/publish-due', { method: 'POST' });
+      const data = await res.json();
+      if (data && data.success) {
+        const failErr = data.results?.find((r: any) => r.status === 'FAILED')?.error;
+        setAutoPublishStatus({
+          lastRun: new Date().toLocaleTimeString(),
+          publishedCount: data.publishedCount,
+          error: failErr || null
+        });
+
+        if (data.publishedCount > 0) {
+          setActionSuccess(`🎉 Auto-Publisher successfully published ${data.publishedCount} post(s)!`);
+          setTimeout(() => setActionSuccess(null), 4000);
+          fetchCalendarData();
+        } else if (isManual) {
+          if (failErr) {
+            setActionSuccess(`Auto-publish note: ${failErr}`);
+          } else {
+            setActionSuccess('Auto-Publisher checked queue: all due posts are up to date.');
+          }
+          setTimeout(() => setActionSuccess(null), 4000);
+        }
+      }
+    } catch (e: any) {
+      setAutoPublishStatus({
+        lastRun: new Date().toLocaleTimeString(),
+        error: e.message || 'Network error triggering publisher'
+      });
+    } finally {
+      setIsTriggeringAutoPublish(false);
+    }
+  };
+
+  // Quick Token Submit
+  const handleQuickTokenSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!quickTokenInput.trim()) return;
+    setIsSubmittingQuickToken(true);
+    setQuickTokenError(null);
+
+    try {
+      const res = await fetch('/api/v1/calendar/quick-update-token', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ rawToken: quickTokenInput.trim() })
+      });
+      const data = await res.json();
+      if (res.ok && data.success) {
+        setIsTokenModalOpen(false);
+        setQuickTokenInput('');
+        setActionSuccess(`🎉 Meta Page Token verified & saved! ${data.publishResult?.publishedCount || 0} due posts published to Facebook!`);
+        setTimeout(() => setActionSuccess(null), 5000);
+        fetchCalendarData();
+      } else {
+        setQuickTokenError(data.error?.message || 'Token verification failed. Please check token permissions.');
+      }
+    } catch (err: any) {
+      setQuickTokenError(err.message || 'Connection failed');
+    } finally {
+      setIsSubmittingQuickToken(false);
+    }
+  };
+
   // Sync to localStorage with safe try-catch
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -1410,6 +1525,99 @@ export const ContentCalendarPage: React.FC = () => {
           <span>{actionSuccess}</span>
         </div>
       )}
+
+      {/* ===================================================================== */}
+      {/* LIVE AUTO-PUBLISHER COUNTDOWN & DISPATCH CONTROL PANEL               */}
+      {/* ===================================================================== */}
+      <div className="bg-gradient-to-r from-slate-900 via-slate-950 to-slate-900 border border-slate-800 rounded-2xl p-4 sm:p-5 shadow-xl">
+        <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
+          {/* Left: Status & Indicator */}
+          <div className="space-y-1.5">
+            <div className="flex items-center gap-2">
+              <span className="relative flex h-2.5 w-2.5">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+              </span>
+              <span className="text-xs font-bold text-white tracking-wide uppercase flex items-center gap-1.5">
+                <span>Autonomous Auto-Publisher</span>
+                <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-mono">
+                  ACTIVE
+                </span>
+              </span>
+            </div>
+
+            <p className="text-xs text-slate-400">
+              {overduePosts.length > 0 ? (
+                <span className="text-amber-400 font-semibold flex items-center gap-1">
+                  <AlertCircle className="w-3.5 h-3.5" />
+                  <span>{overduePosts.length} post(s) ready for automatic dispatch</span>
+                </span>
+              ) : nextUpcomingPost ? (
+                <span>
+                  Next automated post: <strong className="text-slate-200">{nextUpcomingPost.channel === 'TWITTER' ? '𝕏' : 'Facebook'}</strong> on{' '}
+                  <strong className="text-white">
+                    {new Date(nextUpcomingPost.scheduledFor).toLocaleDateString('default', { month: 'short', day: 'numeric' })} at{' '}
+                    {new Date(nextUpcomingPost.scheduledFor).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                  </strong>
+                </span>
+              ) : (
+                <span>All scheduled posts are published or up to date.</span>
+              )}
+            </p>
+
+            {/* Error or token warning banner if token expired */}
+            {autoPublishStatus.error && autoPublishStatus.error.toLowerCase().includes('token') && (
+              <div className="flex items-center gap-2 pt-1 text-[11px] text-rose-300">
+                <AlertCircle className="w-3.5 h-3.5 flex-shrink-0 text-rose-400" />
+                <span>Facebook token expired. Renew to enable automatic posting to Facebook:</span>
+                <button
+                  onClick={() => setIsTokenModalOpen(true)}
+                  className="underline hover:text-white font-semibold text-rose-200 ml-1"
+                >
+                  Update Token
+                </button>
+              </div>
+            )}
+          </div>
+
+          {/* Right: Countdown & Trigger Controls */}
+          <div className="flex flex-wrap items-center gap-3 w-full lg:w-auto justify-between lg:justify-end">
+            {/* Live Countdown Box */}
+            <div className="bg-slate-950/80 border border-slate-800 rounded-xl px-3.5 py-2 flex items-center gap-2.5">
+              <Clock className="w-4 h-4 text-emerald-400 animate-pulse" />
+              <div>
+                <span className="text-[10px] uppercase tracking-wider text-slate-500 block leading-tight font-semibold">
+                  {overduePosts.length > 0 ? 'Queue Status' : 'Countdown'}
+                </span>
+                <span className="font-mono text-sm sm:text-base font-bold text-white tracking-widest">
+                  {overduePosts.length > 0 ? 'DUE NOW' : countdownText}
+                </span>
+              </div>
+            </div>
+
+            {/* Trigger Button */}
+            <button
+              onClick={() => triggerAutoPublish(true)}
+              disabled={isTriggeringAutoPublish}
+              className="flex items-center gap-2 px-3.5 py-2.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white rounded-xl text-xs font-semibold shadow-lg shadow-emerald-600/20 active:scale-95 transition-all disabled:opacity-50"
+              title="Execute publisher immediately"
+            >
+              <RefreshCw className={`w-3.5 h-3.5 ${isTriggeringAutoPublish ? 'animate-spin' : ''}`} />
+              <span>{isTriggeringAutoPublish ? 'Publishing...' : 'Trigger Now'}</span>
+            </button>
+
+            {/* Quick Renew Facebook Token Button */}
+            <button
+              onClick={() => setIsTokenModalOpen(true)}
+              className="flex items-center gap-1.5 px-3 py-2.5 bg-slate-800/80 hover:bg-slate-700/80 text-slate-200 border border-slate-700/60 rounded-xl text-xs font-medium transition-colors"
+              title="Renew Facebook Page Access Token"
+            >
+              <Key className="w-3.5 h-3.5 text-amber-400" />
+              <span>Facebook Token</span>
+            </button>
+          </div>
+        </div>
+      </div>
 
       {/* Main View Area */}
       {viewMode === 'calendar' ? (
@@ -3024,6 +3232,92 @@ export const ContentCalendarPage: React.FC = () => {
                 <span>Post Manually Right Now</span>
               </button>
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* ===================================================================== */}
+      {/* QUICK FACEBOOK TOKEN RENEWAL MODAL                                   */}
+      {/* ===================================================================== */}
+      {isTokenModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-fade-in">
+          <div className="bg-slate-900 border border-slate-800 rounded-2xl max-w-lg w-full p-6 space-y-4 shadow-2xl relative">
+            <div className="flex items-center justify-between pb-3 border-b border-slate-800">
+              <div className="flex items-center gap-2">
+                <Facebook className="w-5 h-5 text-[#1877F2]" />
+                <h3 className="text-base font-bold text-white">Renew Facebook Page Access Token</h3>
+              </div>
+              <button
+                onClick={() => {
+                  setIsTokenModalOpen(false);
+                  setQuickTokenError(null);
+                }}
+                className="p-1 text-slate-400 hover:text-white rounded-lg"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <p className="text-xs text-slate-300 leading-relaxed">
+              Meta Graph API tokens from the Explorer expire after 1-2 hours unless generated with a long-lived exchange. Paste your fresh or permanent Page Access Token (<code className="text-emerald-400 font-mono">EAAV...</code>) below:
+            </p>
+
+            <form onSubmit={handleQuickTokenSubmit} className="space-y-4">
+              <div>
+                <label className="text-xs font-semibold text-slate-300 block mb-1.5">
+                  Page Access Token (EAAV...)
+                </label>
+                <textarea
+                  rows={3}
+                  value={quickTokenInput}
+                  onChange={(e) => setQuickTokenInput(e.target.value)}
+                  placeholder="Paste your fresh EAAV... token here"
+                  className="w-full bg-slate-950 border border-slate-700 rounded-xl p-3 text-xs text-white placeholder-slate-500 font-mono focus:outline-none focus:border-emerald-500 transition-colors"
+                  required
+                />
+              </div>
+
+              {quickTokenError && (
+                <div className="p-3 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-300 text-xs flex items-start gap-2">
+                  <AlertCircle className="w-4 h-4 text-rose-400 flex-shrink-0 mt-0.5" />
+                  <span>{quickTokenError}</span>
+                </div>
+              )}
+
+              <div className="p-3 rounded-xl bg-slate-950/70 border border-slate-800 text-[11px] text-slate-400 space-y-1.5">
+                <p className="font-semibold text-slate-200">💡 How to get a Long-Lived / Permanent Token:</p>
+                <p>1. In <a href="https://developers.facebook.com/tools/explorer/" target="_blank" rel="noreferrer" className="text-blue-400 hover:underline">Meta Graph API Explorer</a>, select your Meta App and Page.</p>
+                <p>2. Under Permissions, add: <code className="text-slate-200 font-mono">pages_manage_posts</code>, <code className="text-slate-200 font-mono">pages_read_engagement</code>, <code className="text-slate-200 font-mono">pages_show_list</code>.</p>
+                <p>3. Generate the token and paste it here. Saving will automatically trigger publishing for today&apos;s pending posts!</p>
+              </div>
+
+              <div className="flex items-center justify-end gap-3 pt-2">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setIsTokenModalOpen(false);
+                    setQuickTokenError(null);
+                  }}
+                  className="px-4 py-2 text-xs text-slate-400 hover:text-white"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  disabled={isSubmittingQuickToken || !quickTokenInput.trim()}
+                  className="px-5 py-2 bg-[#1877F2] hover:bg-[#166fe5] text-white text-xs font-semibold rounded-xl flex items-center gap-2 shadow-lg shadow-[#1877F2]/20 disabled:opacity-50 transition-all active:scale-95"
+                >
+                  {isSubmittingQuickToken ? (
+                    <>
+                      <RefreshCw className="w-3.5 h-3.5 animate-spin" />
+                      <span>Verifying & Saving...</span>
+                    </>
+                  ) : (
+                    <span>Save & Auto-Publish Due Posts</span>
+                  )}
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       )}
