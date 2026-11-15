@@ -427,9 +427,7 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
 const INITIAL_HISTORICAL_PUBLISHED: PublishedPost[] = [];
 
 export const ContentCalendarPage: React.FC = () => {
-  const [viewMode, setViewMode] = useState<'calendar' | 'timeline'>(
-    typeof window !== 'undefined' && window.innerWidth < 768 ? 'timeline' : 'calendar'
-  );
+  const [viewMode, setViewMode] = useState<'calendar' | 'timeline'>('calendar');
   const [currentDate, setCurrentDate] = useState(new Date(2026, 10, 14)); // November 2026
 
   // Cache key v7 (strictly real posts, deduplicated, zero dummy data)
