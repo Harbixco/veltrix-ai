@@ -171,7 +171,7 @@ export class CalendarService {
   async publishNow(
     organizationId: string,
     postId: string,
-    override?: { mediaUrls?: string[]; caption?: string }
+    override?: { mediaUrls?: string[]; caption?: string; firstComment?: string }
   ) {
     let post = null;
 
@@ -390,7 +390,9 @@ export class CalendarService {
       if (publishedExternalId && decryptedToken) {
         try {
           const firstCommentMessage =
-            "Want a free initial review of your business's online presence or a professional website? Send Veltrix Hub a message.\nWhatsApp: https://wa.me/2348087098270";
+            override?.firstComment ||
+            (post as any)?.firstComment ||
+            "Want to test our AI assistant live or discuss a high-converting website? Send Veltrix Hub a message on WhatsApp:\nhttps://wa.me/2348087098270";
 
           await fetch(`https://graph.facebook.com/v19.0/${publishedExternalId}/comments`, {
             method: 'POST',

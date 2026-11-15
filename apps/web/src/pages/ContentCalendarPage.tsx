@@ -47,6 +47,10 @@ export interface ScheduledPost {
   channel: 'FACEBOOK' | 'TWITTER';
   slotType?: 'MORNING' | 'MIDDAY' | 'EVENING';
   topicBadge?: string;
+  formatType?: 'RED_BACKGROUND' | 'MANUAL_PROOF' | 'PICTURE' | 'TEXT_ONLY';
+  firstComment?: string;
+  isManual?: boolean;
+  carePillars?: string;
   page?: {
     pageName: string;
     pageId: string;
@@ -157,17 +161,19 @@ export function compressImageFile(file: File, maxWidth = 1080, maxHeight = 1080,
 // All posts start clean with mediaUrls: [] (manual upload for Facebook, text-only for Twitter)
 // ============================================================================
 const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
-  // --- TODAY: SATURDAY, NOV 14 ---
+  // --- SATURDAY, NOV 14 ---
   {
     id: 'sched_nov14_x1',
     socialPageId: 'AbiodunBuilds',
     channel: 'TWITTER',
     slotType: 'MORNING',
-    topicBadge: 'REACT.JS ARCHITECTURE',
-    caption: `React performance tip: Most lag isn't caused by missing useMemo.\n\nIt's caused by lifting state higher than it needs to be.\n\nKeep state local. When state stays near the component that actually uses it, 90% of unnecessary re-renders vanish.\n\n#ReactJS #TypeScript #WebDev`,
+    formatType: 'TEXT_ONLY',
+    topicBadge: 'REACT PERFORMANCE',
+    carePillars: 'Curiosity + Alignment',
+    caption: 'React performance tip: Most lag is not caused by missing useMemo.\n\nIt is caused by lifting state higher than it needs to be.\n\nKeep state local. When state stays near the component that actually uses it, 90% of unnecessary re-renders vanish.',
     mediaUrls: [],
     scheduledFor: '2026-11-14T09:00:00.000Z',
-    status: 'SCHEDULED',
+    status: 'PUBLISHED',
     page: { pageName: 'Abiodun Builds (@AbiodunBuilds)', pageId: 'AbiodunBuilds' }
   },
   {
@@ -175,11 +181,14 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     socialPageId: '112352500475248',
     channel: 'FACEBOOK',
     slotType: 'MIDDAY',
+    formatType: 'MANUAL_PROOF',
     topicBadge: 'WEBSITE SPEED & CONVERSION',
-    caption: `Why 70% of business websites in Nigeria lose customers before they even read the offer:\n\n1. Slow loading speed (over 4 seconds on mobile networks)\n2. No direct WhatsApp conversion button on the screen\n3. Cluttered layout that confuses first-time visitors\n\nAt Veltrix Hub, we build digital infrastructure designed for speed, clarity, and trust.\n\nSend us a DM for a free website review today.`,
+    carePillars: 'Reliability + Alignment',
+    caption: 'Why 70% of business websites in Nigeria lose customers before they even read the offer:\n\n1. Slow loading speed (over 4 seconds on mobile networks)\n2. No direct WhatsApp conversion button on the screen\n3. Cluttered layout that confuses first-time visitors\n\nAt Veltrix Hub, we build digital infrastructure designed for speed, clarity, and trust.',
+    firstComment: 'Send us a direct message on WhatsApp for a free website speed audit:\nhttps://wa.me/2348087098270',
     mediaUrls: [],
     scheduledFor: '2026-11-14T13:00:00.000Z',
-    status: 'SCHEDULED',
+    status: 'PUBLISHED',
     page: { pageName: 'Veltrixhq', pageId: '112352500475248' }
   },
   {
@@ -187,25 +196,29 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     socialPageId: 'AbiodunBuilds',
     channel: 'TWITTER',
     slotType: 'EVENING',
-    topicBadge: 'AI AUTOMATION & WORKFLOWS',
-    caption: `AI won't replace software engineers.\n\nBut an engineer who builds custom AI automations will replace an entire legacy agency.\n\nWe connect LLMs directly to client databases and WhatsApp to qualify leads in under 20 seconds.\n\n#AIAutomation #SoftwareEngineering`,
+    formatType: 'TEXT_ONLY',
+    topicBadge: 'AI AUTOMATION',
+    carePillars: 'Reliability + Emotion',
+    caption: 'AI will not replace software engineers.\n\nBut an engineer who builds custom AI automations will replace an entire legacy agency.\n\nWe connect LLMs directly to client databases and WhatsApp to qualify leads in under 20 seconds.',
     mediaUrls: [],
     scheduledFor: '2026-11-14T18:00:00.000Z',
-    status: 'SCHEDULED',
+    status: 'PUBLISHED',
     page: { pageName: 'Abiodun Builds (@AbiodunBuilds)', pageId: 'AbiodunBuilds' }
   },
 
-  // --- SUNDAY, NOV 15 ---
+  // --- SUNDAY, NOV 15 (TODAY - PUBLISHED LIVE) ---
   {
     id: 'sched_nov15_x1',
     socialPageId: 'AbiodunBuilds',
     channel: 'TWITTER',
     slotType: 'MORNING',
+    formatType: 'TEXT_ONLY',
     topicBadge: 'CLEAN ARCHITECTURE',
-    caption: `Stop using useEffect to sync related state.\n\nIf a value can be computed from existing props or state, derive it during render:\n\nconst fullName = \`\${firstName} \${lastName}\`;\n\nNo extra render cycle. Zero synchronization bugs.\n\n#React #Frontend #CleanCode`,
+    carePillars: 'Curiosity + Alignment',
+    caption: 'Stop using useEffect to sync related state.\n\nIf a value can be computed from existing props or state, derive it during render.\n\nNo extra render cycle. Zero synchronization bugs.',
     mediaUrls: [],
     scheduledFor: '2026-11-15T09:00:00.000Z',
-    status: 'SCHEDULED',
+    status: 'PUBLISHED',
     page: { pageName: 'Abiodun Builds (@AbiodunBuilds)', pageId: 'AbiodunBuilds' }
   },
   {
@@ -213,11 +226,14 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     socialPageId: '112352500475248',
     channel: 'FACEBOOK',
     slotType: 'MIDDAY',
+    formatType: 'MANUAL_PROOF',
     topicBadge: 'CORPORATE BRANDING & TRUST',
-    caption: `Professional Branding vs Informal Business:\n\nCustomers will happily pay 3x more to a business with clean corporate branding, verified CAC credentials, and an official domain email.\n\nStop losing high-value clients to competitors with better presentation. Let Veltrix Hub transform your brand perception this week.`,
+    carePillars: 'Reliability + Alignment',
+    caption: 'Professional Branding vs Informal Business:\n\nCustomers will happily pay 3x more to a business with clean corporate branding, verified CAC credentials, and an official domain email.\n\nStop losing high-value clients to competitors with better presentation.',
+    firstComment: 'Send Veltrix Hub a message on WhatsApp to upgrade your corporate branding:\nhttps://wa.me/2348087098270',
     mediaUrls: [],
     scheduledFor: '2026-11-15T13:00:00.000Z',
-    status: 'SCHEDULED',
+    status: 'PUBLISHED',
     page: { pageName: 'Veltrixhq', pageId: '112352500475248' }
   },
   {
@@ -225,46 +241,86 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     socialPageId: 'AbiodunBuilds',
     channel: 'TWITTER',
     slotType: 'EVENING',
+    formatType: 'TEXT_ONLY',
     topicBadge: 'AI WORKFLOW ARCHITECTURE',
-    caption: `Most businesses don't need another generic ChatGPT prompt.\n\nThey need deterministic AI workflows:\n1. Ingest lead inquiry\n2. Query inventory & pricing via API\n3. Deliver tailored quotation in 15 seconds\n\nThat's how modern businesses scale.\n\n#VeltrixHub #Automation`,
+    carePillars: 'Reliability + Emotion',
+    caption: 'Most businesses do not need another generic ChatGPT prompt.\n\nThey need deterministic AI workflows:\n1. Ingest lead inquiry\n2. Query inventory & pricing via API\n3. Deliver tailored quotation in 15 seconds\n\nThat is how modern businesses scale.',
     mediaUrls: [],
     scheduledFor: '2026-11-15T18:00:00.000Z',
-    status: 'SCHEDULED',
+    status: 'PUBLISHED',
     page: { pageName: 'Abiodun Builds (@AbiodunBuilds)', pageId: 'AbiodunBuilds' }
   },
 
   // --- MONDAY, NOV 16 ---
   {
-    id: 'sched_nov16_x1',
+    id: 'sched_nov16_fb_am',
+    socialPageId: '112352500475248',
+    channel: 'FACEBOOK',
+    slotType: 'MORNING',
+    formatType: 'RED_BACKGROUND',
+    topicBadge: 'REPETITIVE TASKS',
+    carePillars: 'Curiosity + Alignment',
+    caption: 'Most business owners spend 3 hours a day answering the exact same 5 questions on WhatsApp. Why are you still doing this manually in 2026?',
+    firstComment: 'We connect an AI assistant directly to your WhatsApp to qualify leads and answer FAQs 24/7. Test a live demo here:\nhttps://wa.me/2348087098270',
+    mediaUrls: [],
+    scheduledFor: '2026-11-16T09:00:00.000Z',
+    status: 'SCHEDULED',
+    page: { pageName: 'Veltrixhq', pageId: '112352500475248' }
+  },
+  {
+    id: 'sched_nov16_x_am',
     socialPageId: 'AbiodunBuilds',
     channel: 'TWITTER',
     slotType: 'MORNING',
-    topicBadge: 'TYPESCRIPT PRO',
-    caption: `TypeScript tip:\n\nStop reaching for 'any' when dealing with dynamic API responses.\n\nUse 'unknown' paired with a custom type guard. You get compiler safety without compromising flexibility.\n\nJunior devs rush with any; senior devs validate shapes.\n\n#TypeScript`,
+    formatType: 'TEXT_ONLY',
+    topicBadge: 'AUTOMATION LEVERAGE',
+    carePillars: 'Curiosity + Alignment',
+    caption: 'Most business owners spend 3 hours a day answering the exact same 5 questions on WhatsApp.\n\nWhy are you still doing this manually in 2026?\n\nAutomate the repetitive inquiries. Focus on closing the high-value deals.',
     mediaUrls: [],
     scheduledFor: '2026-11-16T09:00:00.000Z',
     status: 'SCHEDULED',
     page: { pageName: 'Abiodun Builds (@AbiodunBuilds)', pageId: 'AbiodunBuilds' }
   },
   {
-    id: 'sched_nov16_fb',
+    id: 'sched_nov16_fb_mid',
     socialPageId: '112352500475248',
     channel: 'FACEBOOK',
     slotType: 'MIDDAY',
-    topicBadge: 'WEBSITE MAINTENANCE & CARE',
-    caption: `Did you know that an unmonitored website can go offline for days without the owner noticing?\n\nWith Veltrix Hub Website Maintenance, we provide 24/7 uptime monitoring, daily automated backups, and instant security patches so your business never misses a sale.\n\nFocus on running your business while we handle your digital infrastructure.`,
+    formatType: 'MANUAL_PROOF',
+    isManual: true,
+    topicBadge: 'REAL BOT CHAT PROOF',
+    carePillars: 'Reliability + Alignment',
+    caption: 'A client asked if our AI bot can handle Nigerian customer inquiries, slang, and price questions.\n\nHere is a real screenshot of the bot qualifying a lead and booking a service at 1:40 AM while the business owner was sound asleep.\n\nProof beats promises every single time.',
+    firstComment: 'Want to see how this works for your business? Chat with our team:\nhttps://wa.me/2348087098270',
     mediaUrls: [],
     scheduledFor: '2026-11-16T13:00:00.000Z',
     status: 'SCHEDULED',
     page: { pageName: 'Veltrixhq', pageId: '112352500475248' }
   },
   {
-    id: 'sched_nov16_x2',
+    id: 'sched_nov16_fb_pm',
+    socialPageId: '112352500475248',
+    channel: 'FACEBOOK',
+    slotType: 'EVENING',
+    formatType: 'PICTURE',
+    topicBadge: 'CUSTOMER GHOSTING SOLVED',
+    carePillars: 'Reliability + Emotion',
+    caption: 'Customers ask "How much?" and disappear. Here is the real reason:\n\nWhen a customer asks for your price and gets just a bare number with no context, they compare you solely on cheapness.\n\nIf your response takes more than 15 minutes, they have already messaged three of your competitors.\n\nAnd if you do not follow up within 24 hours, the lead is permanently dead.\n\nWe built Veltrix AI to fix this: instant 20-second replies, automated value positioning, and scheduled follow-ups on WhatsApp.',
+    firstComment: 'Want to test the AI live on your own phone? Send a test message to our demo number on WhatsApp:\nhttps://wa.me/2348087098270',
+    mediaUrls: [],
+    scheduledFor: '2026-11-16T18:00:00.000Z',
+    status: 'SCHEDULED',
+    page: { pageName: 'Veltrixhq', pageId: '112352500475248' }
+  },
+  {
+    id: 'sched_nov16_x_pm',
     socialPageId: 'AbiodunBuilds',
     channel: 'TWITTER',
     slotType: 'EVENING',
-    topicBadge: 'LEARN WEB DEV',
-    caption: `How to escape tutorial hell in 3 steps:\n\n1. Stop watching 10-hour build videos on YouTube\n2. Pick 1 real-world app (e.g. an invoice builder)\n3. Build it from scratch without templates. Google each error yourself.\n\nStruggle is where real learning happens.\n\n#100DaysOfCode #LearnInPublic`,
+    formatType: 'TEXT_ONLY',
+    topicBadge: 'CONVERSION TIMING',
+    carePillars: 'Reliability + Emotion',
+    caption: 'When a prospect asks "How much?" and you take 20 minutes to reply, they have already messaged 3 competitors.\n\nInstant response time is not customer service—it is conversion rate optimization.\n\nAutomate the first response or lose the sale.',
     mediaUrls: [],
     scheduledFor: '2026-11-16T18:00:00.000Z',
     status: 'SCHEDULED',
@@ -273,36 +329,74 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
 
   // --- TUESDAY, NOV 17 ---
   {
-    id: 'sched_nov17_x1',
+    id: 'sched_nov17_fb_am',
+    socialPageId: '112352500475248',
+    channel: 'FACEBOOK',
+    slotType: 'MORNING',
+    formatType: 'RED_BACKGROUND',
+    topicBadge: 'WEBSITE SPEED',
+    carePillars: 'Curiosity + Alignment',
+    caption: 'Having a slow website in 2026 is like locking your shop door and wondering why nobody is buying.',
+    firstComment: 'Check how fast your site loads on mobile networks. Send your website link to Veltrix Hub for a free technical speed audit:\nhttps://wa.me/2348087098270',
+    mediaUrls: [],
+    scheduledFor: '2026-11-17T09:00:00.000Z',
+    status: 'SCHEDULED',
+    page: { pageName: 'Veltrixhq', pageId: '112352500475248' }
+  },
+  {
+    id: 'sched_nov17_x_am',
     socialPageId: 'AbiodunBuilds',
     channel: 'TWITTER',
     slotType: 'MORNING',
-    topicBadge: 'FRONTEND REALITY',
-    caption: `Designers design on a 4K MacBook.\nReal customers visit on a $90 smartphone with a weak 3G connection in traffic.\n\nIf your web app isn't tested on slow networks and budget devices, it isn't production ready.\n\n#Frontend #MobileFirst`,
+    formatType: 'TEXT_ONLY',
+    topicBadge: 'MOBILE PERFORMANCE',
+    carePillars: 'Curiosity + Alignment',
+    caption: 'Designers build websites on 4K MacBooks with fiber optic WiFi.\n\nReal customers visit on budget smartphones with 3G connections in traffic.\n\nIf your web app is not tested on slow networks, it is not production ready.',
     mediaUrls: [],
     scheduledFor: '2026-11-17T09:00:00.000Z',
     status: 'SCHEDULED',
     page: { pageName: 'Abiodun Builds (@AbiodunBuilds)', pageId: 'AbiodunBuilds' }
   },
   {
-    id: 'sched_nov17_fb',
+    id: 'sched_nov17_fb_mid',
     socialPageId: '112352500475248',
     channel: 'FACEBOOK',
     slotType: 'MIDDAY',
-    topicBadge: 'CAC LEGAL REGISTRATION',
-    caption: `Is your business legally registered with the CAC?\n\nOperating without CAC registration means any competitor can legally claim your business name tomorrow.\n\nVeltrix Hub handles complete CAC business registration, tax certificates, and official documents smoothly.\n\nProtect your brand name today. Send us a message on WhatsApp.`,
+    formatType: 'MANUAL_PROOF',
+    isManual: true,
+    topicBadge: 'SPEED BENCHMARK PROOF',
+    carePillars: 'Reliability + Alignment',
+    caption: 'Before and after: We just rebuilt a client\'s e-commerce platform. Mobile load time dropped from 7.4 seconds to 0.8 seconds.\n\nResult? Inquiries doubled within 48 hours.\n\nSpeed is not a luxury. In business, speed is revenue.',
+    firstComment: 'Want us to optimize your store for sub-second speeds? Inquire here:\nhttps://wa.me/2348087098270',
     mediaUrls: [],
     scheduledFor: '2026-11-17T13:00:00.000Z',
     status: 'SCHEDULED',
     page: { pageName: 'Veltrixhq', pageId: '112352500475248' }
   },
   {
-    id: 'sched_nov17_x2',
+    id: 'sched_nov17_fb_pm',
+    socialPageId: '112352500475248',
+    channel: 'FACEBOOK',
+    slotType: 'EVENING',
+    formatType: 'PICTURE',
+    topicBadge: 'WEBSITE CONVERSION ARCHITECTURE',
+    carePillars: 'Reliability + Emotion',
+    caption: 'Why 80% of business websites fail to make a single sale:\n\n1. They treat their website like a static brochure instead of an active salesperson.\n2. There is no direct WhatsApp conversion button on the screen.\n3. Visitors cannot find pricing or answers to their objections in under 10 seconds.\n\nA high-converting website does not just look pretty. It removes hesitation and drives immediate action.',
+    firstComment: 'Let us review your current website and show you where you are losing customers:\nhttps://wa.me/2348087098270',
+    mediaUrls: [],
+    scheduledFor: '2026-11-17T18:00:00.000Z',
+    status: 'SCHEDULED',
+    page: { pageName: 'Veltrixhq', pageId: '112352500475248' }
+  },
+  {
+    id: 'sched_nov17_x_pm',
     socialPageId: 'AbiodunBuilds',
     channel: 'TWITTER',
     slotType: 'EVENING',
-    topicBadge: 'WEB DEV ROADMAP 2026',
-    caption: `If I had to learn web development from zero in 2026:\n\nMonth 1: HTML, CSS & Flexbox layout\nMonth 2: Pure JavaScript & DOM manipulation\nMonth 3: React & TypeScript\nMonth 4: Build 3 fullstack CRUD apps\n\nDon't jump between 10 frameworks. Master fundamentals first.\n\n#CodeNewbie #WebDev`,
+    formatType: 'TEXT_ONLY',
+    topicBadge: 'CONVERSION ARCHITECTURE',
+    carePillars: 'Reliability + Emotion',
+    caption: '3 reasons business websites fail to convert:\n\n1. No clear value proposition in the first 5 seconds\n2. Friction in contact (no one-click WhatsApp or booking)\n3. Buried pricing and zero social proof\n\nFix these three and watch conversions double.',
     mediaUrls: [],
     scheduledFor: '2026-11-17T18:00:00.000Z',
     status: 'SCHEDULED',
@@ -311,36 +405,74 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
 
   // --- WEDNESDAY, NOV 18 ---
   {
-    id: 'sched_nov18_x1',
+    id: 'sched_nov18_fb_am',
+    socialPageId: '112352500475248',
+    channel: 'FACEBOOK',
+    slotType: 'MORNING',
+    formatType: 'RED_BACKGROUND',
+    topicBadge: 'COMMISSION OPPORTUNITY',
+    carePillars: 'Curiosity + Emotion',
+    caption: 'Find people who need websites, e-commerce stores, or AI automation. Bring the job, take your cut. Think like an entrepreneur.',
+    firstComment: 'We pay direct commission on every closed web or automation project you refer to Veltrix Hub. Send us a message on WhatsApp to join our partner circle:\nhttps://wa.me/2348087098270',
+    mediaUrls: [],
+    scheduledFor: '2026-11-18T09:00:00.000Z',
+    status: 'SCHEDULED',
+    page: { pageName: 'Veltrixhq', pageId: '112352500475248' }
+  },
+  {
+    id: 'sched_nov18_x_am',
     socialPageId: 'AbiodunBuilds',
     channel: 'TWITTER',
     slotType: 'MORNING',
-    topicBadge: 'MOBILE APP DEV',
-    caption: `React Native with the New Architecture and Hermes engine is incredible.\n\n60 FPS animations, near-instant startup, and 85% shared code across iOS and Android.\n\nFor most startups, building two separate native apps is financial waste.\n\n#ReactNative #MobileAppDev`,
+    formatType: 'TEXT_ONLY',
+    topicBadge: 'TECH LEVERAGE',
+    carePillars: 'Curiosity + Emotion',
+    caption: 'You do not need to write code to make money in software.\n\nSpot businesses with terrible websites and manual customer service bottlenecks. Connect them to high-caliber builders. Earn on the deal.\n\nThink like an entrepreneur.',
     mediaUrls: [],
     scheduledFor: '2026-11-18T09:00:00.000Z',
     status: 'SCHEDULED',
     page: { pageName: 'Abiodun Builds (@AbiodunBuilds)', pageId: 'AbiodunBuilds' }
   },
   {
-    id: 'sched_nov18_fb',
+    id: 'sched_nov18_fb_mid',
     socialPageId: '112352500475248',
     channel: 'FACEBOOK',
     slotType: 'MIDDAY',
-    topicBadge: 'AUTOMATED LEAD ACQUISITION',
-    caption: `Automating customer inquiries:\n\nWhat if every prospect who messaged your business got their questions answered and booked a consultation within 30 seconds, even at 2 AM?\n\nAI customer automations by Veltrix Hub connect directly to WhatsApp and your CRM to capture sales 24/7.\n\nAsk us for a live demo.`,
+    formatType: 'MANUAL_PROOF',
+    isManual: true,
+    topicBadge: 'COMMISSION PAYOUT PROOF',
+    carePillars: 'Reliability + Emotion',
+    caption: 'Just sent out another referral commission payout to an associate who connected us with a logistics firm in Lagos.\n\nYou do not need to know how to code to earn in tech. You just need to spot opportunities and connect the dots.',
+    firstComment: 'Ready to partner with Veltrix Hub? Message us on WhatsApp:\nhttps://wa.me/2348087098270',
     mediaUrls: [],
     scheduledFor: '2026-11-18T13:00:00.000Z',
     status: 'SCHEDULED',
     page: { pageName: 'Veltrixhq', pageId: '112352500475248' }
   },
   {
-    id: 'sched_nov18_x2',
+    id: 'sched_nov18_fb_pm',
+    socialPageId: '112352500475248',
+    channel: 'FACEBOOK',
+    slotType: 'EVENING',
+    formatType: 'PICTURE',
+    topicBadge: 'DIGITAL INFRASTRUCTURE',
+    carePillars: 'Alignment + Emotion',
+    caption: 'The difference between an expense and digital infrastructure:\n\nA website or an AI assistant is not an expense. It is a digital employee that never sleeps, never complains, and handles 50 customers at the same time.\n\nIf your business relies 100% on you being awake to make sales, you do not own a business. You own a 24-hour job.\n\nAutomation is how you reclaim your time while multiplying your revenue.',
+    firstComment: 'See how automation works for your specific business model. Message us on WhatsApp:\nhttps://wa.me/2348087098270',
+    mediaUrls: [],
+    scheduledFor: '2026-11-18T18:00:00.000Z',
+    status: 'SCHEDULED',
+    page: { pageName: 'Veltrixhq', pageId: '112352500475248' }
+  },
+  {
+    id: 'sched_nov18_x_pm',
     socialPageId: 'AbiodunBuilds',
     channel: 'TWITTER',
     slotType: 'EVENING',
-    topicBadge: 'FOUNDER & ENGINEER',
-    caption: `What building Veltrix Hub taught me as a Frontend Engineer:\n\nWriting clean code is only 50% of the job. The other 50% is understanding business problems, meeting deadlines, and delivering software that makes clients money.\n\nEngineers who understand business are unstoppable.\n\n#BuildInPublic`,
+    formatType: 'TEXT_ONLY',
+    topicBadge: 'SYSTEMS OVER TASKS',
+    carePillars: 'Alignment + Emotion',
+    caption: 'If your revenue stops the moment you fall asleep, you do not own a business—you own an exhausting shift.\n\nDigital infrastructure (fast web apps, automated lead capture) works while you rest.\n\nBuild systems, not just tasks.',
     mediaUrls: [],
     scheduledFor: '2026-11-18T18:00:00.000Z',
     status: 'SCHEDULED',
@@ -349,36 +481,74 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
 
   // --- THURSDAY, NOV 19 ---
   {
-    id: 'sched_nov19_x1',
+    id: 'sched_nov19_fb_am',
+    socialPageId: '112352500475248',
+    channel: 'FACEBOOK',
+    slotType: 'MORNING',
+    formatType: 'RED_BACKGROUND',
+    topicBadge: 'LIVE BOT TEST',
+    carePillars: 'Curiosity + Reliability',
+    caption: 'I just automated our business WhatsApp and handed it over to AI. If you doubt me, go and test it yourself: +2348087098270',
+    firstComment: 'The AI answers FAQs, explains services, and qualifies leads in real-time. Test it right now:\nhttps://wa.me/2348087098270',
+    mediaUrls: [],
+    scheduledFor: '2026-11-19T09:00:00.000Z',
+    status: 'SCHEDULED',
+    page: { pageName: 'Veltrixhq', pageId: '112352500475248' }
+  },
+  {
+    id: 'sched_nov19_x_am',
     socialPageId: 'AbiodunBuilds',
     channel: 'TWITTER',
     slotType: 'MORNING',
-    topicBadge: 'STARTUP STRATEGY',
-    caption: `Before building a mobile app, ask yourself:\n\nDoes your product really need push tokens, bluetooth, or offline storage?\n\nIf not, a high-performance Progressive Web App (PWA) gets you to market in 2 weeks for 1/3 the cost.\n\n#StartupAdvice #MobileDev`,
+    formatType: 'TEXT_ONLY',
+    topicBadge: 'AI IN PRODUCTION',
+    carePillars: 'Curiosity + Reliability',
+    caption: 'We connected an LLM directly to client APIs and WhatsApp.\n\nIt answers inquiries, qualifies budget, and schedules discovery calls in under 20 seconds.\n\nTest the live bot right now on WhatsApp: +2348087098270',
     mediaUrls: [],
     scheduledFor: '2026-11-19T09:00:00.000Z',
     status: 'SCHEDULED',
     page: { pageName: 'Abiodun Builds (@AbiodunBuilds)', pageId: 'AbiodunBuilds' }
   },
   {
-    id: 'sched_nov19_fb',
+    id: 'sched_nov19_fb_mid',
     socialPageId: '112352500475248',
     channel: 'FACEBOOK',
     slotType: 'MIDDAY',
-    topicBadge: 'GRAPHIC DESIGN & ADS',
-    caption: `Flyers that convert vs Flyers that get scrolled past:\n\nHigh-converting flyers have 1 bold headline, 3 clear benefits, an attractive offer, and a direct WhatsApp call-to-action.\n\nElevate your visual marketing with Veltrix Hub Graphic Design & Campaign Studio.`,
+    formatType: 'MANUAL_PROOF',
+    isManual: true,
+    topicBadge: 'BACKEND LOG PROOF',
+    carePillars: 'Reliability + Alignment',
+    caption: 'Screen capture from our backend logs this morning: 14 incoming customer inquiries answered in under 12 seconds with zero human typing.\n\nWhen customers get instant answers, they do not hesitate to make payment.',
+    firstComment: 'See our automation stack in action. Chat with Veltrix Hub on WhatsApp:\nhttps://wa.me/2348087098270',
     mediaUrls: [],
     scheduledFor: '2026-11-19T13:00:00.000Z',
     status: 'SCHEDULED',
     page: { pageName: 'Veltrixhq', pageId: '112352500475248' }
   },
   {
-    id: 'sched_nov19_x2',
+    id: 'sched_nov19_fb_pm',
+    socialPageId: '112352500475248',
+    channel: 'FACEBOOK',
+    slotType: 'EVENING',
+    formatType: 'PICTURE',
+    topicBadge: 'CUSTOMER SERVICE AUTOMATION',
+    carePillars: 'Alignment + Reliability',
+    caption: 'What happens when an AI agent handles your customer service:\n\nFirst, your response time drops from 45 minutes to 3 seconds.\n\nSecond, your leads get qualified before they ever reach your phone, filtering out time-wasters.\n\nThird, your business captures orders at 2:00 AM, on Sundays, and during public holidays without hiring additional night staff.\n\nThis is the standard for modern businesses in 2026.',
+    firstComment: 'Get a custom AI assistant deployed for your brand this week. Chat with our team:\nhttps://wa.me/2348087098270',
+    mediaUrls: [],
+    scheduledFor: '2026-11-19T18:00:00.000Z',
+    status: 'SCHEDULED',
+    page: { pageName: 'Veltrixhq', pageId: '112352500475248' }
+  },
+  {
+    id: 'sched_nov19_x_pm',
     socialPageId: 'AbiodunBuilds',
     channel: 'TWITTER',
     slotType: 'EVENING',
-    topicBadge: 'SOFTWARE ARCHITECTURE',
-    caption: `Junior engineers debate frameworks.\nSenior engineers debate architecture.\nStaff engineers and founders focus on user experience and business outcomes.\n\nThe higher you climb, the simpler your solutions become.\n\n#SoftwareEngineering #TechCareer`,
+    formatType: 'TEXT_ONLY',
+    topicBadge: 'BOTTLENECK REMOVAL',
+    carePillars: 'Alignment + Reliability',
+    caption: 'What custom AI automation actually delivers for businesses:\n\n- 3-second response times\n- 24/7 lead qualification while you sleep\n- Instant booking without back-and-forth messaging\n\nAI is not replacing jobs. It is eliminating bottlenecks.',
     mediaUrls: [],
     scheduledFor: '2026-11-19T18:00:00.000Z',
     status: 'SCHEDULED',
@@ -387,38 +557,228 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
 
   // --- FRIDAY, NOV 20 ---
   {
-    id: 'sched_nov20_x1',
+    id: 'sched_nov20_fb_am',
+    socialPageId: '112352500475248',
+    channel: 'FACEBOOK',
+    slotType: 'MORNING',
+    formatType: 'RED_BACKGROUND',
+    topicBadge: 'CAC REGISTRATION',
+    carePillars: 'Curiosity + Alignment',
+    caption: 'Operating a business without CAC registration means any competitor can legally take your business name tomorrow.',
+    firstComment: 'Veltrix Hub handles full CAC business name and company registration, status reports, and tax IDs. Inquire on WhatsApp:\nhttps://wa.me/2348087098270',
+    mediaUrls: [],
+    scheduledFor: '2026-11-20T09:00:00.000Z',
+    status: 'SCHEDULED',
+    page: { pageName: 'Veltrixhq', pageId: '112352500475248' }
+  },
+  {
+    id: 'sched_nov20_x_am',
     socialPageId: 'AbiodunBuilds',
     channel: 'TWITTER',
     slotType: 'MORNING',
-    topicBadge: 'GET HIRED FAST',
-    caption: `Stop building to-do apps to get hired as a frontend engineer.\n\nBuild one polished SaaS dashboard with:\n• User authentication\n• Dark/light theme\n• Data visualization charts\n• Responsive mobile UI\n\nEmployers want proof you can ship products.\n\n#WebDev #TechJobs`,
+    formatType: 'TEXT_ONLY',
+    topicBadge: 'BRAND PROTECTION',
+    carePillars: 'Curiosity + Alignment',
+    caption: 'Operating an unregistered business is building on rented land.\n\nAny competitor can file for your brand name tomorrow and legally shut you down.\n\nProtect your legal identity before scaling your marketing.',
     mediaUrls: [],
     scheduledFor: '2026-11-20T09:00:00.000Z',
     status: 'SCHEDULED',
     page: { pageName: 'Abiodun Builds (@AbiodunBuilds)', pageId: 'AbiodunBuilds' }
   },
   {
-    id: 'sched_nov20_fb',
+    id: 'sched_nov20_fb_mid',
     socialPageId: '112352500475248',
     channel: 'FACEBOOK',
     slotType: 'MIDDAY',
-    topicBadge: 'STRATEGIC DIGITAL AUDIT',
-    caption: `Ready to scale your business online before the end of the year?\n\nBook a strategic digital consultation with Veltrix Hub. We audit your existing online funnel, brand visibility, and lead generation channels to craft a clear roadmap for growth.\n\nSend us a DM or chat on WhatsApp to schedule your session.`,
+    formatType: 'MANUAL_PROOF',
+    isManual: true,
+    topicBadge: 'CAC CERTIFICATE PROOF',
+    carePillars: 'Reliability + Emotion',
+    caption: 'Fresh CAC certificate delivered to a client in Abuja this morning. From name availability search to official certificate in hand without stress.\n\nLegal security gives corporate clients the confidence to send large invoices without fear.',
+    firstComment: 'Register your business name or company with CAC this week. Inquire on WhatsApp:\nhttps://wa.me/2348087098270',
     mediaUrls: [],
     scheduledFor: '2026-11-20T13:00:00.000Z',
     status: 'SCHEDULED',
     page: { pageName: 'Veltrixhq', pageId: '112352500475248' }
   },
   {
-    id: 'sched_nov20_x2',
+    id: 'sched_nov20_fb_pm',
+    socialPageId: '112352500475248',
+    channel: 'FACEBOOK',
+    slotType: 'EVENING',
+    formatType: 'PICTURE',
+    topicBadge: 'PRICING POWER',
+    carePillars: 'Alignment + Emotion',
+    caption: 'Why corporate presentation determines your pricing power:\n\nClients will happily pay 300,000 Naira to a registered business with a professional domain email and a fast website, while arguing over 50,000 Naira with an informal vendor on WhatsApp.\n\nTrust is not something you claim in words. It is demonstrated in your presentation.\n\nWhen your digital presence looks enterprise-grade, premium clients treat you accordingly.',
+    firstComment: 'Upgrade your digital branding, CAC registration, and website with Veltrix Hub:\nhttps://wa.me/2348087098270',
+    mediaUrls: [],
+    scheduledFor: '2026-11-20T18:00:00.000Z',
+    status: 'SCHEDULED',
+    page: { pageName: 'Veltrixhq', pageId: '112352500475248' }
+  },
+  {
+    id: 'sched_nov20_x_pm',
     socialPageId: 'AbiodunBuilds',
     channel: 'TWITTER',
     slotType: 'EVENING',
-    topicBadge: 'ENGINEERING MANAGEMENT',
-    caption: `Never push code on Friday afternoon without automated CI/CD rollbacks in place.\n\n10 minutes of pipeline discipline saves you 10 hours of weekend firefighting.\n\n#DevOps #EngineeringManagement #WebDevelopment`,
+    formatType: 'TEXT_ONLY',
+    topicBadge: 'PERCEIVED VALUE',
+    carePillars: 'Alignment + Emotion',
+    caption: 'Pricing power comes from presentation and perceived risk.\n\nA company with verified CAC credentials, a custom domain, and an automated portal can charge 5x more for the exact same deliverable.\n\nUpgrade your presentation.',
     mediaUrls: [],
     scheduledFor: '2026-11-20T18:00:00.000Z',
+    status: 'SCHEDULED',
+    page: { pageName: 'Abiodun Builds (@AbiodunBuilds)', pageId: 'AbiodunBuilds' }
+  },
+
+  // --- SATURDAY, NOV 21 ---
+  {
+    id: 'sched_nov21_fb_am',
+    socialPageId: '112352500475248',
+    channel: 'FACEBOOK',
+    slotType: 'MORNING',
+    formatType: 'RED_BACKGROUND',
+    topicBadge: 'WEBSITE REVENUE',
+    carePillars: 'Curiosity + Alignment',
+    caption: 'If your website has not brought you a single paying client this month, it is not a website. It is just an expensive digital picture.',
+    firstComment: 'Turn your website into an active lead generator. Book a free review on WhatsApp:\nhttps://wa.me/2348087098270',
+    mediaUrls: [],
+    scheduledFor: '2026-11-21T09:00:00.000Z',
+    status: 'SCHEDULED',
+    page: { pageName: 'Veltrixhq', pageId: '112352500475248' }
+  },
+  {
+    id: 'sched_nov21_x_am',
+    socialPageId: 'AbiodunBuilds',
+    channel: 'TWITTER',
+    slotType: 'MORNING',
+    formatType: 'TEXT_ONLY',
+    topicBadge: 'CONVERSION ARCHITECTURE',
+    carePillars: 'Curiosity + Alignment',
+    caption: 'A website without conversion architecture is just an expensive digital brochure.\n\nClear headlines. Clear social proof. Direct WhatsApp triggers.\n\nMake it easy for customers to pay you.',
+    mediaUrls: [],
+    scheduledFor: '2026-11-21T09:00:00.000Z',
+    status: 'SCHEDULED',
+    page: { pageName: 'Abiodun Builds (@AbiodunBuilds)', pageId: 'AbiodunBuilds' }
+  },
+  {
+    id: 'sched_nov21_fb_mid',
+    socialPageId: '112352500475248',
+    channel: 'FACEBOOK',
+    slotType: 'MIDDAY',
+    formatType: 'MANUAL_PROOF',
+    isManual: true,
+    topicBadge: 'BUILD SESSION PROOF',
+    carePillars: 'Reliability + Alignment',
+    caption: 'Saturday build session: Polishing a new client dashboard with real-time analytics and WhatsApp webhook triggers.\n\nWeekend work hits different when you build tools that genuinely move the needle for real businesses.',
+    firstComment: 'Need a custom portal or dashboard built for your team? Message us:\nhttps://wa.me/2348087098270',
+    mediaUrls: [],
+    scheduledFor: '2026-11-21T13:00:00.000Z',
+    status: 'SCHEDULED',
+    page: { pageName: 'Veltrixhq', pageId: '112352500475248' }
+  },
+  {
+    id: 'sched_nov21_fb_pm',
+    socialPageId: '112352500475248',
+    channel: 'FACEBOOK',
+    slotType: 'EVENING',
+    formatType: 'PICTURE',
+    topicBadge: 'WEBSITE CHECKLIST',
+    carePillars: 'Reliability + Alignment',
+    caption: 'Three things every profitable business website needs in 2026:\n\n1. A clear value statement above the fold: Explain what you do in 5 seconds so a 12-year-old could understand it.\n2. Frictionless contact: Direct one-click WhatsApp and call buttons permanently visible on mobile.\n3. Social proof: Client results, real testimonials, and verified credentials displayed before asking for the sale.',
+    firstComment: 'Want a website engineered for conversions? Message us on WhatsApp:\nhttps://wa.me/2348087098270',
+    mediaUrls: [],
+    scheduledFor: '2026-11-21T18:00:00.000Z',
+    status: 'SCHEDULED',
+    page: { pageName: 'Veltrixhq', pageId: '112352500475248' }
+  },
+  {
+    id: 'sched_nov21_x_pm',
+    socialPageId: 'AbiodunBuilds',
+    channel: 'TWITTER',
+    slotType: 'EVENING',
+    formatType: 'TEXT_ONLY',
+    topicBadge: 'SIMPLICITY CONVERTS',
+    carePillars: 'Reliability + Alignment',
+    caption: '3 rules for websites that actually make sales:\n\n1. Explain the value in 5 seconds\n2. Permanent mobile WhatsApp button\n3. Proof before the pitch\n\nSimplicity converts.',
+    mediaUrls: [],
+    scheduledFor: '2026-11-21T18:00:00.000Z',
+    status: 'SCHEDULED',
+    page: { pageName: 'Abiodun Builds (@AbiodunBuilds)', pageId: 'AbiodunBuilds' }
+  },
+
+  // --- SUNDAY, NOV 22 ---
+  {
+    id: 'sched_nov22_fb_am',
+    socialPageId: '112352500475248',
+    channel: 'FACEBOOK',
+    slotType: 'MORNING',
+    formatType: 'RED_BACKGROUND',
+    topicBadge: 'AUTOMATION STRATEGY',
+    carePillars: 'Emotion + Alignment',
+    caption: 'The goal of automation is not to work less. The goal is to spend your energy on strategy while systems handle the repetitive routine.',
+    firstComment: 'Plan your week ahead with automated workflows. Talk to Veltrix Hub:\nhttps://wa.me/2348087098270',
+    mediaUrls: [],
+    scheduledFor: '2026-11-22T09:00:00.000Z',
+    status: 'SCHEDULED',
+    page: { pageName: 'Veltrixhq', pageId: '112352500475248' }
+  },
+  {
+    id: 'sched_nov22_x_am',
+    socialPageId: 'AbiodunBuilds',
+    channel: 'TWITTER',
+    slotType: 'MORNING',
+    formatType: 'TEXT_ONLY',
+    topicBadge: 'FOUNDER BANDWIDTH',
+    carePillars: 'Emotion + Alignment',
+    caption: 'The goal of automation is not to be lazy.\n\nIt is to protect your highest-leverage asset: your mental bandwidth.\n\nLet bots answer the FAQs. You close the deals.',
+    mediaUrls: [],
+    scheduledFor: '2026-11-22T09:00:00.000Z',
+    status: 'SCHEDULED',
+    page: { pageName: 'Abiodun Builds (@AbiodunBuilds)', pageId: 'AbiodunBuilds' }
+  },
+  {
+    id: 'sched_nov22_fb_mid',
+    socialPageId: '112352500475248',
+    channel: 'FACEBOOK',
+    slotType: 'MIDDAY',
+    formatType: 'MANUAL_PROOF',
+    isManual: true,
+    topicBadge: 'WEEKEND ANALYTICS PROOF',
+    carePillars: 'Reliability + Emotion',
+    caption: 'Sunday review: While our office was closed today, our automated systems handled 38 lead inquiries and scheduled 4 discovery calls for Monday morning.\n\nSleep peacefully knowing your business is working even when you are not.',
+    firstComment: 'Deploy 24/7 lead capture for your brand. Message Veltrix Hub:\nhttps://wa.me/2348087098270',
+    mediaUrls: [],
+    scheduledFor: '2026-11-22T13:00:00.000Z',
+    status: 'SCHEDULED',
+    page: { pageName: 'Veltrixhq', pageId: '112352500475248' }
+  },
+  {
+    id: 'sched_nov22_fb_pm',
+    socialPageId: '112352500475248',
+    channel: 'FACEBOOK',
+    slotType: 'EVENING',
+    formatType: 'PICTURE',
+    topicBadge: 'SYSTEMS AUDIT',
+    carePillars: 'Alignment + Emotion',
+    caption: 'How to prepare your business infrastructure for the coming week:\n\nAudit where you lost time last week. Was it typing the same price list 20 times? Was it chasing up unclosed quotes manually?\n\nEvery hour spent on repetitive tasks is an hour stolen from closing bigger deals.\n\nSet up your systems once, and let them serve you indefinitely.',
+    firstComment: 'Let us automate your business workflows this week. Start a conversation on WhatsApp:\nhttps://wa.me/2348087098270',
+    mediaUrls: [],
+    scheduledFor: '2026-11-22T18:00:00.000Z',
+    status: 'SCHEDULED',
+    page: { pageName: 'Veltrixhq', pageId: '112352500475248' }
+  },
+  {
+    id: 'sched_nov22_x_pm',
+    socialPageId: 'AbiodunBuilds',
+    channel: 'TWITTER',
+    slotType: 'EVENING',
+    formatType: 'TEXT_ONLY',
+    topicBadge: 'SCALE THE REVENUE',
+    carePillars: 'Alignment + Emotion',
+    caption: 'Every hour you spend typing repetitive WhatsApp replies is an hour stolen from growing your business.\n\nAudit your bottlenecks tonight.\n\nAutomate the routine. Scale the revenue.',
+    mediaUrls: [],
+    scheduledFor: '2026-11-22T18:00:00.000Z',
     status: 'SCHEDULED',
     page: { pageName: 'Abiodun Builds (@AbiodunBuilds)', pageId: 'AbiodunBuilds' }
   }
@@ -497,7 +857,7 @@ export const ContentCalendarPage: React.FC = () => {
   // Cache key v7 (strictly real posts, deduplicated, zero dummy data)
   const [scheduledPosts, setScheduledPosts] = useState<ScheduledPost[]>(() => {
     if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('veltrix_scheduled_posts_v7');
+      const saved = localStorage.getItem('veltrix_scheduled_posts_v8');
       if (saved) {
         try {
           const parsed = JSON.parse(saved);
@@ -514,7 +874,7 @@ export const ContentCalendarPage: React.FC = () => {
 
   const [publishedPosts, setPublishedPosts] = useState<PublishedPost[]>(() => {
     if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('veltrix_published_posts_v7');
+      const saved = localStorage.getItem('veltrix_published_posts_v8');
       if (saved) {
         try {
           const parsed = JSON.parse(saved);
@@ -544,8 +904,11 @@ export const ContentCalendarPage: React.FC = () => {
   // Active day for Mobile Daily Calendar view (displays strictly for the day on mobile)
   const [mobileDay, setMobileDay] = useState<number>(() => {
     const today = new Date();
-    return today.getMonth() === 10 && today.getFullYear() === 2026 ? today.getDate() : 15;
+    return today.getMonth() === 10 && today.getFullYear() === 2026 ? today.getDate() : 16;
   });
+
+  // Calendar Layout Mode: 'daily' (default on all devices to avoid confusion) vs 'month'
+  const [calendarLayout, setCalendarLayout] = useState<'daily' | 'month'>('daily');
 
   // Fullscreen Lightbox Flyer Modal
   const [lightboxFlyer, setLightboxFlyer] = useState<{ url: string; title: string; badge?: string } | null>(null);
@@ -685,7 +1048,7 @@ export const ContentCalendarPage: React.FC = () => {
   useEffect(() => {
     if (typeof window !== 'undefined') {
       try {
-        localStorage.setItem('veltrix_scheduled_posts_v7', JSON.stringify(scheduledPosts));
+        localStorage.setItem('veltrix_scheduled_posts_v8', JSON.stringify(scheduledPosts));
       } catch (err) {
         console.warn('Storage quota exceeded, preserving in-memory state:', err);
       }
@@ -695,7 +1058,7 @@ export const ContentCalendarPage: React.FC = () => {
   useEffect(() => {
     if (typeof window !== 'undefined') {
       try {
-        localStorage.setItem('veltrix_published_posts_v7', JSON.stringify(publishedPosts));
+        localStorage.setItem('veltrix_published_posts_v8', JSON.stringify(publishedPosts));
       } catch (err) {
         console.warn('Storage quota exceeded, preserving in-memory state:', err);
       }
@@ -1151,9 +1514,10 @@ export const ContentCalendarPage: React.FC = () => {
             Authorization: token ? `Bearer ${token}` : ''
           },
           body: JSON.stringify({
-            mediaUrls: post.mediaUrls || [],
-            caption: post.caption
-          })
+          mediaUrls: post.mediaUrls || [],
+          caption: post.caption,
+          firstComment: post.firstComment
+        })
         });
         const data = await res.json();
         const updatedScheduled = scheduledPosts.filter((p) => p.id !== postId);
@@ -1205,7 +1569,8 @@ export const ContentCalendarPage: React.FC = () => {
         },
         body: JSON.stringify({
           mediaUrls: post.mediaUrls || [],
-          caption: post.caption
+          caption: post.caption,
+          firstComment: post.firstComment
         })
       });
 
@@ -1338,8 +1703,8 @@ export const ContentCalendarPage: React.FC = () => {
       }
       setScheduledPosts(INITIAL_CURATED_SCHEDULED);
       setPublishedPosts(INITIAL_HISTORICAL_PUBLISHED);
-      localStorage.setItem('veltrix_scheduled_posts_v7', JSON.stringify(INITIAL_CURATED_SCHEDULED));
-      localStorage.setItem('veltrix_published_posts_v7', JSON.stringify(INITIAL_HISTORICAL_PUBLISHED));
+      localStorage.setItem('veltrix_scheduled_posts_v8', JSON.stringify(INITIAL_CURATED_SCHEDULED));
+      localStorage.setItem('veltrix_published_posts_v8', JSON.stringify(INITIAL_HISTORICAL_PUBLISHED));
       setActionSuccess('Content calendar reloaded cleanly!');
       setTimeout(() => setActionSuccess(null), 3000);
     }
@@ -1621,11 +1986,56 @@ export const ContentCalendarPage: React.FC = () => {
 
       {/* Main View Area */}
       {viewMode === 'calendar' ? (
-        <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden p-3.5 sm:p-6 shadow-xl">
+        <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden p-3.5 sm:p-6 shadow-xl space-y-5">
+          {/* Daily vs Month Layout Toggle */}
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-800/80 pb-4">
+            <div className="flex items-center gap-2">
+              <span className="text-xs text-slate-400 font-medium">Calendar Display:</span>
+              <div className="bg-slate-950 p-1 rounded-xl flex border border-slate-800">
+                <button
+                  type="button"
+                  onClick={() => setCalendarLayout('daily')}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-all ${
+                    calendarLayout === 'daily'
+                      ? 'bg-emerald-500 text-white shadow-md shadow-emerald-500/20'
+                      : 'text-slate-400 hover:text-white'
+                  }`}
+                >
+                  <Clock className="w-3.5 h-3.5" />
+                  <span>Daily Schedule (3 Posts/Day)</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setCalendarLayout('month')}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-all ${
+                    calendarLayout === 'month'
+                      ? 'bg-slate-700 text-white shadow'
+                      : 'text-slate-400 hover:text-white'
+                  }`}
+                >
+                  <CalendarIcon className="w-3.5 h-3.5" />
+                  <span>Month Overview</span>
+                </button>
+              </div>
+            </div>
+
+            <div className="text-xs text-slate-400 flex items-center gap-3">
+              <span className="flex items-center gap-1.5">
+                <span className="w-2 h-2 rounded-full bg-emerald-400"></span>
+                <span>2 Automated (9 AM & 6 PM)</span>
+              </span>
+              <span className="flex items-center gap-1.5">
+                <span className="w-2 h-2 rounded-full bg-purple-400"></span>
+                <span>1 Manual (1 PM Proof)</span>
+              </span>
+            </div>
+          </div>
+
           {/* ===================================================================== */}
-          {/* MOBILE DAILY CALENDAR (SHOWN ONLY ON MOBILE TO AVOID CONFUSION)      */}
+          {/* DAILY CALENDAR (ACTIVE ON ALL DEVICES TO AVOID CONFUSION)              */}
           {/* ===================================================================== */}
-          <div className="md:hidden space-y-4">
+          {calendarLayout === 'daily' ? (
+          <div className="space-y-4">
             {/* Mobile Header: Daily Date Navigator */}
             <div className="bg-slate-950/80 border border-slate-800 rounded-2xl p-4 space-y-3">
               <div className="flex items-center justify-between">
@@ -1786,55 +2196,91 @@ export const ContentCalendarPage: React.FC = () => {
                     {mobileSched.map((post) => {
                       const isTweet = post.channel === 'TWITTER' || post.page?.pageId === 'AbiodunBuilds';
                       const flyerUrl = resolveFlyerForPost(post);
+                      const isMorning = post.slotType === 'MORNING';
+                      const isMidday = post.slotType === 'MIDDAY' || post.isManual;
+                      const isEvening = post.slotType === 'EVENING';
 
                       return (
                         <div
                           key={post.id}
-                          className={`p-4 rounded-2xl border bg-slate-950/80 transition-all space-y-3 ${
-                            isTweet ? 'border-slate-800' : 'border-blue-500/30'
+                          className={`p-4 sm:p-5 rounded-2xl border bg-slate-950/90 transition-all flex flex-col justify-between space-y-4 shadow-xl ${
+                            isTweet
+                              ? 'border-slate-800'
+                              : isMidday
+                              ? 'border-purple-500/40 bg-purple-950/10'
+                              : isMorning
+                              ? 'border-amber-500/40 bg-amber-950/10'
+                              : 'border-blue-500/40 bg-blue-950/10'
                           }`}
                         >
-                          {/* Card Header */}
-                          <div className="flex items-center justify-between">
-                            <div className="flex items-center gap-1.5">
-                              <span
-                                className={`px-2.5 py-1 rounded-lg text-xs font-bold flex items-center gap-1.5 border ${
-                                  isTweet
-                                    ? 'bg-white/10 text-white border-white/20'
-                                    : isMorningPost(post)
-                                    ? 'bg-amber-500/10 text-amber-300 border-amber-500/30'
-                                    : 'bg-blue-500/10 text-blue-400 border-blue-500/30'
-                                }`}
-                              >
-                                {isTweet ? (
-                                  <XLogo className="w-3 h-3" />
-                                ) : isMorningPost(post) ? (
-                                  <Sun className="w-3 h-3 text-amber-400" />
-                                ) : (
-                                  <Moon className="w-3 h-3 text-blue-400" />
+                          <div className="space-y-3">
+                            {/* Card Header */}
+                            <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800/80 pb-2.5">
+                              <div className="flex flex-wrap items-center gap-1.5">
+                                <span
+                                  className={`px-2.5 py-1 rounded-lg text-xs font-bold flex items-center gap-1.5 border ${
+                                    isTweet
+                                      ? 'bg-white/10 text-white border-white/20'
+                                      : isMorning
+                                      ? 'bg-amber-500/20 text-amber-300 border-amber-500/40'
+                                      : isMidday
+                                      ? 'bg-purple-500/20 text-purple-300 border-purple-500/40'
+                                      : 'bg-blue-500/20 text-blue-300 border-blue-500/40'
+                                  }`}
+                                >
+                                  {isTweet ? (
+                                    <XLogo className="w-3 h-3" />
+                                  ) : isMorning ? (
+                                    <Sun className="w-3 h-3 text-amber-400" />
+                                  ) : isMidday ? (
+                                    <Clock className="w-3 h-3 text-purple-400" />
+                                  ) : (
+                                    <Moon className="w-3 h-3 text-blue-400" />
+                                  )}
+                                  <span>
+                                    {isTweet
+                                      ? '𝕏 Tech Insight'
+                                      : isMorning
+                                      ? '09:00 AM (Automated)'
+                                      : isMidday
+                                      ? '01:00 PM (Manual Post)'
+                                      : '06:00 PM (Automated)'}
+                                  </span>
+                                </span>
+
+                                {/* Format Badge */}
+                                {post.formatType === 'RED_BACKGROUND' && (
+                                  <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-rose-500/20 text-rose-300 border border-rose-500/40">
+                                    🟥 Red Background
+                                  </span>
                                 )}
-                                <span>
-                                  {isTweet
-                                    ? '𝕏 Tech Hook'
-                                    : isMorningPost(post)
-                                    ? '9:00 AM Morning'
-                                    : '6:00 PM Evening'}
-                                </span>
+                                {post.formatType === 'MANUAL_PROOF' && (
+                                  <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-purple-500/20 text-purple-300 border border-purple-500/40">
+                                    📸 Real Proof / Chat
+                                  </span>
+                                )}
+                                {post.formatType === 'PICTURE' && (
+                                  <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-blue-500/20 text-blue-300 border border-blue-500/40">
+                                    🖼️ 10/10 Executive Picture
+                                  </span>
+                                )}
+                              </div>
+
+                              <span className="text-slate-400 font-mono text-[11px]">
+                                {new Date(post.scheduledFor).toLocaleTimeString([], {
+                                  hour: '2-digit',
+                                  minute: '2-digit'
+                                })}
                               </span>
-                              {!isTweet && (
-                                <span className="text-[10px] px-1.5 py-0.5 rounded font-mono font-bold bg-slate-800 text-slate-300 border border-slate-700">
-                                  {isMorningPost(post) ? '09:00 AM' : '06:00 PM'}
-                                </span>
-                              )}
                             </div>
 
-                            <span className="text-slate-400 font-mono text-[11px]">
-                              {new Date(post.scheduledFor).toLocaleTimeString([], {
-                                hour: '2-digit',
-                                minute: '2-digit'
-                              })}
-                            </span>
-                          </div>
+                            {/* C.A.R.E. Pillar indicator */}
+                            {post.carePillars && (
+                              <div className="flex items-center gap-1.5 text-[10px] text-emerald-400 font-semibold">
+                                <Sparkles className="w-3 h-3" />
+                                <span>C.A.R.E: {post.carePillars}</span>
+                              </div>
+                            )}
 
                           {/* Flyer Thumbnail (if attached) */}
                           {!isTweet && flyerUrl && (
@@ -1859,6 +2305,34 @@ export const ContentCalendarPage: React.FC = () => {
                           <p className="text-xs text-slate-200 whitespace-pre-wrap leading-relaxed line-clamp-4">
                             {post.caption}
                           </p>
+
+                          {/* Auto First Comment Preview */}
+                            {post.firstComment && (
+                              <div className="p-3 rounded-xl bg-slate-900/90 border border-emerald-500/30 text-xs space-y-1.5">
+                                <div className="flex items-center justify-between">
+                                  <span className="text-[10px] uppercase font-bold text-emerald-400 flex items-center gap-1.5">
+                                    <MessageSquare className="w-3.5 h-3.5" />
+                                    <span>Auto First Comment (Posted to Facebook)</span>
+                                  </span>
+                                  <button
+                                    type="button"
+                                    onClick={() => {
+                                      navigator.clipboard.writeText(post.firstComment || '');
+                                      setActionSuccess('First comment copied to clipboard!');
+                                      setTimeout(() => setActionSuccess(null), 2500);
+                                    }}
+                                    className="text-[10px] text-slate-400 hover:text-white flex items-center gap-1 transition-colors"
+                                  >
+                                    <Copy className="w-3 h-3" />
+                                    <span>Copy</span>
+                                  </button>
+                                </div>
+                                <p className="font-mono text-slate-300 text-[11px] whitespace-pre-line leading-relaxed">
+                                  {post.firstComment}
+                                </p>
+                              </div>
+                            )}
+                          </div>
 
                           {/* Card Footer Actions */}
                           <div className="pt-2.5 flex flex-wrap items-center justify-between gap-2 border-t border-slate-800/80">
@@ -2011,11 +2485,11 @@ export const ContentCalendarPage: React.FC = () => {
               })()}
             </div>
           </div>
-
-          {/* ===================================================================== */}
-          {/* DESKTOP MONTH CALENDAR GRID (SHOWN ON md: AND ABOVE SCREENS)          */}
-          {/* ===================================================================== */}
-          <div className="hidden md:block overflow-x-auto no-scrollbar">
+          ) : (
+          /* ===================================================================== */
+          /* MONTH CALENDAR GRID (OPTIONAL EXPANDED VIEW)                         */
+          /* ===================================================================== */
+          <div className="overflow-x-auto no-scrollbar">
             <div className="min-w-[640px] md:min-w-0">
               {/* Calendar Controls */}
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4 sm:mb-6">
@@ -2209,6 +2683,7 @@ export const ContentCalendarPage: React.FC = () => {
               </div>
             </div>
           </div>
+          )}
         </div>
       ) : (
         /* Timeline / Queue View */
