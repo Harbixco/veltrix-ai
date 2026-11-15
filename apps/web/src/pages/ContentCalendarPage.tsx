@@ -896,7 +896,7 @@ export const ContentCalendarPage: React.FC = () => {
 
   const [loading, setLoading] = useState(false);
   const [statusFilter, setStatusFilter] = useState<'ALL' | 'SCHEDULED' | 'PUBLISHED'>('ALL');
-  const [platformFilter, setPlatformFilter] = useState<'ALL' | 'FACEBOOK' | 'TWITTER'>('ALL');
+  const [platformFilter, setPlatformFilter] = useState<'FACEBOOK' | 'TWITTER'>('FACEBOOK');
 
   // Selected Day View Modal (for desktop grid inspection)
   const [selectedDay, setSelectedDay] = useState<number | null>(null);
@@ -1797,11 +1797,24 @@ export const ContentCalendarPage: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      {/* Clean Header */}
-      <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+      {/* Header with Live Countdown */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-800 pb-3">
         <div className="flex items-center gap-2.5">
           <CalendarIcon className="w-5 h-5 text-emerald-400" />
           <h1 className="text-xl font-bold text-white tracking-tight">Daily Content Dispatch</h1>
+        </div>
+
+        {/* Live Countdown Box (Only element kept from the banner) */}
+        <div className="bg-slate-950/80 border border-slate-800 rounded-xl px-4 py-2 flex items-center gap-2.5 shadow-lg w-fit">
+          <Clock className="w-4 h-4 text-emerald-400 animate-pulse" />
+          <div className="flex items-center gap-2">
+            <span className="text-[10px] uppercase tracking-wider text-slate-500 font-bold">
+              {overduePosts.length > 0 ? 'Status' : 'Countdown'}
+            </span>
+            <span className="font-mono text-sm sm:text-base font-bold text-white tracking-widest">
+              {overduePosts.length > 0 ? 'DUE NOW' : countdownText}
+            </span>
+          </div>
         </div>
       </div>
 
@@ -1813,98 +1826,19 @@ export const ContentCalendarPage: React.FC = () => {
         </div>
       )}
 
-      {/* ===================================================================== */}
-      {/* LIVE AUTO-PUBLISHER COUNTDOWN & DISPATCH CONTROL PANEL               */}
-      {/* ===================================================================== */}
-      <div className="bg-gradient-to-r from-slate-900 via-slate-950 to-slate-900 border border-slate-800 rounded-2xl p-4 sm:p-5 shadow-xl">
-        <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
-          {/* Left: Status & Indicator */}
-          <div className="space-y-1.5">
-            <div className="flex items-center gap-2">
-              <span className="relative flex h-2.5 w-2.5">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
-              </span>
-              <span className="text-xs font-bold text-white tracking-wide uppercase flex items-center gap-1.5">
-                <span>Autonomous Auto-Publisher</span>
-                <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-mono">
-                  ACTIVE
-                </span>
-              </span>
-            </div>
-
-            <p className="text-xs text-slate-400">
-              {overduePosts.length > 0 ? (
-                <span className="text-amber-400 font-semibold flex items-center gap-1">
-                  <AlertCircle className="w-3.5 h-3.5" />
-                  <span>{overduePosts.length} post(s) ready for automatic dispatch</span>
-                </span>
-              ) : nextUpcomingPost ? (
-                <span>
-                  Next automated post: <strong className="text-slate-200">{nextUpcomingPost.channel === 'TWITTER' ? '𝕏' : 'Facebook'}</strong> on{' '}
-                  <strong className="text-white">
-                    {new Date(nextUpcomingPost.scheduledFor).toLocaleDateString('default', { month: 'short', day: 'numeric' })} at{' '}
-                    {new Date(nextUpcomingPost.scheduledFor).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                  </strong>
-                </span>
-              ) : (
-                <span>All scheduled posts are published or up to date.</span>
-              )}
-            </p>
-
-            {/* Error or token warning banner if token expired */}
-            {autoPublishStatus.error && autoPublishStatus.error.toLowerCase().includes('token') && (
-              <div className="flex items-center gap-2 pt-1 text-[11px] text-rose-300">
-                <AlertCircle className="w-3.5 h-3.5 flex-shrink-0 text-rose-400" />
-                <span>Facebook token expired. Renew to enable automatic posting to Facebook:</span>
-                <button
-                  onClick={() => setIsTokenModalOpen(true)}
-                  className="underline hover:text-white font-semibold text-rose-200 ml-1"
-                >
-                  Update Token
-                </button>
-              </div>
-            )}
-          </div>
-
-          {/* Right: Countdown & Trigger Controls */}
-          <div className="flex flex-wrap items-center gap-3 w-full lg:w-auto justify-between lg:justify-end">
-            {/* Live Countdown Box */}
-            <div className="bg-slate-950/80 border border-slate-800 rounded-xl px-3.5 py-2 flex items-center gap-2.5">
-              <Clock className="w-4 h-4 text-emerald-400 animate-pulse" />
-              <div>
-                <span className="text-[10px] uppercase tracking-wider text-slate-500 block leading-tight font-semibold">
-                  {overduePosts.length > 0 ? 'Queue Status' : 'Countdown'}
-                </span>
-                <span className="font-mono text-sm sm:text-base font-bold text-white tracking-widest">
-                  {overduePosts.length > 0 ? 'DUE NOW' : countdownText}
-                </span>
-              </div>
-            </div>
-
-            {/* Trigger Button */}
-            <button
-              onClick={() => triggerAutoPublish(true)}
-              disabled={isTriggeringAutoPublish}
-              className="flex items-center gap-2 px-3.5 py-2.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white rounded-xl text-xs font-semibold shadow-lg shadow-emerald-600/20 active:scale-95 transition-all disabled:opacity-50"
-              title="Execute publisher immediately"
-            >
-              <RefreshCw className={`w-3.5 h-3.5 ${isTriggeringAutoPublish ? 'animate-spin' : ''}`} />
-              <span>{isTriggeringAutoPublish ? 'Publishing...' : 'Trigger Now'}</span>
-            </button>
-
-            {/* Quick Renew Facebook Token Button */}
-            <button
-              onClick={() => setIsTokenModalOpen(true)}
-              className="flex items-center gap-1.5 px-3 py-2.5 bg-slate-800/80 hover:bg-slate-700/80 text-slate-200 border border-slate-700/60 rounded-xl text-xs font-medium transition-colors"
-              title="Renew Facebook Page Access Token"
-            >
-              <Key className="w-3.5 h-3.5 text-amber-400" />
-              <span>Facebook Token</span>
-            </button>
-          </div>
+      {/* Error or token warning banner if token expired */}
+      {autoPublishStatus.error && autoPublishStatus.error.toLowerCase().includes('token') && (
+        <div className="flex items-center gap-2 p-3 bg-rose-500/10 border border-rose-500/30 rounded-xl text-xs text-rose-300">
+          <AlertCircle className="w-4 h-4 flex-shrink-0 text-rose-400" />
+          <span>Facebook token expired. Renew to enable automatic posting:</span>
+          <button
+            onClick={() => setIsTokenModalOpen(true)}
+            className="underline hover:text-white font-semibold text-rose-200 ml-1"
+          >
+            Update Token
+          </button>
         </div>
-      </div>
+      )}
 
       {/* Main View Area */}
       <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden p-3.5 sm:p-6 shadow-xl space-y-5">
@@ -1997,18 +1931,8 @@ export const ContentCalendarPage: React.FC = () => {
               </div>
             </div>
 
-            {/* Mobile Filter Tabs */}
+            {/* Filter Tabs (Facebook & Twitter) */}
             <div className="flex items-center gap-1.5 bg-slate-950 p-1 rounded-xl border border-slate-800 text-xs">
-              <button
-                onClick={() => setPlatformFilter('ALL')}
-                className={`flex-1 py-1.5 rounded-lg font-medium transition-all text-center ${
-                  platformFilter === 'ALL'
-                    ? 'bg-slate-700 text-white font-bold'
-                    : 'text-slate-400 hover:text-white'
-                }`}
-              >
-                All ({getPostsForDay(mobileDay).sched.length + getPostsForDay(mobileDay).pub.length})
-              </button>
               <button
                 onClick={() => setPlatformFilter('FACEBOOK')}
                 className={`flex-1 py-1.5 rounded-lg font-medium transition-all text-center flex items-center justify-center gap-1 ${
