@@ -5,7 +5,7 @@
   "rewrites": [
     {
       "source": "/api/:path*",
-      "destination": "https://veltrix-rl5tegiov-projects-f867.vercel.app/api/:path*"
+      "destination": "https://veltrix-ai-git-main-projects-f867.vercel.app/api/:path*"
     },
     {
       "source": "/(.*)",

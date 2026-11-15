@@ -12,5 +12,5 @@ jobs:
     steps:
       - name: Trigger Veltrix Auto-Publisher
         run: |
-          response=$(curl -s -w "\nHTTP_STATUS:%{http_code}" -X POST https://veltrix-rl5tegiov-projects-f867.vercel.app/api/v1/calendar/cron/publish-due -H "Content-Type: application/json")
+          response=$(curl -s -w "\nHTTP_STATUS:%{http_code}" -X POST https://veltrix-ai-git-main-projects-f867.vercel.app/api/v1/calendar/cron/publish-due -H "Content-Type: application/json")
           echo "$response"

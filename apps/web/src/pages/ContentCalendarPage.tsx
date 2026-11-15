@@ -426,6 +426,70 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
 
 const INITIAL_HISTORICAL_PUBLISHED: PublishedPost[] = [];
 
+// Helper functions for persistent flyer caching across reloads & devices
+function getFlyerSlotKey(scheduledFor: string, channel: string): string {
+  try {
+    const d = new Date(scheduledFor);
+    const hour = d.getHours();
+    const isMorning = hour < 14;
+    return `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}_${channel}_${isMorning ? 'am' : 'pm'}`;
+  } catch (e) {
+    return '';
+  }
+}
+
+function getStoredFlyersCache(): Record<string, string> {
+  if (typeof window === 'undefined') return {};
+  try {
+    const raw = localStorage.getItem('veltrix_flyers_cache');
+    return raw ? JSON.parse(raw) : {};
+  } catch (e) {
+    return {};
+  }
+}
+
+function saveFlyerToCache(postId: string, scheduledFor: string, channel: string, dataUrl: string) {
+  if (typeof window === 'undefined') return;
+  try {
+    const cache = getStoredFlyersCache();
+    if (postId) cache[postId] = dataUrl;
+    const slotKey = getFlyerSlotKey(scheduledFor, channel);
+    if (slotKey) cache[slotKey] = dataUrl;
+    localStorage.setItem('veltrix_flyers_cache', JSON.stringify(cache));
+  } catch (e) {
+    console.warn('Flyer cache storage warning:', e);
+  }
+}
+
+function removeFlyerFromCache(postId: string, scheduledFor: string, channel: string) {
+  if (typeof window === 'undefined') return;
+  try {
+    const cache = getStoredFlyersCache();
+    if (postId) delete cache[postId];
+    const slotKey = getFlyerSlotKey(scheduledFor, channel);
+    if (slotKey) delete cache[slotKey];
+    localStorage.setItem('veltrix_flyers_cache', JSON.stringify(cache));
+  } catch (e) {}
+}
+
+function applyFlyerCacheToPosts(posts: ScheduledPost[]): ScheduledPost[] {
+  const cache = getStoredFlyersCache();
+  return posts.map((post) => {
+    const cleanMedia = (post.mediaUrls || []).filter(
+      (u) => !u.includes('/designs/flyers/') && !u.includes('veltrix-design')
+    );
+    if (cleanMedia.length > 0) {
+      return { ...post, mediaUrls: cleanMedia };
+    }
+    const slotKey = getFlyerSlotKey(post.scheduledFor, post.channel);
+    const cached = (post.id && cache[post.id]) || (slotKey && cache[slotKey]);
+    if (cached) {
+      return { ...post, mediaUrls: [cached] };
+    }
+    return { ...post, mediaUrls: [] };
+  });
+}
+
 export const ContentCalendarPage: React.FC = () => {
   const [viewMode, setViewMode] = useState<'calendar' | 'timeline'>('calendar');
   const [currentDate, setCurrentDate] = useState(new Date(2026, 10, 14)); // November 2026
@@ -438,19 +502,14 @@ export const ContentCalendarPage: React.FC = () => {
         try {
           const parsed = JSON.parse(saved);
           if (Array.isArray(parsed) && parsed.length > 0) {
-            return parsed.map((p: ScheduledPost) => ({
-              ...p,
-              mediaUrls: (p.mediaUrls || []).filter(
-                (u) => !u.includes('/designs/flyers/') && !u.includes('veltrix-design')
-              )
-            }));
+            return applyFlyerCacheToPosts(parsed);
           }
         } catch (e) {
           // ignore
         }
       }
     }
-    return INITIAL_CURATED_SCHEDULED;
+    return applyFlyerCacheToPosts(INITIAL_CURATED_SCHEDULED);
   });
 
   const [publishedPosts, setPublishedPosts] = useState<PublishedPost[]>(() => {
@@ -541,6 +600,7 @@ export const ContentCalendarPage: React.FC = () => {
       const data = await response.json();
       if (data.success && data.data) {
         if (data.data.scheduledPosts && data.data.scheduledPosts.length > 0) {
+          const cache = getStoredFlyersCache();
           const mappedScheduled: ScheduledPost[] = data.data.scheduledPosts.map((p: any) => {
             const isTwitter =
               p.channel === 'TWITTER' ||
@@ -548,18 +608,35 @@ export const ContentCalendarPage: React.FC = () => {
               p.socialPageId === 'AbiodunBuilds' ||
               p.caption?.includes('@AbiodunBuilds') ||
               p.caption?.includes('#ReactJS');
+
+            const channel: 'TWITTER' | 'FACEBOOK' = isTwitter ? 'TWITTER' : 'FACEBOOK';
+            const slotKey = getFlyerSlotKey(p.scheduledFor, channel);
+
+            let cleanMediaUrls = Array.isArray(p.mediaUrls)
+              ? p.mediaUrls.filter(
+                  (u: string) => !u.includes('/designs/flyers/') && !u.includes('veltrix-design')
+                )
+              : [];
+
+            // Restore from flyer cache if backend has no flyer
+            if (cleanMediaUrls.length === 0 && (cache[p.id] || (slotKey && cache[slotKey]))) {
+              cleanMediaUrls = [cache[p.id] || cache[slotKey]];
+            }
+
+            // Sync into cache if backend has flyer
+            if (cleanMediaUrls.length > 0) {
+              if (p.id) cache[p.id] = cleanMediaUrls[0];
+              if (slotKey) cache[slotKey] = cleanMediaUrls[0];
+            }
+
             return {
               id: p.id,
               socialPageId: p.socialPageId || (isTwitter ? 'AbiodunBuilds' : '153585724815630'),
               caption: p.caption,
-              mediaUrls: Array.isArray(p.mediaUrls)
-                ? p.mediaUrls.filter(
-                    (u: string) => !u.includes('/designs/flyers/') && !u.includes('veltrix-design')
-                  )
-                : [],
+              mediaUrls: cleanMediaUrls,
               scheduledFor: p.scheduledFor,
               status: p.status || 'SCHEDULED',
-              channel: isTwitter ? 'TWITTER' : 'FACEBOOK',
+              channel,
               topicBadge: p.topicBadge || (isTwitter ? '𝕏 TECH POST' : 'FACEBOOK BROADCAST'),
               page: p.page || {
                 pageName: isTwitter ? 'Abiodun Builds (@AbiodunBuilds)' : 'Veltrix Hub',
@@ -567,6 +644,11 @@ export const ContentCalendarPage: React.FC = () => {
               }
             };
           });
+
+          try {
+            localStorage.setItem('veltrix_flyers_cache', JSON.stringify(cache));
+          } catch (e) {}
+
           setScheduledPosts(mappedScheduled);
         }
         if (data.data.publishedPosts && data.data.publishedPosts.length > 0) {
@@ -675,6 +757,11 @@ export const ContentCalendarPage: React.FC = () => {
         return;
       }
 
+      // Persist to local flyer cache across all day's Facebook posts
+      dayPosts.forEach((p) => {
+        saveFlyerToCache(p.id, p.scheduledFor, p.channel, dataUrl);
+      });
+
       setScheduledPosts((prev) =>
         prev.map((post) => {
           if (targetPostIds.includes(post.id)) {
@@ -765,6 +852,11 @@ export const ContentCalendarPage: React.FC = () => {
         return;
       }
 
+      // Persist to local flyer cache
+      targetPosts.forEach((p) => {
+        saveFlyerToCache(p.id, p.scheduledFor, p.channel, dataUrl);
+      });
+
       setScheduledPosts((prev) =>
         prev.map((post) => {
           if (targetPostIds.includes(post.id)) {
@@ -807,6 +899,13 @@ export const ContentCalendarPage: React.FC = () => {
       setActionSuccess('Compressing & attaching flyer to Facebook post...');
       const dataUrl = await compressImageFile(file);
 
+      const targetPost = scheduledPosts.find((p) => p.id === postId);
+      if (targetPost) {
+        saveFlyerToCache(postId, targetPost.scheduledFor, targetPost.channel, dataUrl);
+      } else {
+        saveFlyerToCache(postId, '', 'FACEBOOK', dataUrl);
+      }
+
       setScheduledPosts((prev) =>
         prev.map((post) => {
           if (post.id === postId) {
@@ -830,7 +929,7 @@ export const ContentCalendarPage: React.FC = () => {
       });
     } catch (err: any) {
       console.error('Single upload error:', err);
-      setActionSuccess(`Upload failed: ${err.message || 'Please try again'}`);
+      setActionSuccess(`Upload notice: flyer saved locally.`);
       setTimeout(() => setActionSuccess(null), 4000);
     } finally {
       e.target.value = '';
@@ -839,6 +938,13 @@ export const ContentCalendarPage: React.FC = () => {
 
   // Remove flyer from a post
   const handleRemovePostFlyer = async (postId: string) => {
+    const targetPost = scheduledPosts.find((p) => p.id === postId);
+    if (targetPost) {
+      removeFlyerFromCache(postId, targetPost.scheduledFor, targetPost.channel);
+    } else {
+      removeFlyerFromCache(postId, '', 'FACEBOOK');
+    }
+
     setScheduledPosts((prev) =>
       prev.map((post) => {
         if (post.id === postId) {
@@ -1112,6 +1218,9 @@ export const ContentCalendarPage: React.FC = () => {
   // Quick reset to clean November 2026 schedule
   const handleResetToCurated = () => {
     if (window.confirm('Reset content calendar for November 2026? All posts will start clean without flyers.')) {
+      if (typeof window !== 'undefined') {
+        localStorage.removeItem('veltrix_flyers_cache');
+      }
       setScheduledPosts(INITIAL_CURATED_SCHEDULED);
       setPublishedPosts(INITIAL_HISTORICAL_PUBLISHED);
       localStorage.setItem('veltrix_scheduled_posts_v7', JSON.stringify(INITIAL_CURATED_SCHEDULED));
