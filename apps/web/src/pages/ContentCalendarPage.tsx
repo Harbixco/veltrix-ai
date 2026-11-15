@@ -1843,91 +1843,36 @@ export const ContentCalendarPage: React.FC = () => {
       {/* Main View Area */}
       <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden p-3.5 sm:p-6 shadow-xl space-y-5">
         <div className="space-y-4">
-            {/* Mobile Header: Daily Date Navigator */}
-            <div className="bg-slate-950/80 border border-slate-800 rounded-2xl p-4 space-y-3">
-              <div className="flex items-center justify-between">
-                <div>
-                  <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider block">
-                    Daily Schedule
-                  </span>
-                  <div className="flex items-center gap-2 mt-0.5">
-                    <h3 className="text-base font-bold text-white">
-                      {new Date(year, month, mobileDay).toLocaleDateString('default', {
-                        weekday: 'short',
-                        month: 'short',
-                        day: 'numeric'
-                      })}
-                    </h3>
-                    {isCurrentMonth && mobileDay === todayDate.getDate() && (
-                      <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
-                        Today
-                      </span>
-                    )}
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-1.5">
-                  <button
-                    onClick={() => setMobileDay((d) => Math.max(1, d - 1))}
-                    disabled={mobileDay <= 1}
-                    className="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 disabled:opacity-40 transition-colors"
-                    title="Previous Day"
-                  >
-                    <ChevronLeft className="w-4 h-4" />
-                  </button>
-                  {isCurrentMonth && mobileDay !== todayDate.getDate() && (
-                    <button
-                      onClick={() => setMobileDay(todayDate.getDate())}
-                      className="px-2.5 py-1.5 text-xs font-semibold rounded-xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 hover:bg-emerald-500/20"
-                    >
-                      Today
-                    </button>
-                  )}
-                  <button
-                    onClick={() => setMobileDay((d) => Math.min(daysInMonth, d + 1))}
-                    disabled={mobileDay >= daysInMonth}
-                    className="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 disabled:opacity-40 transition-colors"
-                    title="Next Day"
-                  >
-                    <ChevronRight className="w-4 h-4" />
-                  </button>
-                </div>
-              </div>
-
-              {/* Horizontal Scrollable Day Strip */}
-              <div className="flex items-center gap-1.5 overflow-x-auto pb-1 no-scrollbar pt-1 border-t border-slate-800/80">
-                {daysArray.map((day) => {
-                  const { sched: dSched, pub: dPub } = getPostsForDay(day);
-                  const count = dSched.length + dPub.length;
-                  const isSelected = day === mobileDay;
-                  const isTodayDay = isCurrentMonth && day === todayDate.getDate();
-
-                  return (
-                    <button
-                      key={day}
-                      onClick={() => setMobileDay(day)}
-                      className={`flex flex-col items-center justify-center min-w-[44px] py-1.5 rounded-xl text-xs font-semibold transition-all relative shrink-0 ${
-                        isSelected
-                          ? 'bg-emerald-500 text-white shadow-md shadow-emerald-500/30 font-bold scale-105 ring-1 ring-white/20'
-                          : isTodayDay
-                          ? 'bg-slate-800 text-emerald-300 border border-emerald-500/50'
-                          : 'bg-slate-900 text-slate-400 hover:text-white border border-slate-800'
-                      }`}
-                    >
-                      <span className="text-[10px] uppercase opacity-75">
-                        {new Date(year, month, day).toLocaleDateString('default', { weekday: 'narrow' })}
-                      </span>
-                      <span className="text-sm">{day}</span>
-                      {count > 0 && (
-                        <span
-                          className={`w-1.5 h-1.5 rounded-full mt-0.5 ${
-                            isSelected ? 'bg-white' : 'bg-emerald-400'
-                          }`}
-                        />
-                      )}
-                    </button>
-                  );
+            {/* Clean Date Navigator: Just Date & Prev/Next Buttons */}
+            <div className="bg-slate-950/80 border border-slate-800 rounded-2xl p-4 flex items-center justify-between">
+              <h2 className="text-base sm:text-lg font-bold text-white tracking-tight">
+                {new Date(year, month, mobileDay).toLocaleDateString('default', {
+                  weekday: 'short',
+                  month: 'short',
+                  day: 'numeric'
                 })}
+              </h2>
+
+              {/* Just two buttons for prev and next */}
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => setMobileDay((d) => Math.max(1, d - 1))}
+                  disabled={mobileDay <= 1}
+                  className="p-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 disabled:opacity-30 transition-all active:scale-95"
+                  title="Previous Day"
+                >
+                  <ChevronLeft className="w-4 h-4" />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setMobileDay((d) => Math.min(daysInMonth, d + 1))}
+                  disabled={mobileDay >= daysInMonth}
+                  className="p-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 disabled:opacity-30 transition-all active:scale-95"
+                  title="Next Day"
+                >
+                  <ChevronRight className="w-4 h-4" />
+                </button>
               </div>
             </div>
 
