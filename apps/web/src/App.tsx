@@ -59,7 +59,8 @@ export const App: React.FC = () => {
             </ProtectedRoute>
           }
         >
-          <Route index element={<DashboardOverview />} />
+          <Route index element={<Navigate to="/content-calendar" replace />} />
+          <Route path="overview" element={<Navigate to="/content-calendar" replace />} />
           <Route path="facebook-accounts" element={<FacebookAccountsPage />} />
           <Route path="social-accounts" element={<FacebookAccountsPage />} />
           <Route path="design-studio" element={<Navigate to="/content-calendar" replace />} />

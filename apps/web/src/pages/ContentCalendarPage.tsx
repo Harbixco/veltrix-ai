@@ -314,7 +314,7 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     carePillars: 'Reliability + Emotion',
     caption: 'Customers ask "How much?" and disappear. Here is the real reason:\n\nWhen a customer asks for your price and gets just a bare number with no context, they compare you solely on cheapness.\n\nIf your response takes more than 15 minutes, they have already messaged three of your competitors.\n\nAnd if you do not follow up within 24 hours, the lead is permanently dead.\n\nWe built Veltrix AI to fix this: instant 20-second replies, automated value positioning, and scheduled follow-ups on WhatsApp.',
     firstComment: 'Want to test the AI live on your own phone? Send a test message to our demo number on WhatsApp:\nhttps://wa.me/2348087098270',
-    mediaUrls: ['/designs/executive-portrait-nov16.jpg'],
+    mediaUrls: [],
     scheduledFor: '2026-11-16T19:00:00.000Z',
     status: 'SCHEDULED',
     page: { pageName: 'Veltrixhq', pageId: '112352500475248' }
@@ -765,10 +765,10 @@ export const ContentCalendarPage: React.FC = () => {
   const [viewMode, setViewMode] = useState<'calendar' | 'timeline'>('calendar');
   const [currentDate, setCurrentDate] = useState(new Date(2026, 10, 14)); // November 2026
 
-  // Cache key v7 (strictly real posts, deduplicated, zero dummy data)
+  // Cache key v15 (strictly real posts, deduplicated, zero dummy data)
   const [scheduledPosts, setScheduledPosts] = useState<ScheduledPost[]>(() => {
     if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('veltrix_scheduled_posts_v14');
+      const saved = localStorage.getItem('veltrix_scheduled_posts_v15');
       if (saved) {
         try {
           const parsed = JSON.parse(saved);
@@ -785,7 +785,7 @@ export const ContentCalendarPage: React.FC = () => {
 
   const [publishedPosts, setPublishedPosts] = useState<PublishedPost[]>(() => {
     if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('veltrix_published_posts_v14');
+      const saved = localStorage.getItem('veltrix_published_posts_v15');
       if (saved) {
         try {
           const parsed = JSON.parse(saved);
@@ -959,7 +959,7 @@ export const ContentCalendarPage: React.FC = () => {
   useEffect(() => {
     if (typeof window !== 'undefined') {
       try {
-        localStorage.setItem('veltrix_scheduled_posts_v14', JSON.stringify(scheduledPosts));
+        localStorage.setItem('veltrix_scheduled_posts_v15', JSON.stringify(scheduledPosts));
       } catch (err) {
         console.warn('Storage quota exceeded, preserving in-memory state:', err);
       }
@@ -969,7 +969,7 @@ export const ContentCalendarPage: React.FC = () => {
   useEffect(() => {
     if (typeof window !== 'undefined') {
       try {
-        localStorage.setItem('veltrix_published_posts_v14', JSON.stringify(publishedPosts));
+        localStorage.setItem('veltrix_published_posts_v15', JSON.stringify(publishedPosts));
       } catch (err) {
         console.warn('Storage quota exceeded, preserving in-memory state:', err);
       }
@@ -1627,8 +1627,8 @@ export const ContentCalendarPage: React.FC = () => {
       }
       setScheduledPosts(INITIAL_CURATED_SCHEDULED);
       setPublishedPosts(INITIAL_HISTORICAL_PUBLISHED);
-      localStorage.setItem('veltrix_scheduled_posts_v14', JSON.stringify(INITIAL_CURATED_SCHEDULED));
-      localStorage.setItem('veltrix_published_posts_v14', JSON.stringify(INITIAL_HISTORICAL_PUBLISHED));
+      localStorage.setItem('veltrix_scheduled_posts_v15', JSON.stringify(INITIAL_CURATED_SCHEDULED));
+      localStorage.setItem('veltrix_published_posts_v15', JSON.stringify(INITIAL_HISTORICAL_PUBLISHED));
       setActionSuccess('Content calendar reloaded cleanly!');
       setTimeout(() => setActionSuccess(null), 3000);
     }

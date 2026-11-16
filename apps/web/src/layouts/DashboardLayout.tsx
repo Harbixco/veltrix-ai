@@ -18,7 +18,6 @@ import {
 } from 'lucide-react';
 
 const NAV_ITEMS = [
-  { name: 'Overview', path: '/', icon: LayoutDashboard },
   { name: 'Social Accounts', path: '/facebook-accounts', icon: Share2 },
   { name: 'Content Calendar', path: '/content-calendar', icon: Calendar },
   { name: 'Reports', path: '/reports', icon: FileSpreadsheet },
@@ -26,10 +25,10 @@ const NAV_ITEMS = [
 ];
 
 const MOBILE_BOTTOM_ITEMS = [
-  { name: 'Home', path: '/', icon: LayoutDashboard },
   { name: 'Socials', path: '/facebook-accounts', icon: Share2 },
   { name: 'Calendar', path: '/content-calendar', icon: Calendar },
-  { name: 'Reports', path: '/reports', icon: FileSpreadsheet }
+  { name: 'Reports', path: '/reports', icon: FileSpreadsheet },
+  { name: 'Settings', path: '/settings', icon: Settings }
 ];
 
 export const DashboardLayout: React.FC = () => {
