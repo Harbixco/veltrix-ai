@@ -213,11 +213,11 @@ export class TwitterService {
       const lines = clean.split('\n').filter((l) => l.trim().length > 0);
       const hook = lines[0] || '';
       const secondLine = lines[1] || '';
-      clean = `${hook}\n\n${secondLine.slice(0, 100)}...\n\n👉 DM us or visit veltrixhub.ng`;
+      clean = `${hook}\n\n${secondLine.slice(0, 100)}...\n\nDM us or visit veltrixhub.ng`;
     }
 
     if (includeCommentLink) {
-      clean += `\n💬 wa.me/2348087098270`;
+      clean += `\nwa.me/2348087098270`;
     }
 
     const charCount = clean.length;
