@@ -239,7 +239,7 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     carePillars: 'Reliability + Emotion',
     caption: 'AI will not replace software engineers.\n\nBut an engineer who builds custom AI automations will replace an entire legacy agency.\n\nWe connect LLMs directly to client databases and WhatsApp to qualify leads in under 20 seconds.',
     mediaUrls: [],
-    scheduledFor: '2026-11-14T18:00:00.000Z',
+    scheduledFor: '2026-11-14T19:00:00.000Z',
     status: 'PUBLISHED',
     page: { pageName: 'Abiodun Builds (@AbiodunBuilds)', pageId: 'AbiodunBuilds' }
   },
@@ -269,7 +269,7 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     carePillars: 'Reliability + Emotion',
     caption: 'Most businesses do not need another generic ChatGPT prompt.\n\nThey need deterministic AI workflows:\n1. Ingest lead inquiry\n2. Query inventory & pricing via API\n3. Deliver tailored quotation in 15 seconds\n\nThat is how modern businesses scale.',
     mediaUrls: [],
-    scheduledFor: '2026-11-15T18:00:00.000Z',
+    scheduledFor: '2026-11-15T19:00:00.000Z',
     status: 'PUBLISHED',
     page: { pageName: 'Abiodun Builds (@AbiodunBuilds)', pageId: 'AbiodunBuilds' }
   },
@@ -315,7 +315,7 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     caption: 'Customers ask "How much?" and disappear. Here is the real reason:\n\nWhen a customer asks for your price and gets just a bare number with no context, they compare you solely on cheapness.\n\nIf your response takes more than 15 minutes, they have already messaged three of your competitors.\n\nAnd if you do not follow up within 24 hours, the lead is permanently dead.\n\nWe built Veltrix AI to fix this: instant 20-second replies, automated value positioning, and scheduled follow-ups on WhatsApp.',
     firstComment: 'Want to test the AI live on your own phone? Send a test message to our demo number on WhatsApp:\nhttps://wa.me/2348087098270',
     mediaUrls: ['/designs/executive-portrait-nov16.jpg'],
-    scheduledFor: '2026-11-16T18:00:00.000Z',
+    scheduledFor: '2026-11-16T19:00:00.000Z',
     status: 'SCHEDULED',
     page: { pageName: 'Veltrixhq', pageId: '112352500475248' }
   },
@@ -329,7 +329,7 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     carePillars: 'Reliability + Emotion',
     caption: 'When a prospect asks "How much?" and you take 20 minutes to reply, they have already messaged 3 competitors.\n\nInstant response time is not customer service—it is conversion rate optimization.\n\nAutomate the first response or lose the sale.',
     mediaUrls: [],
-    scheduledFor: '2026-11-16T18:00:00.000Z',
+    scheduledFor: '2026-11-16T19:00:00.000Z',
     status: 'SCHEDULED',
     page: { pageName: 'Abiodun Builds (@AbiodunBuilds)', pageId: 'AbiodunBuilds' }
   },
@@ -375,7 +375,7 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     caption: 'Why 80% of business websites fail to make a single sale:\n\n1. They treat their website like a static brochure instead of an active salesperson.\n2. There is no direct WhatsApp conversion button on the screen.\n3. Visitors cannot find pricing or answers to their objections in under 10 seconds.\n\nA high-converting website does not just look pretty. It removes hesitation and drives immediate action.',
     firstComment: 'Let us review your current website and show you where you are losing customers:\nhttps://wa.me/2348087098270',
     mediaUrls: [],
-    scheduledFor: '2026-11-17T18:00:00.000Z',
+    scheduledFor: '2026-11-17T19:00:00.000Z',
     status: 'SCHEDULED',
     page: { pageName: 'Veltrixhq', pageId: '112352500475248' }
   },
@@ -389,7 +389,7 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     carePillars: 'Reliability + Emotion',
     caption: '3 reasons business websites fail to convert:\n\n1. No clear value proposition in the first 5 seconds\n2. Friction in contact (no one-click WhatsApp or booking)\n3. Buried pricing and zero social proof\n\nFix these three and watch conversions double.',
     mediaUrls: [],
-    scheduledFor: '2026-11-17T18:00:00.000Z',
+    scheduledFor: '2026-11-17T19:00:00.000Z',
     status: 'SCHEDULED',
     page: { pageName: 'Abiodun Builds (@AbiodunBuilds)', pageId: 'AbiodunBuilds' }
   },
@@ -435,7 +435,7 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     caption: 'The difference between an expense and digital infrastructure:\n\nA website or an AI assistant is not an expense. It is a digital employee that never sleeps, never complains, and handles 50 customers at the same time.\n\nIf your business relies 100% on you being awake to make sales, you do not own a business. You own a 24-hour job.\n\nAutomation is how you reclaim your time while multiplying your revenue.',
     firstComment: 'See how automation works for your specific business model. Message us on WhatsApp:\nhttps://wa.me/2348087098270',
     mediaUrls: [],
-    scheduledFor: '2026-11-18T18:00:00.000Z',
+    scheduledFor: '2026-11-18T19:00:00.000Z',
     status: 'SCHEDULED',
     page: { pageName: 'Veltrixhq', pageId: '112352500475248' }
   },
@@ -449,7 +449,7 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     carePillars: 'Alignment + Emotion',
     caption: 'If your revenue stops the moment you fall asleep, you do not own a business—you own an exhausting shift.\n\nDigital infrastructure (fast web apps, automated lead capture) works while you rest.\n\nBuild systems, not just tasks.',
     mediaUrls: [],
-    scheduledFor: '2026-11-18T18:00:00.000Z',
+    scheduledFor: '2026-11-18T19:00:00.000Z',
     status: 'SCHEDULED',
     page: { pageName: 'Abiodun Builds (@AbiodunBuilds)', pageId: 'AbiodunBuilds' }
   },
@@ -495,7 +495,7 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     caption: 'What happens when an AI agent handles your customer service:\n\nFirst, your response time drops from 45 minutes to 3 seconds.\n\nSecond, your leads get qualified before they ever reach your phone, filtering out time-wasters.\n\nThird, your business captures orders at 2:00 AM, on Sundays, and during public holidays without hiring additional night staff.\n\nThis is the standard for modern businesses in 2026.',
     firstComment: 'Get a custom AI assistant deployed for your brand this week. Chat with our team:\nhttps://wa.me/2348087098270',
     mediaUrls: [],
-    scheduledFor: '2026-11-19T18:00:00.000Z',
+    scheduledFor: '2026-11-19T19:00:00.000Z',
     status: 'SCHEDULED',
     page: { pageName: 'Veltrixhq', pageId: '112352500475248' }
   },
@@ -509,7 +509,7 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     carePillars: 'Alignment + Reliability',
     caption: 'What custom AI automation actually delivers for businesses:\n\n- 3-second response times\n- 24/7 lead qualification while you sleep\n- Instant booking without back-and-forth messaging\n\nAI is not replacing jobs. It is eliminating bottlenecks.',
     mediaUrls: [],
-    scheduledFor: '2026-11-19T18:00:00.000Z',
+    scheduledFor: '2026-11-19T19:00:00.000Z',
     status: 'SCHEDULED',
     page: { pageName: 'Abiodun Builds (@AbiodunBuilds)', pageId: 'AbiodunBuilds' }
   },
@@ -555,7 +555,7 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     caption: 'Why corporate presentation determines your pricing power:\n\nClients will happily pay 300,000 Naira to a registered business with a professional domain email and a fast website, while arguing over 50,000 Naira with an informal vendor on WhatsApp.\n\nTrust is not something you claim in words. It is demonstrated in your presentation.\n\nWhen your digital presence looks enterprise-grade, premium clients treat you accordingly.',
     firstComment: 'Upgrade your digital branding, CAC registration, and website with Veltrix Hub:\nhttps://wa.me/2348087098270',
     mediaUrls: [],
-    scheduledFor: '2026-11-20T18:00:00.000Z',
+    scheduledFor: '2026-11-20T19:00:00.000Z',
     status: 'SCHEDULED',
     page: { pageName: 'Veltrixhq', pageId: '112352500475248' }
   },
@@ -569,7 +569,7 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     carePillars: 'Alignment + Emotion',
     caption: 'Pricing power comes from presentation and perceived risk.\n\nA company with verified CAC credentials, a custom domain, and an automated portal can charge 5x more for the exact same deliverable.\n\nUpgrade your presentation.',
     mediaUrls: [],
-    scheduledFor: '2026-11-20T18:00:00.000Z',
+    scheduledFor: '2026-11-20T19:00:00.000Z',
     status: 'SCHEDULED',
     page: { pageName: 'Abiodun Builds (@AbiodunBuilds)', pageId: 'AbiodunBuilds' }
   },
@@ -615,7 +615,7 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     caption: 'Three things every profitable business website needs in 2026:\n\n1. A clear value statement above the fold: Explain what you do in 5 seconds so a 12-year-old could understand it.\n2. Frictionless contact: Direct one-click WhatsApp and call buttons permanently visible on mobile.\n3. Social proof: Client results, real testimonials, and verified credentials displayed before asking for the sale.',
     firstComment: 'Want a website engineered for conversions? Message us on WhatsApp:\nhttps://wa.me/2348087098270',
     mediaUrls: [],
-    scheduledFor: '2026-11-21T18:00:00.000Z',
+    scheduledFor: '2026-11-21T19:00:00.000Z',
     status: 'SCHEDULED',
     page: { pageName: 'Veltrixhq', pageId: '112352500475248' }
   },
@@ -629,7 +629,7 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     carePillars: 'Reliability + Alignment',
     caption: '3 rules for websites that actually make sales:\n\n1. Explain the value in 5 seconds\n2. Permanent mobile WhatsApp button\n3. Proof before the pitch\n\nSimplicity converts.',
     mediaUrls: [],
-    scheduledFor: '2026-11-21T18:00:00.000Z',
+    scheduledFor: '2026-11-21T19:00:00.000Z',
     status: 'SCHEDULED',
     page: { pageName: 'Abiodun Builds (@AbiodunBuilds)', pageId: 'AbiodunBuilds' }
   },
@@ -675,7 +675,7 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     caption: 'How to prepare your business infrastructure for the coming week:\n\nAudit where you lost time last week. Was it typing the same price list 20 times? Was it chasing up unclosed quotes manually?\n\nEvery hour spent on repetitive tasks is an hour stolen from closing bigger deals.\n\nSet up your systems once, and let them serve you indefinitely.',
     firstComment: 'Let us automate your business workflows this week. Start a conversation on WhatsApp:\nhttps://wa.me/2348087098270',
     mediaUrls: [],
-    scheduledFor: '2026-11-22T18:00:00.000Z',
+    scheduledFor: '2026-11-22T19:00:00.000Z',
     status: 'SCHEDULED',
     page: { pageName: 'Veltrixhq', pageId: '112352500475248' }
   },
@@ -689,7 +689,7 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     carePillars: 'Alignment + Emotion',
     caption: 'Every hour you spend typing repetitive WhatsApp replies is an hour stolen from growing your business.\n\nAudit your bottlenecks tonight.\n\nAutomate the routine. Scale the revenue.',
     mediaUrls: [],
-    scheduledFor: '2026-11-22T18:00:00.000Z',
+    scheduledFor: '2026-11-22T19:00:00.000Z',
     status: 'SCHEDULED',
     page: { pageName: 'Abiodun Builds (@AbiodunBuilds)', pageId: 'AbiodunBuilds' }
   }
@@ -768,7 +768,7 @@ export const ContentCalendarPage: React.FC = () => {
   // Cache key v7 (strictly real posts, deduplicated, zero dummy data)
   const [scheduledPosts, setScheduledPosts] = useState<ScheduledPost[]>(() => {
     if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('veltrix_scheduled_posts_v13');
+      const saved = localStorage.getItem('veltrix_scheduled_posts_v14');
       if (saved) {
         try {
           const parsed = JSON.parse(saved);
@@ -785,7 +785,7 @@ export const ContentCalendarPage: React.FC = () => {
 
   const [publishedPosts, setPublishedPosts] = useState<PublishedPost[]>(() => {
     if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('veltrix_published_posts_v13');
+      const saved = localStorage.getItem('veltrix_published_posts_v14');
       if (saved) {
         try {
           const parsed = JSON.parse(saved);
@@ -959,7 +959,7 @@ export const ContentCalendarPage: React.FC = () => {
   useEffect(() => {
     if (typeof window !== 'undefined') {
       try {
-        localStorage.setItem('veltrix_scheduled_posts_v13', JSON.stringify(scheduledPosts));
+        localStorage.setItem('veltrix_scheduled_posts_v14', JSON.stringify(scheduledPosts));
       } catch (err) {
         console.warn('Storage quota exceeded, preserving in-memory state:', err);
       }
@@ -969,7 +969,7 @@ export const ContentCalendarPage: React.FC = () => {
   useEffect(() => {
     if (typeof window !== 'undefined') {
       try {
-        localStorage.setItem('veltrix_published_posts_v13', JSON.stringify(publishedPosts));
+        localStorage.setItem('veltrix_published_posts_v14', JSON.stringify(publishedPosts));
       } catch (err) {
         console.warn('Storage quota exceeded, preserving in-memory state:', err);
       }
@@ -1627,8 +1627,8 @@ export const ContentCalendarPage: React.FC = () => {
       }
       setScheduledPosts(INITIAL_CURATED_SCHEDULED);
       setPublishedPosts(INITIAL_HISTORICAL_PUBLISHED);
-      localStorage.setItem('veltrix_scheduled_posts_v13', JSON.stringify(INITIAL_CURATED_SCHEDULED));
-      localStorage.setItem('veltrix_published_posts_v13', JSON.stringify(INITIAL_HISTORICAL_PUBLISHED));
+      localStorage.setItem('veltrix_scheduled_posts_v14', JSON.stringify(INITIAL_CURATED_SCHEDULED));
+      localStorage.setItem('veltrix_published_posts_v14', JSON.stringify(INITIAL_HISTORICAL_PUBLISHED));
       setActionSuccess('Content calendar reloaded cleanly!');
       setTimeout(() => setActionSuccess(null), 3000);
     }
@@ -1900,10 +1900,10 @@ export const ContentCalendarPage: React.FC = () => {
                                   )}
                                   <span>
                                     {isTweet
-                                      ? (isMorning ? '09:00 AM Tech Insight' : '06:00 PM Tech Insight')
+                                      ? (isMorning ? '09:00 AM Tech Insight' : '07:00 PM Tech Insight')
                                       : isMorning
                                       ? '09:00 AM (Automated)'
-                                      : '06:00 PM (Automated)'}
+                                      : '07:00 PM (Automated)'}
                                   </span>
                                 </span>
                               </div>
