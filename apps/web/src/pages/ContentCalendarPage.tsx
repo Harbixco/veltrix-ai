@@ -2208,7 +2208,7 @@ export const ContentCalendarPage: React.FC = () => {
   // Cache key v15 (strictly real posts, deduplicated, zero dummy data)
   const [scheduledPosts, setScheduledPosts] = useState<ScheduledPost[]>(() => {
     if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('veltrix_scheduled_posts_v19');
+      const saved = localStorage.getItem('veltrix_scheduled_posts_v20');
       if (saved) {
         try {
           const parsed = JSON.parse(saved);
@@ -2225,7 +2225,7 @@ export const ContentCalendarPage: React.FC = () => {
 
   const [publishedPosts, setPublishedPosts] = useState<PublishedPost[]>(() => {
     if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('veltrix_published_posts_v19');
+      const saved = localStorage.getItem('veltrix_published_posts_v20');
       if (saved) {
         try {
           const parsed = JSON.parse(saved);
@@ -2399,7 +2399,7 @@ export const ContentCalendarPage: React.FC = () => {
   useEffect(() => {
     if (typeof window !== 'undefined') {
       try {
-        localStorage.setItem('veltrix_scheduled_posts_v19', JSON.stringify(scheduledPosts));
+        localStorage.setItem('veltrix_scheduled_posts_v20', JSON.stringify(scheduledPosts));
       } catch (err) {
         console.warn('Storage quota exceeded, preserving in-memory state:', err);
       }
@@ -2409,7 +2409,7 @@ export const ContentCalendarPage: React.FC = () => {
   useEffect(() => {
     if (typeof window !== 'undefined') {
       try {
-        localStorage.setItem('veltrix_published_posts_v19', JSON.stringify(publishedPosts));
+        localStorage.setItem('veltrix_published_posts_v20', JSON.stringify(publishedPosts));
       } catch (err) {
         console.warn('Storage quota exceeded, preserving in-memory state:', err);
       }
@@ -3067,8 +3067,8 @@ export const ContentCalendarPage: React.FC = () => {
       }
       setScheduledPosts(INITIAL_CURATED_SCHEDULED);
       setPublishedPosts(INITIAL_HISTORICAL_PUBLISHED);
-      localStorage.setItem('veltrix_scheduled_posts_v19', JSON.stringify(INITIAL_CURATED_SCHEDULED));
-      localStorage.setItem('veltrix_published_posts_v19', JSON.stringify(INITIAL_HISTORICAL_PUBLISHED));
+      localStorage.setItem('veltrix_scheduled_posts_v20', JSON.stringify(INITIAL_CURATED_SCHEDULED));
+      localStorage.setItem('veltrix_published_posts_v20', JSON.stringify(INITIAL_HISTORICAL_PUBLISHED));
       setActionSuccess('Content calendar reloaded cleanly!');
       setTimeout(() => setActionSuccess(null), 3000);
     }

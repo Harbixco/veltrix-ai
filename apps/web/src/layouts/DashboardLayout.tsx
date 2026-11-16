@@ -4,9 +4,7 @@ import {
   Calendar,
   ChevronLeft,
   ChevronRight,
-  LogOut,
-  Menu,
-  X
+  LogOut
 } from 'lucide-react';
 
 const NAV_ITEMS = [
@@ -17,7 +15,6 @@ const MOBILE_BOTTOM_ITEMS: Array<{ name: string; path: string; icon: any }> = []
 
 export const DashboardLayout: React.FC = () => {
   const [isCollapsed, setIsCollapsed] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -121,100 +118,19 @@ export const DashboardLayout: React.FC = () => {
       </aside>
 
       {/* ===================================================================== */}
-      {/* MOBILE DRAWER / OVERLAY (When Hamburger is Clicked) */}
-      {/* ===================================================================== */}
-      {isMobileMenuOpen && (
-        <div className="fixed inset-0 z-50 flex md:hidden">
-          {/* Backdrop */}
-          <div
-            onClick={() => setIsMobileMenuOpen(false)}
-            className="fixed inset-0 bg-black/70 backdrop-blur-sm transition-opacity"
-          />
-
-          {/* Drawer Content */}
-          <div className="relative flex w-4/5 max-w-xs flex-1 flex-col bg-slate-900 border-r border-slate-800 p-4 space-y-4 shadow-2xl">
-            <div className="flex items-center justify-between border-b border-slate-800 pb-3">
-              <div className="flex items-center gap-2.5">
-                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-500 font-bold text-white text-sm">
-                  V
-                </div>
-                <div>
-                  <h3 className="font-bold text-sm text-white">Veltrix Hub</h3>
-                  <p className="text-[10px] text-slate-400">AI Growth Command</p>
-                </div>
-              </div>
-              <button
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="rounded-lg p-1.5 text-slate-400 hover:text-white"
-              >
-                <X className="h-5 w-5" />
-              </button>
-            </div>
-
-            <nav className="flex-1 space-y-1.5 overflow-y-auto">
-              {NAV_ITEMS.map((item) => {
-                const Icon = item.icon;
-                const isActive = location.pathname === item.path;
-                return (
-                  <NavLink
-                    key={item.path}
-                    to={item.path}
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className={`flex items-center gap-3 rounded-xl px-3.5 py-3 text-xs font-semibold min-h-[44px] transition-all ${
-                      isActive
-                        ? 'bg-emerald-500/15 text-emerald-400 border border-emerald-500/30'
-                        : 'text-slate-300 hover:bg-slate-800 hover:text-white'
-                    }`}
-                  >
-                    <Icon className="h-4 w-4 shrink-0" />
-                    <span>{item.name}</span>
-                  </NavLink>
-                );
-              })}
-            </nav>
-
-            <div className="border-t border-slate-800 pt-3">
-              <div className="flex items-center justify-between rounded-xl bg-slate-950 p-2.5 border border-slate-800 mb-2">
-                <div className="truncate pr-2">
-                  <p className="text-xs font-semibold text-slate-200">{userName}</p>
-                  <p className="text-[10px] text-slate-400">{userEmail}</p>
-                </div>
-              </div>
-              <button
-                onClick={handleLogout}
-                className="w-full flex items-center justify-center gap-2 rounded-xl bg-rose-500/10 border border-rose-500/20 py-2.5 text-xs font-semibold text-rose-400 hover:bg-rose-500/20 transition-colors min-h-[44px]"
-              >
-                <LogOut className="h-4 w-4" />
-                <span>Log Out</span>
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* ===================================================================== */}
       {/* MAIN VIEWPORT */}
       {/* ===================================================================== */}
       <div className="flex flex-1 flex-col overflow-hidden">
         {/* Top Header */}
         <header className="flex h-14 sm:h-16 items-center justify-between border-b border-slate-800 bg-slate-900/90 backdrop-blur px-3 sm:px-6 shrink-0">
-          {/* Left on Mobile: Hamburger + Brand */}
-          <div className="flex items-center gap-2.5 sm:gap-3">
-            <button
-              onClick={() => setIsMobileMenuOpen(true)}
-              className="md:hidden rounded-xl p-2 min-h-[44px] min-w-[44px] flex items-center justify-center text-slate-300 hover:bg-slate-800 hover:text-white active:bg-slate-700 transition-colors"
-              aria-label="Open Navigation Menu"
-            >
-              <Menu className="h-5 w-5" />
-            </button>
-            <div className="flex items-center gap-2">
-              <div className="md:hidden flex h-7 w-7 items-center justify-center rounded-lg bg-emerald-500 font-bold text-white text-xs">
-                V
-              </div>
-              <span className="text-xs sm:text-sm font-bold text-white tracking-tight">
-                Veltrix Hub
-              </span>
+          {/* Left on Mobile: Clean Brand Identity (No Hamburger) */}
+          <div className="flex items-center gap-2.5">
+            <div className="md:hidden flex h-7 w-7 items-center justify-center rounded-lg bg-emerald-500 font-bold text-white text-xs">
+              V
             </div>
+            <span className="text-xs sm:text-sm font-bold text-white tracking-tight">
+              Veltrix Hub
+            </span>
           </div>
 
           {/* Right Header Status + User Profile + Quick Logout */}
