@@ -1,35 +1,19 @@
 import React, { useState } from 'react';
 import { NavLink, Outlet, useNavigate, useLocation } from 'react-router-dom';
 import {
-  LayoutDashboard,
-  Facebook,
-  Palette,
   Calendar,
-  FileSpreadsheet,
-  Settings,
   ChevronLeft,
   ChevronRight,
   LogOut,
-  Share2,
   Menu,
-  X,
-  Sparkles,
-  UserCheck
+  X
 } from 'lucide-react';
 
 const NAV_ITEMS = [
-  { name: 'Social Accounts', path: '/facebook-accounts', icon: Share2 },
-  { name: 'Content Calendar', path: '/content-calendar', icon: Calendar },
-  { name: 'Reports', path: '/reports', icon: FileSpreadsheet },
-  { name: 'Settings', path: '/settings', icon: Settings }
+  { name: 'Content Calendar', path: '/content-calendar', icon: Calendar }
 ];
 
-const MOBILE_BOTTOM_ITEMS = [
-  { name: 'Socials', path: '/facebook-accounts', icon: Share2 },
-  { name: 'Calendar', path: '/content-calendar', icon: Calendar },
-  { name: 'Reports', path: '/reports', icon: FileSpreadsheet },
-  { name: 'Settings', path: '/settings', icon: Settings }
-];
+const MOBILE_BOTTOM_ITEMS: Array<{ name: string; path: string; icon: any }> = [];
 
 export const DashboardLayout: React.FC = () => {
   const [isCollapsed, setIsCollapsed] = useState(false);
@@ -252,40 +236,42 @@ export const DashboardLayout: React.FC = () => {
           </div>
         </header>
 
-        {/* Scrollable Main Content (pb-24 on mobile so bottom bar doesn't cover content) */}
-        <main className="flex-1 overflow-y-auto p-3 sm:p-6 pb-24 md:pb-6">
+        {/* Scrollable Main Content */}
+        <main className={`flex-1 overflow-y-auto p-3 sm:p-6 ${MOBILE_BOTTOM_ITEMS.length > 0 ? 'pb-24' : 'pb-6'} md:pb-6`}>
           <Outlet />
         </main>
 
         {/* =================================================================== */}
-        {/* MOBILE BOTTOM NAVIGATION BAR (md:hidden) */}
+        {/* MOBILE BOTTOM NAVIGATION BAR (md:hidden, renders when > 0 items)   */}
         {/* =================================================================== */}
-        <nav className="md:hidden fixed bottom-0 left-0 right-0 z-40 flex items-center justify-around border-t border-slate-800/90 bg-slate-950/95 backdrop-blur-xl px-1 pt-1 safe-area-pb shadow-2xl">
-          {MOBILE_BOTTOM_ITEMS.map((item) => {
-            const Icon = item.icon;
-            const isActive = location.pathname === item.path;
-            return (
-              <NavLink
-                key={item.path}
-                to={item.path}
-                className={`flex-1 flex flex-col items-center justify-center py-1 px-1 min-h-[48px] rounded-xl transition-all ${
-                  isActive
-                    ? 'text-emerald-400 font-bold'
-                    : 'text-slate-400 hover:text-slate-200 active:scale-95'
-                }`}
-              >
-                <div
-                  className={`flex items-center justify-center w-8 h-7 rounded-lg transition-all ${
-                    isActive ? 'bg-emerald-500/20 text-emerald-400 ring-1 ring-emerald-500/30' : 'text-slate-400'
+        {MOBILE_BOTTOM_ITEMS.length > 0 && (
+          <nav className="md:hidden fixed bottom-0 left-0 right-0 z-40 flex items-center justify-around border-t border-slate-800/90 bg-slate-950/95 backdrop-blur-xl px-1 pt-1 safe-area-pb shadow-2xl">
+            {MOBILE_BOTTOM_ITEMS.map((item) => {
+              const Icon = item.icon;
+              const isActive = location.pathname === item.path;
+              return (
+                <NavLink
+                  key={item.path}
+                  to={item.path}
+                  className={`flex-1 flex flex-col items-center justify-center py-1 px-1 min-h-[48px] rounded-xl transition-all ${
+                    isActive
+                      ? 'text-emerald-400 font-bold'
+                      : 'text-slate-400 hover:text-slate-200 active:scale-95'
                   }`}
                 >
-                  <Icon className="h-4 w-4" />
-                </div>
-                <span className="text-[10px] leading-tight tracking-tight mt-0.5">{item.name}</span>
-              </NavLink>
-            );
-          })}
-        </nav>
+                  <div
+                    className={`flex items-center justify-center w-8 h-7 rounded-lg transition-all ${
+                      isActive ? 'bg-emerald-500/20 text-emerald-400 ring-1 ring-emerald-500/30' : 'text-slate-400'
+                    }`}
+                  >
+                    <Icon className="h-4 w-4" />
+                  </div>
+                  <span className="text-[10px] leading-tight tracking-tight mt-0.5">{item.name}</span>
+                </NavLink>
+              );
+            })}
+          </nav>
+        )}
       </div>
     </div>
   );

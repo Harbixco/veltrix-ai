@@ -2879,19 +2879,22 @@ export const ContentCalendarPage: React.FC = () => {
                 Metricool posts directly without human intervention because it is authorized with a genuine <strong>Meta Page Access Token</strong> (starts with <code className="text-blue-300 font-mono">EAAG...</code>).
               </p>
               <p className="text-[11px] text-slate-400 leading-relaxed">
-                Once you paste your Page Access Token in <strong>Social Accounts</strong>, every click on <strong>Publish</strong> will send your posts & flyers directly to your Facebook Page timeline automatically!
+                Once you paste your Page Access Token, every click on <strong>Publish</strong> will send your posts & flyers directly to your Facebook Page timeline automatically!
               </p>
             </div>
 
             <div className="flex flex-col sm:flex-row items-center gap-2.5 pt-2 border-t border-slate-800">
-              <Link
-                to="/facebook-accounts"
-                onClick={() => setDirectPublishNotice(null)}
+              <button
+                type="button"
+                onClick={() => {
+                  setDirectPublishNotice(null);
+                  setIsTokenModalOpen(true);
+                }}
                 className="w-full sm:flex-1 flex items-center justify-center gap-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white py-2.5 text-xs font-semibold shadow-lg shadow-blue-600/30 transition-all text-center"
               >
                 <Key className="w-3.5 h-3.5" />
-                <span>Update Token in Social Accounts</span>
-              </Link>
+                <span>Update Facebook Token</span>
+              </button>
               <button
                 type="button"
                 onClick={() => handleManualFallbackPost(directPublishNotice.post)}

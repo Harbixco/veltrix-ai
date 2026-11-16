@@ -1,12 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { DashboardLayout } from './layouts/DashboardLayout';
-import { DashboardOverview } from './pages/DashboardOverview';
-import { FacebookAccountsPage } from './pages/FacebookAccountsPage';
-import { DesignStudioPage } from './pages/DesignStudioPage';
 import { ContentCalendarPage } from './pages/ContentCalendarPage';
-import { ReportsPage } from './pages/ReportsPage';
-import { SettingsPage } from './pages/SettingsPage';
 import { LoginPage } from './pages/LoginPage';
 
 /**
@@ -61,12 +56,12 @@ export const App: React.FC = () => {
         >
           <Route index element={<Navigate to="/content-calendar" replace />} />
           <Route path="overview" element={<Navigate to="/content-calendar" replace />} />
-          <Route path="facebook-accounts" element={<FacebookAccountsPage />} />
-          <Route path="social-accounts" element={<FacebookAccountsPage />} />
+          <Route path="facebook-accounts" element={<Navigate to="/content-calendar" replace />} />
+          <Route path="social-accounts" element={<Navigate to="/content-calendar" replace />} />
           <Route path="design-studio" element={<Navigate to="/content-calendar" replace />} />
           <Route path="content-calendar" element={<ContentCalendarPage />} />
-          <Route path="reports" element={<ReportsPage />} />
-          <Route path="settings" element={<SettingsPage />} />
+          <Route path="reports" element={<Navigate to="/content-calendar" replace />} />
+          <Route path="settings" element={<Navigate to="/content-calendar" replace />} />
         </Route>
 
         {/* Catch-all redirect */}
