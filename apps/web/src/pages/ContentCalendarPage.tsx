@@ -312,9 +312,9 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     formatType: 'PICTURE',
     topicBadge: 'CUSTOMER GHOSTING SOLVED',
     carePillars: 'Reliability + Emotion',
-    caption: 'Customers ask "How much?" and disappear. Here is the real reason:\n\nWhen a customer asks for your price and gets just a bare number with no context, they compare you solely on cheapness.\n\nIf your response takes more than 15 minutes, they have already messaged three of your competitors.\n\nAnd if you do not follow up within 24 hours, the lead is permanently dead.\n\nWe built Veltrix AI to fix this: instant 20-second replies, automated value positioning, and scheduled follow-ups on WhatsApp.',
-    firstComment: 'Want to test the AI live on your own phone? Send a test message to our demo number on WhatsApp:\nhttps://wa.me/2348087098270',
-    mediaUrls: [],
+    caption: "Customers ask \"How much?\" and disappear. Here is the real reason:\n\nWhen a customer asks for your price and gets just a bare number with no context, they compare you solely on cheapness.\n\nIf your response takes more than fifteen minutes, they have already messaged three of your competitors.\n\nAnd if you do not follow up within twenty-four hours, the lead is permanently dead.\n\nHere is what changes the outcome:\n\n1. Never quote a bare number alone. Explain what is included, who it is for, and the result it protects before stating the price.\n2. Cut your response window from twenty minutes to twenty seconds. Fast, structured answers build immediate credibility.\n3. Keep the conversation alive with one clarifying question instead of waiting for them to reply.\n\nAt Veltrix Hub, we build digital infrastructure and automated WhatsApp systems that reply in seconds, position your value before naming price, and nurture warm inquiries so you stop losing ready buyers to delay.",
+    firstComment: "Send us your current website or catalog link on WhatsApp and we will review your inquiry response flow:\nhttps://wa.me/2348087098270",
+    mediaUrls: ['/designs/executive/flyer-nov16-how-much-disappear.jpg'],
     scheduledFor: '2026-11-16T19:00:00.000Z',
     status: 'SCHEDULED',
     page: { pageName: 'Veltrixhq', pageId: '112352500475248' }
@@ -327,7 +327,7 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     formatType: 'TEXT_ONLY',
     topicBadge: 'CONVERSION TIMING',
     carePillars: 'Reliability + Emotion',
-    caption: 'When a prospect asks "How much?" and you take 20 minutes to reply, they have already messaged 3 competitors.\n\nInstant response time is not customer service—it is conversion rate optimization.\n\nAutomate the first response or lose the sale.',
+    caption: "When a customer asks \"How much?\" and gets just a bare number, they compare you solely on cheapness.\n\nPosition your value before naming price. Reply in 20 seconds instead of 20 minutes.\n\nSpeed and positioning convert inquiries into sales.",
     mediaUrls: [],
     scheduledFor: '2026-11-16T19:00:00.000Z',
     status: 'SCHEDULED',
@@ -372,9 +372,9 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     formatType: 'PICTURE',
     topicBadge: 'WEBSITE CONVERSION ARCHITECTURE',
     carePillars: 'Reliability + Emotion',
-    caption: 'Why 80% of business websites fail to make a single sale:\n\n1. They treat their website like a static brochure instead of an active salesperson.\n2. There is no direct WhatsApp conversion button on the screen.\n3. Visitors cannot find pricing or answers to their objections in under 10 seconds.\n\nA high-converting website does not just look pretty. It removes hesitation and drives immediate action.',
-    firstComment: 'Let us review your current website and show you where you are losing customers:\nhttps://wa.me/2348087098270',
-    mediaUrls: [],
+    caption: "Most business owners are solving the wrong online problem. Here is how to spot it:\n\nYou might think your business needs more followers, more traffic, or a larger ad budget.\n\nBut if nine out of ten visitors land on your page and leave without asking a single question, pouring more money into marketing only burns cash faster.\n\nThe issue is rarely visibility. It is usually clarity, speed, and trust:\n\n1. Does your homepage explain what you do and who you help in five seconds? If a visitor has to scroll through paragraphs to understand your offer, they close the tab.\n2. Is your contact path frictionless? If a ready buyer has to copy a phone number, save it manually, and open WhatsApp themselves, you lose them to friction.\n3. Can customers verify your credibility before they pay? Without visible proof, reviews, and clear terms, doubt kills the purchase.\n\nBefore you spend another naira on ads, inspect where your visitors drop off. At Veltrix Hub, we diagnose the leaks in your customer journey and build websites engineered to turn visitors into paying clients.",
+    firstComment: "Send us your website link on WhatsApp and we will audit where your visitors are dropping off:\nhttps://wa.me/2348087098270",
+    mediaUrls: ['/designs/executive/flyer-nov17-wrong-problem.jpg'],
     scheduledFor: '2026-11-17T19:00:00.000Z',
     status: 'SCHEDULED',
     page: { pageName: 'Veltrixhq', pageId: '112352500475248' }
@@ -387,7 +387,7 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     formatType: 'TEXT_ONLY',
     topicBadge: 'CONVERSION ARCHITECTURE',
     carePillars: 'Reliability + Emotion',
-    caption: '3 reasons business websites fail to convert:\n\n1. No clear value proposition in the first 5 seconds\n2. Friction in contact (no one-click WhatsApp or booking)\n3. Buried pricing and zero social proof\n\nFix these three and watch conversions double.',
+    caption: "Most businesses don't have a traffic problem. They have a conversion leak.\n\nIf 95% of visitors leave without asking a question, buying more ads just burns money faster.\n\nFix clarity, speed, and trust first.",
     mediaUrls: [],
     scheduledFor: '2026-11-17T19:00:00.000Z',
     status: 'SCHEDULED',
@@ -432,9 +432,9 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     formatType: 'PICTURE',
     topicBadge: 'DIGITAL INFRASTRUCTURE',
     carePillars: 'Alignment + Emotion',
-    caption: 'The difference between an expense and digital infrastructure:\n\nA website or an AI assistant is not an expense. It is a digital employee that never sleeps, never complains, and handles 50 customers at the same time.\n\nIf your business relies 100% on you being awake to make sales, you do not own a business. You own a 24-hour job.\n\nAutomation is how you reclaim your time while multiplying your revenue.',
-    firstComment: 'See how automation works for your specific business model. Message us on WhatsApp:\nhttps://wa.me/2348087098270',
-    mediaUrls: [],
+    caption: "Can a new customer understand what you sell in ten seconds?\n\nWhen someone lands on your website for the first time, they are not reading every word. They are scanning to see if they are in the right place.\n\nIf your headline is poetic, vague, or filled with buzzwords like \"innovative synergies\" and \"next-generation excellence\", visitors leave because thinking requires too much effort.\n\nA high-converting homepage answers three straightforward questions above the fold:\n\n1. What do you actually sell or build? State your service plainly in words a twelve-year-old would understand.\n2. Who is this specifically for? Name your target audience so the right client immediately recognizes themselves.\n3. What is the single next step? Provide one clear action button, whether that is booking a call or messaging on WhatsApp.\n\nClarity always outperforms cleverness. At Veltrix Hub, we build clean website architectures that pass the ten-second test and guide visitors straight toward a buying decision.",
+    firstComment: "Does your website pass the 10-second test? Share your link with Veltrix Hub on WhatsApp for a quick breakdown:\nhttps://wa.me/2348087098270",
+    mediaUrls: ['/designs/executive/flyer-nov18-ten-seconds.jpg'],
     scheduledFor: '2026-11-18T19:00:00.000Z',
     status: 'SCHEDULED',
     page: { pageName: 'Veltrixhq', pageId: '112352500475248' }
@@ -447,7 +447,7 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     formatType: 'TEXT_ONLY',
     topicBadge: 'SYSTEMS OVER TASKS',
     carePillars: 'Alignment + Emotion',
-    caption: 'If your revenue stops the moment you fall asleep, you do not own a business—you own an exhausting shift.\n\nDigital infrastructure (fast web apps, automated lead capture) works while you rest.\n\nBuild systems, not just tasks.',
+    caption: "Can a visitor understand what you sell in 10 seconds without scrolling?\n\nIf your headline is filled with corporate jargon, visitors leave.\n\nState what you do, who it is for, and the next step. Clarity beats cleverness.",
     mediaUrls: [],
     scheduledFor: '2026-11-18T19:00:00.000Z',
     status: 'SCHEDULED',
@@ -492,9 +492,9 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     formatType: 'PICTURE',
     topicBadge: 'CUSTOMER SERVICE AUTOMATION',
     carePillars: 'Alignment + Reliability',
-    caption: 'What happens when an AI agent handles your customer service:\n\nFirst, your response time drops from 45 minutes to 3 seconds.\n\nSecond, your leads get qualified before they ever reach your phone, filtering out time-wasters.\n\nThird, your business captures orders at 2:00 AM, on Sundays, and during public holidays without hiring additional night staff.\n\nThis is the standard for modern businesses in 2026.',
-    firstComment: 'Get a custom AI assistant deployed for your brand this week. Chat with our team:\nhttps://wa.me/2348087098270',
-    mediaUrls: [],
+    caption: "Three website design mistakes that frustrate potential customers and kill inquiries:\n\n1. Hidden contact options. Forcing visitors to fill out an eight-field form when all they want is a quick WhatsApp answer creates immediate friction. A direct, one-click WhatsApp button should remain accessible on every screen.\n\n2. Unresponsive mobile layouts. Over eighty percent of your visitors are browsing on a smartphone, often on mobile data. If text shifts awkwardly, buttons are too tiny to tap, or pages take six seconds to load, visitors abandon your business for a competitor.\n\n3. Buried pricing and zero context. When visitors cannot find an idea of what working with you entails, they assume you are either overpriced or disorganized.\n\nYour website should remove hesitation, not create more questions. At Veltrix Hub, we build lightning-fast, mobile-first websites with direct conversion triggers that make contacting your business effortless.",
+    firstComment: "Let us inspect your website on mobile and show you where friction is costing you clients:\nhttps://wa.me/2348087098270",
+    mediaUrls: ['/designs/executive/flyer-nov19-design-mistakes.jpg'],
     scheduledFor: '2026-11-19T19:00:00.000Z',
     status: 'SCHEDULED',
     page: { pageName: 'Veltrixhq', pageId: '112352500475248' }
@@ -507,7 +507,7 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     formatType: 'TEXT_ONLY',
     topicBadge: 'BOTTLENECK REMOVAL',
     carePillars: 'Alignment + Reliability',
-    caption: 'What custom AI automation actually delivers for businesses:\n\n- 3-second response times\n- 24/7 lead qualification while you sleep\n- Instant booking without back-and-forth messaging\n\nAI is not replacing jobs. It is eliminating bottlenecks.',
+    caption: "3 website mistakes killing your sales:\n\n1. Hidden WhatsApp button\n2. Slow mobile load speed on mobile data\n3. Zero pricing context or proof\n\nRemove the friction between your visitor and your contact button.",
     mediaUrls: [],
     scheduledFor: '2026-11-19T19:00:00.000Z',
     status: 'SCHEDULED',
@@ -552,9 +552,9 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     formatType: 'PICTURE',
     topicBadge: 'PRICING POWER',
     carePillars: 'Alignment + Emotion',
-    caption: 'Why corporate presentation determines your pricing power:\n\nClients will happily pay 300,000 Naira to a registered business with a professional domain email and a fast website, while arguing over 50,000 Naira with an informal vendor on WhatsApp.\n\nTrust is not something you claim in words. It is demonstrated in your presentation.\n\nWhen your digital presence looks enterprise-grade, premium clients treat you accordingly.',
-    firstComment: 'Upgrade your digital branding, CAC registration, and website with Veltrix Hub:\nhttps://wa.me/2348087098270',
-    mediaUrls: [],
+    caption: "Customers need confidence, not just product photos.\n\nPosting high-resolution pictures of what you sell is easy. Any competitor can do that. What actually determines whether someone transfers money to an unfamiliar business is perceived risk.\n\nOnline buyers in Nigeria are naturally cautious. Before they buy, their mind is asking: Is this business real? Will they deliver? What happens if there is an issue?\n\nHere is what gives customers the confidence to pay:\n\n1. Verifiable credentials and real business details. Display your official business registration, working office location, and direct contact avenues prominently.\n2. Unedited client proof. Show real conversations, delivered projects, and before-and-after case studies instead of generic stock images.\n3. Clear terms and guarantees. State your turnaround timelines, delivery policies, and support terms openly before asking for payment.\n\nAt Veltrix Hub, our core motto is simple: We do not just build websites. We build trust. We construct digital infrastructure that removes customer doubt and positions your business as the dependable choice.",
+    firstComment: "Build a digital presence that commands trust. Talk to our digital architecture team on WhatsApp:\nhttps://wa.me/2348087098270",
+    mediaUrls: ['/designs/executive/flyer-nov20-confidence-not-photos.jpg'],
     scheduledFor: '2026-11-20T19:00:00.000Z',
     status: 'SCHEDULED',
     page: { pageName: 'Veltrixhq', pageId: '112352500475248' }
@@ -567,7 +567,7 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     formatType: 'TEXT_ONLY',
     topicBadge: 'PERCEIVED VALUE',
     carePillars: 'Alignment + Emotion',
-    caption: 'Pricing power comes from presentation and perceived risk.\n\nA company with verified CAC credentials, a custom domain, and an automated portal can charge 5x more for the exact same deliverable.\n\nUpgrade your presentation.',
+    caption: "Customers don't just need product photos. They need confidence.\n\nDisplay your verified credentials, real delivery proof, and clear policies upfront.\n\nReduce perceived risk and watch conversion rates double.",
     mediaUrls: [],
     scheduledFor: '2026-11-20T19:00:00.000Z',
     status: 'SCHEDULED',
@@ -612,9 +612,9 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     formatType: 'PICTURE',
     topicBadge: 'WEBSITE CHECKLIST',
     carePillars: 'Reliability + Alignment',
-    caption: 'Three things every profitable business website needs in 2026:\n\n1. A clear value statement above the fold: Explain what you do in 5 seconds so a 12-year-old could understand it.\n2. Frictionless contact: Direct one-click WhatsApp and call buttons permanently visible on mobile.\n3. Social proof: Client results, real testimonials, and verified credentials displayed before asking for the sale.',
-    firstComment: 'Want a website engineered for conversions? Message us on WhatsApp:\nhttps://wa.me/2348087098270',
-    mediaUrls: [],
+    caption: "Stop depending on WhatsApp to carry your whole sales process.\n\nWhatsApp is one of the greatest closing tools in modern commerce. But when WhatsApp is your only digital asset, you become the primary bottleneck of your own business.\n\nIf you have to manually type the same price list twenty times a day, re-send pictures already on your phone, and answer \"Where are you located?\" at 11:00 PM, you do not own a scalable system. You own an exhaustion trap.\n\nHere is the healthy division of labor:\n\n1. Let your website do the educating. Your website should showcase your portfolio, answer frequent objections, explain packages, and qualify serious clients before they reach out.\n2. Let WhatsApp do the closing. When a prospect clicks from your website to WhatsApp, they are already informed, pre-qualified, and ready to finalize.\n3. Connect automated workflows. When inquiries arrive after hours, automated assistants can answer basics, capture contact details, and schedule follow-ups.\n\nAt Veltrix Hub, we pair high-converting websites with intelligent WhatsApp automations so your business sells even while you rest.",
+    firstComment: "Ready to automate your repetitive sales questions? Connect with Veltrix Hub on WhatsApp:\nhttps://wa.me/2348087098270",
+    mediaUrls: ['/designs/executive/flyer-nov21-stop-depending-whatsapp.jpg'],
     scheduledFor: '2026-11-21T19:00:00.000Z',
     status: 'SCHEDULED',
     page: { pageName: 'Veltrixhq', pageId: '112352500475248' }
@@ -627,7 +627,7 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     formatType: 'TEXT_ONLY',
     topicBadge: 'SIMPLICITY CONVERTS',
     carePillars: 'Reliability + Alignment',
-    caption: '3 rules for websites that actually make sales:\n\n1. Explain the value in 5 seconds\n2. Permanent mobile WhatsApp button\n3. Proof before the pitch\n\nSimplicity converts.',
+    caption: "If WhatsApp is your entire sales system, you are the bottleneck.\n\nTyping the same price list 20 times a day is an exhaustion trap.\n\nLet your website educate and qualify. Let WhatsApp close the sale.",
     mediaUrls: [],
     scheduledFor: '2026-11-21T19:00:00.000Z',
     status: 'SCHEDULED',
@@ -672,9 +672,9 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     formatType: 'PICTURE',
     topicBadge: 'SYSTEMS AUDIT',
     carePillars: 'Alignment + Emotion',
-    caption: 'How to prepare your business infrastructure for the coming week:\n\nAudit where you lost time last week. Was it typing the same price list 20 times? Was it chasing up unclosed quotes manually?\n\nEvery hour spent on repetitive tasks is an hour stolen from closing bigger deals.\n\nSet up your systems once, and let them serve you indefinitely.',
-    firstComment: 'Let us automate your business workflows this week. Start a conversation on WhatsApp:\nhttps://wa.me/2348087098270',
-    mediaUrls: [],
+    caption: "If you were a first-time visitor, would you trust your own business website?\n\nTake your phone right now. Open your business website on mobile data, just like a stranger would.\n\nLook at it with complete honesty:\n\n1. Does the page load in under three seconds, or does it hang while graphics struggle to render?\n2. Is the design clean and modern, or does it look like a template thrown together five years ago?\n3. Can a visitor verify who owns the business, where you are located, and how to reach a real human instantly?\n4. Are client reviews and delivered results visible without hunting through menus?\n\nIf your website feels dated, slow, or impersonal, customers will not tell you. They will quietly navigate to a competitor whose presentation looks established and secure.\n\nYour digital presence should reflect the genuine quality of your work. At Veltrix Hub, we audit and rebuild business websites to ensure every touchpoint commands credibility.",
+    firstComment: "Request an honest, professional review of your business website on WhatsApp:\nhttps://wa.me/2348087098270",
+    mediaUrls: ['/designs/executive/flyer-nov22-first-time-visitor.jpg'],
     scheduledFor: '2026-11-22T19:00:00.000Z',
     status: 'SCHEDULED',
     page: { pageName: 'Veltrixhq', pageId: '112352500475248' }
@@ -687,12 +687,425 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     formatType: 'TEXT_ONLY',
     topicBadge: 'SCALE THE REVENUE',
     carePillars: 'Alignment + Emotion',
-    caption: 'Every hour you spend typing repetitive WhatsApp replies is an hour stolen from growing your business.\n\nAudit your bottlenecks tonight.\n\nAutomate the routine. Scale the revenue.',
+    caption: "Open your website on mobile right now.\n\nWould a stranger trust you enough to pay in 30 seconds?\n\nIf navigation is slow, contacts are buried, or proof is missing, visitors buy from someone else.",
     mediaUrls: [],
     scheduledFor: '2026-11-22T19:00:00.000Z',
     status: 'SCHEDULED',
     page: { pageName: 'Abiodun Builds (@AbiodunBuilds)', pageId: 'AbiodunBuilds' }
-  }
+  },
+  // --- 2026-11-23 ---
+  {
+    id: 'sched_nov23_fb_am',
+    socialPageId: '112352500475248',
+    channel: 'FACEBOOK',
+    slotType: 'MORNING',
+    formatType: 'RED_BACKGROUND',
+    topicBadge: 'MOBILE FRICTION',
+    carePillars: 'Curiosity + Alignment',
+    caption: "If a customer has to pinch and zoom to read your price list on their phone, they have already decided not to buy.",
+    firstComment: "We build clean, responsive mobile web platforms with direct WhatsApp checkout. Audit your mobile site with Veltrix Hub:\nhttps://wa.me/2348087098270",
+    mediaUrls: [],
+    scheduledFor: '2026-11-23T09:00:00.000Z',
+    status: 'SCHEDULED',
+    page: { pageName: 'Veltrixhq', pageId: '112352500475248' }
+  },
+  {
+    id: 'sched_nov23_x_am',
+    socialPageId: 'AbiodunBuilds',
+    channel: 'TWITTER',
+    slotType: 'MORNING',
+    formatType: 'TEXT_ONLY',
+    topicBadge: 'MOBILE FRICTION',
+    carePillars: 'Curiosity + Alignment',
+    caption: "If your website requires pinching and zooming on a phone, you are losing 80% of mobile buyers.\n\nMobile-first is not optional.",
+    mediaUrls: [],
+    scheduledFor: '2026-11-23T09:00:00.000Z',
+    status: 'SCHEDULED',
+    page: { pageName: 'Abiodun Builds (@AbiodunBuilds)', pageId: 'AbiodunBuilds' }
+  },
+  {
+    id: 'sched_nov23_fb_pm',
+    socialPageId: '112352500475248',
+    channel: 'FACEBOOK',
+    slotType: 'EVENING',
+    formatType: 'PICTURE',
+    topicBadge: 'THE REAL COST OF A CHEAP WEBSITE',
+    carePillars: 'Reliability + Alignment',
+    caption: "A cheap website can become costly if customers struggle to use it.\n\nWhen hiring a web designer, cutting corners on price often looks like a smart expense saving. But a website is not a stationary expense. It is your primary digital storefront.\n\nHere is what a poorly built website actually costs you:\n\n1. Lost clients from broken mobile layouts. If buttons overlap or navigation menus refuse to close on an iPhone or Android, visitors leave immediately. You rarely see the sales you lost.\n2. Security vulnerabilities and zero backups. Cheap setups often skip SSL configuration, database backups, and software updates, leaving your business exposed to downtime and crashes.\n3. Rebuild expenses. Fixing structural code flaws, slow load speeds, and bad navigation six months down the line usually costs twice as much as building it properly from the start.\n\nBuild your business infrastructure on solid foundations. At Veltrix Hub, we engineer custom, robust web platforms designed for speed, security, and measurable client acquisition.",
+    firstComment: "Do not let poor code cost you ready buyers. Talk to our engineering team on WhatsApp:\nhttps://wa.me/2348087098270",
+    mediaUrls: ['/designs/executive/flyer-nov23-cheap-website-costly.jpg'],
+    scheduledFor: '2026-11-23T19:00:00.000Z',
+    status: 'SCHEDULED',
+    page: { pageName: 'Veltrixhq', pageId: '112352500475248' }
+  },
+  {
+    id: 'sched_nov23_x_pm',
+    socialPageId: 'AbiodunBuilds',
+    channel: 'TWITTER',
+    slotType: 'EVENING',
+    formatType: 'TEXT_ONLY',
+    topicBadge: 'THE REAL COST OF A CHEAP WEBSITE',
+    carePillars: 'Reliability + Alignment',
+    caption: "A cheap website is often the most expensive asset you own.\n\nBroken mobile buttons, 6-second load speeds, and zero backups cost you high-value clients every week.\n\nInvest in proper digital infrastructure.",
+    mediaUrls: [],
+    scheduledFor: '2026-11-23T19:00:00.000Z',
+    status: 'SCHEDULED',
+    page: { pageName: 'Abiodun Builds (@AbiodunBuilds)', pageId: 'AbiodunBuilds' }
+  },
+  // --- 2026-11-24 ---
+  {
+    id: 'sched_nov24_fb_am',
+    socialPageId: '112352500475248',
+    channel: 'FACEBOOK',
+    slotType: 'MORNING',
+    formatType: 'RED_BACKGROUND',
+    topicBadge: 'CLARITY OVER CLEVERNESS',
+    carePillars: 'Curiosity + Alignment',
+    caption: "Poetic taglines sound smart in meetings, but plain language makes sales on the internet.",
+    firstComment: "We engineer website architectures that state your value in 5 seconds and convert visitors immediately. Message our team:\nhttps://wa.me/2348087098270",
+    mediaUrls: [],
+    scheduledFor: '2026-11-24T09:00:00.000Z',
+    status: 'SCHEDULED',
+    page: { pageName: 'Veltrixhq', pageId: '112352500475248' }
+  },
+  {
+    id: 'sched_nov24_x_am',
+    socialPageId: 'AbiodunBuilds',
+    channel: 'TWITTER',
+    slotType: 'MORNING',
+    formatType: 'TEXT_ONLY',
+    topicBadge: 'CLARITY OVER CLEVERNESS',
+    carePillars: 'Curiosity + Alignment',
+    caption: "Vague taglines sound clever in boardroom meetings.\n\nPlain, simple language makes sales on the internet.\n\nClarity over poetry.",
+    mediaUrls: [],
+    scheduledFor: '2026-11-24T09:00:00.000Z',
+    status: 'SCHEDULED',
+    page: { pageName: 'Abiodun Builds (@AbiodunBuilds)', pageId: 'AbiodunBuilds' }
+  },
+  {
+    id: 'sched_nov24_fb_pm',
+    socialPageId: '112352500475248',
+    channel: 'FACEBOOK',
+    slotType: 'EVENING',
+    formatType: 'PICTURE',
+    topicBadge: 'CONVERSION LEAKS EXPLAINED',
+    carePillars: 'Curiosity + Alignment',
+    caption: "Why do visitors leave a website without taking the next step?\n\nYou drove traffic to your page, but your inbox remains completely quiet. Where did the interest disappear?\n\nIn most cases, visitors do not leave because they dislike your product. They leave because of three silent conversion leaks:\n\n1. Analysis paralysis. Giving visitors five competing buttons—download our brochure, watch our video, follow our Instagram, sign up for a newsletter, or send an email—overwhelms them. A high-converting page guides visitors toward one primary action.\n2. Slow load speeds. Every additional second of loading time cuts conversion rates significantly. If a page takes longer than three seconds on mobile data, over half your visitors bounce before seeing your offer.\n3. Lack of immediate reassurance. If pricing or process details feel hidden, prospective clients assume there are hidden fees and back away.\n\nRemove the obstacles between your visitor and your contact button. At Veltrix Hub, we build streamlined customer journeys that make taking the next step simple and obvious.",
+    firstComment: "Let us inspect your website and eliminate the friction in your customer journey:\nhttps://wa.me/2348087098270",
+    mediaUrls: ['/designs/executive/flyer-nov24-visitors-leave-website.jpg'],
+    scheduledFor: '2026-11-24T19:00:00.000Z',
+    status: 'SCHEDULED',
+    page: { pageName: 'Veltrixhq', pageId: '112352500475248' }
+  },
+  {
+    id: 'sched_nov24_x_pm',
+    socialPageId: 'AbiodunBuilds',
+    channel: 'TWITTER',
+    slotType: 'EVENING',
+    formatType: 'TEXT_ONLY',
+    topicBadge: 'CONVERSION LEAKS EXPLAINED',
+    carePillars: 'Curiosity + Alignment',
+    caption: "Visitors don't leave websites because they dislike products.\n\nThey leave because of:\n- Analysis paralysis (too many buttons)\n- 4-second load speeds on mobile\n- Buried contact paths\n\nOne clear offer. One clear next step.",
+    mediaUrls: [],
+    scheduledFor: '2026-11-24T19:00:00.000Z',
+    status: 'SCHEDULED',
+    page: { pageName: 'Abiodun Builds (@AbiodunBuilds)', pageId: 'AbiodunBuilds' }
+  },
+  // --- 2026-11-25 ---
+  {
+    id: 'sched_nov25_fb_am',
+    socialPageId: '112352500475248',
+    channel: 'FACEBOOK',
+    slotType: 'MORNING',
+    formatType: 'RED_BACKGROUND',
+    topicBadge: 'FOLLOW-UP SYSTEMS',
+    carePillars: 'Reliability + Alignment',
+    caption: "Eighty percent of sales are made on the second or third follow-up, yet most businesses never follow up once.",
+    firstComment: "Automate your 24-hour and 48-hour prospect follow-ups on WhatsApp without typing manually. See how Veltrix Hub builds automated workflows:\nhttps://wa.me/2348087098270",
+    mediaUrls: [],
+    scheduledFor: '2026-11-25T09:00:00.000Z',
+    status: 'SCHEDULED',
+    page: { pageName: 'Veltrixhq', pageId: '112352500475248' }
+  },
+  {
+    id: 'sched_nov25_x_am',
+    socialPageId: 'AbiodunBuilds',
+    channel: 'TWITTER',
+    slotType: 'MORNING',
+    formatType: 'TEXT_ONLY',
+    topicBadge: 'FOLLOW-UP SYSTEMS',
+    carePillars: 'Reliability + Alignment',
+    caption: "Most deals are closed on the follow-up.\n\nYet 90% of SMEs send a price and never message back.\n\nAutomate follow-ups or leave revenue on the table.",
+    mediaUrls: [],
+    scheduledFor: '2026-11-25T09:00:00.000Z',
+    status: 'SCHEDULED',
+    page: { pageName: 'Abiodun Builds (@AbiodunBuilds)', pageId: 'AbiodunBuilds' }
+  },
+  {
+    id: 'sched_nov25_fb_pm',
+    socialPageId: '112352500475248',
+    channel: 'FACEBOOK',
+    slotType: 'EVENING',
+    formatType: 'PICTURE',
+    topicBadge: 'THE FIRST IMPRESSION TEST',
+    carePillars: 'Reliability + Emotion',
+    caption: "Your website has only a moment to make a clear first impression.\n\nResearch consistently shows that visitors form an opinion about your business website in less than a second.\n\nBefore a prospective client reads your about page or inspects your service catalog, their subconscious makes a rapid calculation: Does this company look legitimate, organized, and capable?\n\nHere is what shapes that instant judgment:\n\n1. Clean typography and balanced spacing. Cluttered text walls, unreadable fonts, and neon colors scream amateur. Clean contrast and ample white space signal professional maturity.\n2. Fast, seamless rendering. A website that renders instantly on mobile tells the visitor your business operates with precision.\n3. An immediate, prominent call to action. When a visitor sees a direct way to communicate without hunting, they feel respected and welcome.\n\nDo not let poor visual architecture undermine years of hard work. At Veltrix Hub, we design corporate websites and brand identities that make an unforgettable, credible first impression.",
+    firstComment: "Send your website to Veltrix Hub on WhatsApp for an executive visual and conversion review:\nhttps://wa.me/2348087098270",
+    mediaUrls: ['/designs/executive/flyer-nov25-moment-first-impression.jpg'],
+    scheduledFor: '2026-11-25T19:00:00.000Z',
+    status: 'SCHEDULED',
+    page: { pageName: 'Veltrixhq', pageId: '112352500475248' }
+  },
+  {
+    id: 'sched_nov25_x_pm',
+    socialPageId: 'AbiodunBuilds',
+    channel: 'TWITTER',
+    slotType: 'EVENING',
+    formatType: 'TEXT_ONLY',
+    topicBadge: 'THE FIRST IMPRESSION TEST',
+    carePillars: 'Reliability + Emotion',
+    caption: "Visitors form an opinion about your business in under 1 second.\n\nClean typography, instant mobile rendering, and an obvious contact button signal competence.\n\nVisual clutter signals disorder.",
+    mediaUrls: [],
+    scheduledFor: '2026-11-25T19:00:00.000Z',
+    status: 'SCHEDULED',
+    page: { pageName: 'Abiodun Builds (@AbiodunBuilds)', pageId: 'AbiodunBuilds' }
+  },
+  // --- 2026-11-26 ---
+  {
+    id: 'sched_nov26_fb_am',
+    socialPageId: '112352500475248',
+    channel: 'FACEBOOK',
+    slotType: 'MORNING',
+    formatType: 'RED_BACKGROUND',
+    topicBadge: 'TRUST BEFORE PITCH',
+    carePillars: 'Reliability + Emotion',
+    caption: "Show proof of what you have built before you ask strangers on the internet to trust you with their money.",
+    firstComment: "Showcase your portfolio, client reviews, and verified credentials with an executive web presence from Veltrix Hub:\nhttps://wa.me/2348087098270",
+    mediaUrls: [],
+    scheduledFor: '2026-11-26T09:00:00.000Z',
+    status: 'SCHEDULED',
+    page: { pageName: 'Veltrixhq', pageId: '112352500475248' }
+  },
+  {
+    id: 'sched_nov26_x_am',
+    socialPageId: 'AbiodunBuilds',
+    channel: 'TWITTER',
+    slotType: 'MORNING',
+    formatType: 'TEXT_ONLY',
+    topicBadge: 'TRUST BEFORE PITCH',
+    carePillars: 'Reliability + Emotion',
+    caption: "Strangers on the internet do not owe you trust.\n\nShow verifiable proof, real testimonials, and clear terms before asking for the sale.",
+    mediaUrls: [],
+    scheduledFor: '2026-11-26T09:00:00.000Z',
+    status: 'SCHEDULED',
+    page: { pageName: 'Abiodun Builds (@AbiodunBuilds)', pageId: 'AbiodunBuilds' }
+  },
+  {
+    id: 'sched_nov26_fb_pm',
+    socialPageId: '112352500475248',
+    channel: 'FACEBOOK',
+    slotType: 'EVENING',
+    formatType: 'PICTURE',
+    topicBadge: 'THE LANDING PAGE AUDIT',
+    carePillars: 'Curiosity + Alignment',
+    caption: "Before you spend more money on ads, check where your visitors will land.\n\nRunning Facebook, Instagram, or Google ads without an optimized destination page is the fastest way to waste a marketing budget.\n\nIf an advertisement promises a specific solution, but the link dumps visitors onto a generic homepage with no clear mention of that offer, the visitor feels disoriented and bounces.\n\nBefore launching your next marketing campaign, verify these four essentials:\n\n1. Message consistency. The exact headline and promise from your ad must be the very first thing visitors see on the page they open.\n2. Direct mobile contact. Include a prominent WhatsApp button pre-loaded with a message indicating which campaign they clicked.\n3. Lightning-fast mobile speed. Compress images and streamline code so the page opens instantly on 4G networks.\n4. Proof before the pitch. Feature real client results right next to your offer.\n\nTraffic is only an amplifier. If your destination converts well, ads become an investment instead of an expense. At Veltrix Hub, we engineer conversion-optimized landing pages that turn ad clicks into confirmed inquiries.",
+    firstComment: "Need a high-converting landing page before your next campaign? Message our team on WhatsApp:\nhttps://wa.me/2348087098270",
+    mediaUrls: ['/designs/executive/flyer-nov26-spend-more-on-ads.jpg'],
+    scheduledFor: '2026-11-26T19:00:00.000Z',
+    status: 'SCHEDULED',
+    page: { pageName: 'Veltrixhq', pageId: '112352500475248' }
+  },
+  {
+    id: 'sched_nov26_x_pm',
+    socialPageId: 'AbiodunBuilds',
+    channel: 'TWITTER',
+    slotType: 'EVENING',
+    formatType: 'TEXT_ONLY',
+    topicBadge: 'THE LANDING PAGE AUDIT',
+    carePillars: 'Curiosity + Alignment',
+    caption: "Running ads to a generic, unoptimized homepage is burning capital.\n\nMatch the ad headline on the landing page. Make the WhatsApp button permanent. Show proof first.\n\nTraffic only amplifies your conversion rate.",
+    mediaUrls: [],
+    scheduledFor: '2026-11-26T19:00:00.000Z',
+    status: 'SCHEDULED',
+    page: { pageName: 'Abiodun Builds (@AbiodunBuilds)', pageId: 'AbiodunBuilds' }
+  },
+  // --- 2026-11-27 ---
+  {
+    id: 'sched_nov27_fb_am',
+    socialPageId: '112352500475248',
+    channel: 'FACEBOOK',
+    slotType: 'MORNING',
+    formatType: 'RED_BACKGROUND',
+    topicBadge: 'BUSINESS EMAIL TRUST',
+    carePillars: 'Alignment + Reliability',
+    caption: "Pitching corporate clients from a free personal email address instantly signals you are an informal freelancer rather than an established enterprise.",
+    firstComment: "Get custom corporate domain emails, digital branding, and enterprise web architecture set up for your brand:\nhttps://wa.me/2348087098270",
+    mediaUrls: [],
+    scheduledFor: '2026-11-27T09:00:00.000Z',
+    status: 'SCHEDULED',
+    page: { pageName: 'Veltrixhq', pageId: '112352500475248' }
+  },
+  {
+    id: 'sched_nov27_x_am',
+    socialPageId: 'AbiodunBuilds',
+    channel: 'TWITTER',
+    slotType: 'MORNING',
+    formatType: 'TEXT_ONLY',
+    topicBadge: 'BUSINESS EMAIL TRUST',
+    carePillars: 'Alignment + Reliability',
+    caption: "Sending corporate proposals from a free personal email immediately hurts your pricing power.\n\nProfessional domains signal permanence.",
+    mediaUrls: [],
+    scheduledFor: '2026-11-27T09:00:00.000Z',
+    status: 'SCHEDULED',
+    page: { pageName: 'Abiodun Builds (@AbiodunBuilds)', pageId: 'AbiodunBuilds' }
+  },
+  {
+    id: 'sched_nov27_fb_pm',
+    socialPageId: '112352500475248',
+    channel: 'FACEBOOK',
+    slotType: 'EVENING',
+    formatType: 'PICTURE',
+    topicBadge: 'PRICING POWER AND PERCEPTION',
+    carePillars: 'Alignment + Emotion',
+    caption: "Does your business look like it offers the value you charge for?\n\nThere is often a painful gap between how good a business actually is and how it looks on the internet.\n\nYou might deliver exceptional work, source premium materials, and provide world-class service. But if your online presence consists of inconsistent social flyers, a broken link in your bio, and no professional website, clients will treat you like a bargain vendor.\n\nPerception governs pricing power:\n\n1. Premium clients rarely buy through informal channels alone. Corporate decision-makers and high-ticket buyers require a professional web destination to justify spending significant budgets with you.\n2. Consistent brand architecture signals reliability. Uniform color palettes, sharp typography, and verified business emails (@yourcompany.com) communicate permanence.\n3. Clear service packages remove haggling. Presenting your solutions with structured deliverables sets a firm benchmark for your value.\n\nStop leaving your revenue to chance. At Veltrix Hub, we build elevated digital platforms that help businesses command the prices their expertise deserves.",
+    firstComment: "Elevate your brand presence and command higher margins. Start a conversation on WhatsApp:\nhttps://wa.me/2348087098270",
+    mediaUrls: ['/designs/executive/flyer-nov27-worth-price-you-charge.jpg'],
+    scheduledFor: '2026-11-27T19:00:00.000Z',
+    status: 'SCHEDULED',
+    page: { pageName: 'Veltrixhq', pageId: '112352500475248' }
+  },
+  {
+    id: 'sched_nov27_x_pm',
+    socialPageId: 'AbiodunBuilds',
+    channel: 'TWITTER',
+    slotType: 'EVENING',
+    formatType: 'TEXT_ONLY',
+    topicBadge: 'PRICING POWER AND PERCEPTION',
+    carePillars: 'Alignment + Emotion',
+    caption: "If your business delivers premium work but your website looks amateur, clients will treat you like a bargain vendor.\n\nPerception governs pricing power.\n\nUpgrade your digital presentation.",
+    mediaUrls: [],
+    scheduledFor: '2026-11-27T19:00:00.000Z',
+    status: 'SCHEDULED',
+    page: { pageName: 'Abiodun Builds (@AbiodunBuilds)', pageId: 'AbiodunBuilds' }
+  },
+  // --- 2026-11-28 ---
+  {
+    id: 'sched_nov28_fb_am',
+    socialPageId: '112352500475248',
+    channel: 'FACEBOOK',
+    slotType: 'MORNING',
+    formatType: 'RED_BACKGROUND',
+    topicBadge: 'DIGITAL CATALOGS',
+    carePillars: 'Alignment + Reliability',
+    caption: "Sending fifty unorganized photos to a customer on WhatsApp creates confusion. A clean web catalog creates orders.",
+    firstComment: "Launch a fast, search-ready digital product catalog with direct WhatsApp ordering. Start with Veltrix Hub:\nhttps://wa.me/2348087098270",
+    mediaUrls: [],
+    scheduledFor: '2026-11-28T09:00:00.000Z',
+    status: 'SCHEDULED',
+    page: { pageName: 'Veltrixhq', pageId: '112352500475248' }
+  },
+  {
+    id: 'sched_nov28_x_am',
+    socialPageId: 'AbiodunBuilds',
+    channel: 'TWITTER',
+    slotType: 'MORNING',
+    formatType: 'TEXT_ONLY',
+    topicBadge: 'DIGITAL CATALOGS',
+    carePillars: 'Alignment + Reliability',
+    caption: "Dumping 30 raw photos into a WhatsApp chat confuses customers.\n\nA clean web catalog with instant search turns interest into orders.",
+    mediaUrls: [],
+    scheduledFor: '2026-11-28T09:00:00.000Z',
+    status: 'SCHEDULED',
+    page: { pageName: 'Abiodun Builds (@AbiodunBuilds)', pageId: 'AbiodunBuilds' }
+  },
+  {
+    id: 'sched_nov28_fb_pm',
+    socialPageId: '112352500475248',
+    channel: 'FACEBOOK',
+    slotType: 'EVENING',
+    formatType: 'PICTURE',
+    topicBadge: 'PERMANENT E-COMMERCE ASSETS',
+    carePillars: 'Alignment + Reliability',
+    caption: "Your products deserve more than a WhatsApp status that disappears after twenty-four hours.\n\nPosting your inventory on WhatsApp status is a great way to generate immediate, daily buzz. But relying solely on ephemeral stories creates severe business limitations:\n\n1. No searchable inventory. When a customer remembers an item you posted three days ago, they cannot find it unless they message you and ask you to search through your camera roll.\n2. Zero search engine discovery. Google cannot index a WhatsApp status. New customers actively searching online for what you sell will never discover your catalog.\n3. Manual payment and order taking. Typing account numbers and verifying transfers manually for twenty orders steals hours you could spend sourcing or expanding.\n\nGive your inventory a permanent home. A structured digital catalog or e-commerce website allows customers to browse 24/7, check specifications, and order with one click directly into your WhatsApp.\n\nAt Veltrix Hub, we build clean, fast e-commerce platforms engineered specifically for modern African merchants and SMEs.",
+    firstComment: "Ready to launch a permanent digital store for your products? Message Veltrix Hub on WhatsApp:\nhttps://wa.me/2348087098270",
+    mediaUrls: ['/designs/executive/flyer-nov28-whatsapp-status-disappears.jpg'],
+    scheduledFor: '2026-11-28T19:00:00.000Z',
+    status: 'SCHEDULED',
+    page: { pageName: 'Veltrixhq', pageId: '112352500475248' }
+  },
+  {
+    id: 'sched_nov28_x_pm',
+    socialPageId: 'AbiodunBuilds',
+    channel: 'TWITTER',
+    slotType: 'EVENING',
+    formatType: 'TEXT_ONLY',
+    topicBadge: 'PERMANENT E-COMMERCE ASSETS',
+    carePillars: 'Alignment + Reliability',
+    caption: "A WhatsApp status disappears in 24 hours. A web catalog works forever.\n\nGive your products a permanent home with search, specifications, and instant ordering.\n\nStop running your business out of your camera roll.",
+    mediaUrls: [],
+    scheduledFor: '2026-11-28T19:00:00.000Z',
+    status: 'SCHEDULED',
+    page: { pageName: 'Abiodun Builds (@AbiodunBuilds)', pageId: 'AbiodunBuilds' }
+  },
+  // --- 2026-11-29 ---
+  {
+    id: 'sched_nov29_fb_am',
+    socialPageId: '112352500475248',
+    channel: 'FACEBOOK',
+    slotType: 'MORNING',
+    formatType: 'RED_BACKGROUND',
+    topicBadge: 'FOUNDER FREEDOM',
+    carePillars: 'Emotion + Alignment',
+    caption: "The ultimate goal of business automation is not to work less. It is to spend your energy on growth instead of maintenance.",
+    firstComment: "Reclaim your time and scale your customer acquisition. Prepare your systems for the new month with Veltrix Hub on WhatsApp:\nhttps://wa.me/2348087098270",
+    mediaUrls: [],
+    scheduledFor: '2026-11-29T09:00:00.000Z',
+    status: 'SCHEDULED',
+    page: { pageName: 'Veltrixhq', pageId: '112352500475248' }
+  },
+  {
+    id: 'sched_nov29_x_am',
+    socialPageId: 'AbiodunBuilds',
+    channel: 'TWITTER',
+    slotType: 'MORNING',
+    formatType: 'TEXT_ONLY',
+    topicBadge: 'FOUNDER FREEDOM',
+    carePillars: 'Emotion + Alignment',
+    caption: "Automation is not about being lazy.\n\nIt is about freeing the founder to focus on high-ticket deals while systems handle the routine.",
+    mediaUrls: [],
+    scheduledFor: '2026-11-29T09:00:00.000Z',
+    status: 'SCHEDULED',
+    page: { pageName: 'Abiodun Builds (@AbiodunBuilds)', pageId: 'AbiodunBuilds' }
+  },
+  {
+    id: 'sched_nov29_fb_pm',
+    socialPageId: '112352500475248',
+    channel: 'FACEBOOK',
+    slotType: 'EVENING',
+    formatType: 'PICTURE',
+    topicBadge: 'MONTHLY WEBSITE HEALTH AUDIT',
+    carePillars: 'Reliability + Alignment',
+    caption: "Three simple checks every business owner should run on their website once a month:\n\n1. Test your contact pathways. Click every WhatsApp button, submit a test inquiry through your form, and call your listed number. It is alarming how many businesses discover their contact form has been failing silently for weeks while leads vanished.\n\n2. Audit your mobile speed. Open Google PageSpeed Insights on your smartphone and enter your URL. If uncompressed images or heavy plugins have slowed your load time past four seconds, clean them up immediately.\n\n3. Verify your core information. Confirm that your opening hours, pricing guides, active services, and physical address are completely accurate. Outdated details erode customer trust faster than almost anything else.\n\nYour website is an active digital employee. A ten-minute monthly review protects your pipeline and ensures ready buyers never encounter a broken door.\n\nAt Veltrix Hub, we provide continuous technical maintenance and conversion monitoring so your digital systems stay fast, secure, and ready to convert.",
+    firstComment: "Let us handle your monthly website maintenance and performance audits. Contact us on WhatsApp:\nhttps://wa.me/2348087098270",
+    mediaUrls: ['/designs/executive/flyer-nov29-three-website-checks.jpg'],
+    scheduledFor: '2026-11-29T19:00:00.000Z',
+    status: 'SCHEDULED',
+    page: { pageName: 'Veltrixhq', pageId: '112352500475248' }
+  },
+  {
+    id: 'sched_nov29_x_pm',
+    socialPageId: 'AbiodunBuilds',
+    channel: 'TWITTER',
+    slotType: 'EVENING',
+    formatType: 'TEXT_ONLY',
+    topicBadge: 'MONTHLY WEBSITE HEALTH AUDIT',
+    carePillars: 'Reliability + Alignment',
+    caption: "3 simple checks to run on your website monthly:\n\n1. Click every contact and WhatsApp button yourself\n2. Test load speed on your phone's 4G\n3. Verify pricing, hours, and addresses\n\nPrevent silent conversion leaks.",
+    mediaUrls: [],
+    scheduledFor: '2026-11-29T19:00:00.000Z',
+    status: 'SCHEDULED',
+    page: { pageName: 'Abiodun Builds (@AbiodunBuilds)', pageId: 'AbiodunBuilds' }
+  },
 ];
 
 const INITIAL_HISTORICAL_PUBLISHED: PublishedPost[] = [];
@@ -768,7 +1181,7 @@ export const ContentCalendarPage: React.FC = () => {
   // Cache key v15 (strictly real posts, deduplicated, zero dummy data)
   const [scheduledPosts, setScheduledPosts] = useState<ScheduledPost[]>(() => {
     if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('veltrix_scheduled_posts_v15');
+      const saved = localStorage.getItem('veltrix_scheduled_posts_v16');
       if (saved) {
         try {
           const parsed = JSON.parse(saved);
@@ -785,7 +1198,7 @@ export const ContentCalendarPage: React.FC = () => {
 
   const [publishedPosts, setPublishedPosts] = useState<PublishedPost[]>(() => {
     if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('veltrix_published_posts_v15');
+      const saved = localStorage.getItem('veltrix_published_posts_v16');
       if (saved) {
         try {
           const parsed = JSON.parse(saved);
@@ -959,7 +1372,7 @@ export const ContentCalendarPage: React.FC = () => {
   useEffect(() => {
     if (typeof window !== 'undefined') {
       try {
-        localStorage.setItem('veltrix_scheduled_posts_v15', JSON.stringify(scheduledPosts));
+        localStorage.setItem('veltrix_scheduled_posts_v16', JSON.stringify(scheduledPosts));
       } catch (err) {
         console.warn('Storage quota exceeded, preserving in-memory state:', err);
       }
@@ -969,7 +1382,7 @@ export const ContentCalendarPage: React.FC = () => {
   useEffect(() => {
     if (typeof window !== 'undefined') {
       try {
-        localStorage.setItem('veltrix_published_posts_v15', JSON.stringify(publishedPosts));
+        localStorage.setItem('veltrix_published_posts_v16', JSON.stringify(publishedPosts));
       } catch (err) {
         console.warn('Storage quota exceeded, preserving in-memory state:', err);
       }
@@ -1627,8 +2040,8 @@ export const ContentCalendarPage: React.FC = () => {
       }
       setScheduledPosts(INITIAL_CURATED_SCHEDULED);
       setPublishedPosts(INITIAL_HISTORICAL_PUBLISHED);
-      localStorage.setItem('veltrix_scheduled_posts_v15', JSON.stringify(INITIAL_CURATED_SCHEDULED));
-      localStorage.setItem('veltrix_published_posts_v15', JSON.stringify(INITIAL_HISTORICAL_PUBLISHED));
+      localStorage.setItem('veltrix_scheduled_posts_v16', JSON.stringify(INITIAL_CURATED_SCHEDULED));
+      localStorage.setItem('veltrix_published_posts_v16', JSON.stringify(INITIAL_HISTORICAL_PUBLISHED));
       setActionSuccess('Content calendar reloaded cleanly!');
       setTimeout(() => setActionSuccess(null), 3000);
     }
@@ -2195,7 +2608,11 @@ export const ContentCalendarPage: React.FC = () => {
                   <Sparkles className="w-4 h-4 text-emerald-400" />
                   <span>{lightboxFlyer.title}</span>
                 </h3>
-                <p className="text-[11px] text-slate-400">1080 × 1080 High-Resolution Vector Flyer</p>
+                <p className="text-[11px] text-slate-400">
+                  {lightboxFlyer.url.endsWith('.jpg') || lightboxFlyer.url.endsWith('.jpeg')
+                    ? '1024 × 1024 High-Resolution Executive Portrait Flyer'
+                    : '1080 × 1080 High-Resolution Vector Flyer'}
+                </p>
               </div>
               <button
                 onClick={() => setLightboxFlyer(null)}
@@ -2220,11 +2637,13 @@ export const ContentCalendarPage: React.FC = () => {
               <div className="flex items-center gap-2">
                 <a
                   href={lightboxFlyer.url}
-                  download="veltrix-flyer.svg"
+                  download={lightboxFlyer.url.split('/').pop() || (lightboxFlyer.url.endsWith('.jpg') ? 'veltrix-flyer.jpg' : 'veltrix-flyer.svg')}
                   className="flex items-center gap-2 px-4 py-2.5 bg-emerald-500 hover:bg-emerald-600 text-white rounded-xl text-xs font-semibold shadow-lg shadow-emerald-500/20 transition-all active:scale-95"
                 >
                   <Download className="w-4 h-4" />
-                  <span>Download Flyer (SVG)</span>
+                  <span>
+                    Download Flyer ({lightboxFlyer.url.endsWith('.jpg') || lightboxFlyer.url.endsWith('.jpeg') ? 'JPG' : 'SVG'})
+                  </span>
                 </a>
                 <button
                   onClick={() => setLightboxFlyer(null)}
