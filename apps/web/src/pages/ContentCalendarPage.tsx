@@ -45,9 +45,9 @@ export interface ScheduledPost {
   scheduledFor: string;
   status: 'SCHEDULED' | 'PUBLISHED' | 'FAILED';
   channel: 'FACEBOOK' | 'TWITTER';
-  slotType?: 'MORNING' | 'MIDDAY' | 'EVENING';
+  slotType?: 'MORNING' | 'EVENING';
   topicBadge?: string;
-  formatType?: 'RED_BACKGROUND' | 'MANUAL_PROOF' | 'PICTURE' | 'TEXT_ONLY';
+  formatType?: 'RED_BACKGROUND' | 'PICTURE' | 'TEXT_ONLY';
   firstComment?: string;
   isManual?: boolean;
   carePillars?: string;
@@ -230,21 +230,6 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     page: { pageName: 'Abiodun Builds (@AbiodunBuilds)', pageId: 'AbiodunBuilds' }
   },
   {
-    id: 'sched_nov14_fb',
-    socialPageId: '112352500475248',
-    channel: 'FACEBOOK',
-    slotType: 'MIDDAY',
-    formatType: 'MANUAL_PROOF',
-    topicBadge: 'WEBSITE SPEED & CONVERSION',
-    carePillars: 'Reliability + Alignment',
-    caption: 'Why 70% of business websites in Nigeria lose customers before they even read the offer:\n\n1. Slow loading speed (over 4 seconds on mobile networks)\n2. No direct WhatsApp conversion button on the screen\n3. Cluttered layout that confuses first-time visitors\n\nAt Veltrix Hub, we build digital infrastructure designed for speed, clarity, and trust.',
-    firstComment: 'Send us a direct message on WhatsApp for a free website speed audit:\nhttps://wa.me/2348087098270',
-    mediaUrls: [],
-    scheduledFor: '2026-11-14T13:00:00.000Z',
-    status: 'PUBLISHED',
-    page: { pageName: 'Veltrixhq', pageId: '112352500475248' }
-  },
-  {
     id: 'sched_nov14_x2',
     socialPageId: 'AbiodunBuilds',
     channel: 'TWITTER',
@@ -273,21 +258,6 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     scheduledFor: '2026-11-15T09:00:00.000Z',
     status: 'PUBLISHED',
     page: { pageName: 'Abiodun Builds (@AbiodunBuilds)', pageId: 'AbiodunBuilds' }
-  },
-  {
-    id: 'sched_nov15_fb',
-    socialPageId: '112352500475248',
-    channel: 'FACEBOOK',
-    slotType: 'MIDDAY',
-    formatType: 'MANUAL_PROOF',
-    topicBadge: 'CORPORATE BRANDING & TRUST',
-    carePillars: 'Reliability + Alignment',
-    caption: 'Professional Branding vs Informal Business:\n\nCustomers will happily pay 3x more to a business with clean corporate branding, verified CAC credentials, and an official domain email.\n\nStop losing high-value clients to competitors with better presentation.',
-    firstComment: 'Send Veltrix Hub a message on WhatsApp to upgrade your corporate branding:\nhttps://wa.me/2348087098270',
-    mediaUrls: [],
-    scheduledFor: '2026-11-15T13:00:00.000Z',
-    status: 'PUBLISHED',
-    page: { pageName: 'Veltrixhq', pageId: '112352500475248' }
   },
   {
     id: 'sched_nov15_x2',
@@ -333,22 +303,6 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     scheduledFor: '2026-11-16T09:00:00.000Z',
     status: 'SCHEDULED',
     page: { pageName: 'Abiodun Builds (@AbiodunBuilds)', pageId: 'AbiodunBuilds' }
-  },
-  {
-    id: 'sched_nov16_fb_mid',
-    socialPageId: '112352500475248',
-    channel: 'FACEBOOK',
-    slotType: 'MIDDAY',
-    formatType: 'MANUAL_PROOF',
-    isManual: true,
-    topicBadge: 'REAL BOT CHAT PROOF',
-    carePillars: 'Reliability + Alignment',
-    caption: 'A client asked if our AI bot can handle Nigerian customer inquiries, slang, and price questions.\n\nHere is a real screenshot of the bot qualifying a lead and booking a service at 1:40 AM while the business owner was sound asleep.\n\nProof beats promises every single time.',
-    firstComment: 'Want to see how this works for your business? Chat with our team:\nhttps://wa.me/2348087098270',
-    mediaUrls: [],
-    scheduledFor: '2026-11-16T13:00:00.000Z',
-    status: 'SCHEDULED',
-    page: { pageName: 'Veltrixhq', pageId: '112352500475248' }
   },
   {
     id: 'sched_nov16_fb_pm',
@@ -411,22 +365,6 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     page: { pageName: 'Abiodun Builds (@AbiodunBuilds)', pageId: 'AbiodunBuilds' }
   },
   {
-    id: 'sched_nov17_fb_mid',
-    socialPageId: '112352500475248',
-    channel: 'FACEBOOK',
-    slotType: 'MIDDAY',
-    formatType: 'MANUAL_PROOF',
-    isManual: true,
-    topicBadge: 'SPEED BENCHMARK PROOF',
-    carePillars: 'Reliability + Alignment',
-    caption: 'Before and after: We just rebuilt a client\'s e-commerce platform. Mobile load time dropped from 7.4 seconds to 0.8 seconds.\n\nResult? Inquiries doubled within 48 hours.\n\nSpeed is not a luxury. In business, speed is revenue.',
-    firstComment: 'Want us to optimize your store for sub-second speeds? Inquire here:\nhttps://wa.me/2348087098270',
-    mediaUrls: [],
-    scheduledFor: '2026-11-17T13:00:00.000Z',
-    status: 'SCHEDULED',
-    page: { pageName: 'Veltrixhq', pageId: '112352500475248' }
-  },
-  {
     id: 'sched_nov17_fb_pm',
     socialPageId: '112352500475248',
     channel: 'FACEBOOK',
@@ -485,22 +423,6 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     scheduledFor: '2026-11-18T09:00:00.000Z',
     status: 'SCHEDULED',
     page: { pageName: 'Abiodun Builds (@AbiodunBuilds)', pageId: 'AbiodunBuilds' }
-  },
-  {
-    id: 'sched_nov18_fb_mid',
-    socialPageId: '112352500475248',
-    channel: 'FACEBOOK',
-    slotType: 'MIDDAY',
-    formatType: 'MANUAL_PROOF',
-    isManual: true,
-    topicBadge: 'COMMISSION PAYOUT PROOF',
-    carePillars: 'Reliability + Emotion',
-    caption: 'Just sent out another referral commission payout to an associate who connected us with a logistics firm in Lagos.\n\nYou do not need to know how to code to earn in tech. You just need to spot opportunities and connect the dots.',
-    firstComment: 'Ready to partner with Veltrix Hub? Message us on WhatsApp:\nhttps://wa.me/2348087098270',
-    mediaUrls: [],
-    scheduledFor: '2026-11-18T13:00:00.000Z',
-    status: 'SCHEDULED',
-    page: { pageName: 'Veltrixhq', pageId: '112352500475248' }
   },
   {
     id: 'sched_nov18_fb_pm',
@@ -563,22 +485,6 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     page: { pageName: 'Abiodun Builds (@AbiodunBuilds)', pageId: 'AbiodunBuilds' }
   },
   {
-    id: 'sched_nov19_fb_mid',
-    socialPageId: '112352500475248',
-    channel: 'FACEBOOK',
-    slotType: 'MIDDAY',
-    formatType: 'MANUAL_PROOF',
-    isManual: true,
-    topicBadge: 'BACKEND LOG PROOF',
-    carePillars: 'Reliability + Alignment',
-    caption: 'Screen capture from our backend logs this morning: 14 incoming customer inquiries answered in under 12 seconds with zero human typing.\n\nWhen customers get instant answers, they do not hesitate to make payment.',
-    firstComment: 'See our automation stack in action. Chat with Veltrix Hub on WhatsApp:\nhttps://wa.me/2348087098270',
-    mediaUrls: [],
-    scheduledFor: '2026-11-19T13:00:00.000Z',
-    status: 'SCHEDULED',
-    page: { pageName: 'Veltrixhq', pageId: '112352500475248' }
-  },
-  {
     id: 'sched_nov19_fb_pm',
     socialPageId: '112352500475248',
     channel: 'FACEBOOK',
@@ -637,22 +543,6 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     scheduledFor: '2026-11-20T09:00:00.000Z',
     status: 'SCHEDULED',
     page: { pageName: 'Abiodun Builds (@AbiodunBuilds)', pageId: 'AbiodunBuilds' }
-  },
-  {
-    id: 'sched_nov20_fb_mid',
-    socialPageId: '112352500475248',
-    channel: 'FACEBOOK',
-    slotType: 'MIDDAY',
-    formatType: 'MANUAL_PROOF',
-    isManual: true,
-    topicBadge: 'CAC CERTIFICATE PROOF',
-    carePillars: 'Reliability + Emotion',
-    caption: 'Fresh CAC certificate delivered to a client in Abuja this morning. From name availability search to official certificate in hand without stress.\n\nLegal security gives corporate clients the confidence to send large invoices without fear.',
-    firstComment: 'Register your business name or company with CAC this week. Inquire on WhatsApp:\nhttps://wa.me/2348087098270',
-    mediaUrls: [],
-    scheduledFor: '2026-11-20T13:00:00.000Z',
-    status: 'SCHEDULED',
-    page: { pageName: 'Veltrixhq', pageId: '112352500475248' }
   },
   {
     id: 'sched_nov20_fb_pm',
@@ -715,22 +605,6 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     page: { pageName: 'Abiodun Builds (@AbiodunBuilds)', pageId: 'AbiodunBuilds' }
   },
   {
-    id: 'sched_nov21_fb_mid',
-    socialPageId: '112352500475248',
-    channel: 'FACEBOOK',
-    slotType: 'MIDDAY',
-    formatType: 'MANUAL_PROOF',
-    isManual: true,
-    topicBadge: 'BUILD SESSION PROOF',
-    carePillars: 'Reliability + Alignment',
-    caption: 'Saturday build session: Polishing a new client dashboard with real-time analytics and WhatsApp webhook triggers.\n\nWeekend work hits different when you build tools that genuinely move the needle for real businesses.',
-    firstComment: 'Need a custom portal or dashboard built for your team? Message us:\nhttps://wa.me/2348087098270',
-    mediaUrls: [],
-    scheduledFor: '2026-11-21T13:00:00.000Z',
-    status: 'SCHEDULED',
-    page: { pageName: 'Veltrixhq', pageId: '112352500475248' }
-  },
-  {
     id: 'sched_nov21_fb_pm',
     socialPageId: '112352500475248',
     channel: 'FACEBOOK',
@@ -789,22 +663,6 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     scheduledFor: '2026-11-22T09:00:00.000Z',
     status: 'SCHEDULED',
     page: { pageName: 'Abiodun Builds (@AbiodunBuilds)', pageId: 'AbiodunBuilds' }
-  },
-  {
-    id: 'sched_nov22_fb_mid',
-    socialPageId: '112352500475248',
-    channel: 'FACEBOOK',
-    slotType: 'MIDDAY',
-    formatType: 'MANUAL_PROOF',
-    isManual: true,
-    topicBadge: 'WEEKEND ANALYTICS PROOF',
-    carePillars: 'Reliability + Emotion',
-    caption: 'Sunday review: While our office was closed today, our automated systems handled 38 lead inquiries and scheduled 4 discovery calls for Monday morning.\n\nSleep peacefully knowing your business is working even when you are not.',
-    firstComment: 'Deploy 24/7 lead capture for your brand. Message Veltrix Hub:\nhttps://wa.me/2348087098270',
-    mediaUrls: [],
-    scheduledFor: '2026-11-22T13:00:00.000Z',
-    status: 'SCHEDULED',
-    page: { pageName: 'Veltrixhq', pageId: '112352500475248' }
   },
   {
     id: 'sched_nov22_fb_pm',
@@ -910,7 +768,7 @@ export const ContentCalendarPage: React.FC = () => {
   // Cache key v7 (strictly real posts, deduplicated, zero dummy data)
   const [scheduledPosts, setScheduledPosts] = useState<ScheduledPost[]>(() => {
     if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('veltrix_scheduled_posts_v12');
+      const saved = localStorage.getItem('veltrix_scheduled_posts_v13');
       if (saved) {
         try {
           const parsed = JSON.parse(saved);
@@ -927,7 +785,7 @@ export const ContentCalendarPage: React.FC = () => {
 
   const [publishedPosts, setPublishedPosts] = useState<PublishedPost[]>(() => {
     if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('veltrix_published_posts_v12');
+      const saved = localStorage.getItem('veltrix_published_posts_v13');
       if (saved) {
         try {
           const parsed = JSON.parse(saved);
@@ -1101,7 +959,7 @@ export const ContentCalendarPage: React.FC = () => {
   useEffect(() => {
     if (typeof window !== 'undefined') {
       try {
-        localStorage.setItem('veltrix_scheduled_posts_v12', JSON.stringify(scheduledPosts));
+        localStorage.setItem('veltrix_scheduled_posts_v13', JSON.stringify(scheduledPosts));
       } catch (err) {
         console.warn('Storage quota exceeded, preserving in-memory state:', err);
       }
@@ -1111,7 +969,7 @@ export const ContentCalendarPage: React.FC = () => {
   useEffect(() => {
     if (typeof window !== 'undefined') {
       try {
-        localStorage.setItem('veltrix_published_posts_v12', JSON.stringify(publishedPosts));
+        localStorage.setItem('veltrix_published_posts_v13', JSON.stringify(publishedPosts));
       } catch (err) {
         console.warn('Storage quota exceeded, preserving in-memory state:', err);
       }
@@ -1769,8 +1627,8 @@ export const ContentCalendarPage: React.FC = () => {
       }
       setScheduledPosts(INITIAL_CURATED_SCHEDULED);
       setPublishedPosts(INITIAL_HISTORICAL_PUBLISHED);
-      localStorage.setItem('veltrix_scheduled_posts_v12', JSON.stringify(INITIAL_CURATED_SCHEDULED));
-      localStorage.setItem('veltrix_published_posts_v12', JSON.stringify(INITIAL_HISTORICAL_PUBLISHED));
+      localStorage.setItem('veltrix_scheduled_posts_v13', JSON.stringify(INITIAL_CURATED_SCHEDULED));
+      localStorage.setItem('veltrix_published_posts_v13', JSON.stringify(INITIAL_HISTORICAL_PUBLISHED));
       setActionSuccess('Content calendar reloaded cleanly!');
       setTimeout(() => setActionSuccess(null), 3000);
     }
@@ -1802,6 +1660,8 @@ export const ContentCalendarPage: React.FC = () => {
 
     const sched = scheduledPosts.filter((p) => {
       const d = new Date(p.scheduledFor);
+      // Strictly 9:00 AM and 6:00 PM alone (exclude 1:00 PM / midday completely)
+      if ((p as any).slotType === 'MIDDAY' || d.getUTCHours() === 13 || d.getHours() === 13) return false;
       const str = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
       if (str !== targetDateStr && d.getDate() !== day) return false;
       const isTweet = p.channel === 'TWITTER' || p.page?.pageId === 'AbiodunBuilds' || p.socialPageId === 'AbiodunBuilds';
@@ -1812,6 +1672,7 @@ export const ContentCalendarPage: React.FC = () => {
 
     const pub = publishedPosts.filter((p) => {
       const d = new Date(p.publishedAt);
+      if (d.getUTCHours() === 13 || d.getHours() === 13) return false;
       const str = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
       if (str !== targetDateStr && d.getDate() !== day) return false;
       const isTweet = p.channel === 'TWITTER' || p.socialPageId === 'AbiodunBuilds' || p.pageName?.includes('Abiodun');
@@ -2005,8 +1866,6 @@ export const ContentCalendarPage: React.FC = () => {
                       const isTweet = post.channel === 'TWITTER' || post.page?.pageId === 'AbiodunBuilds';
                       const flyerUrl = resolveFlyerForPost(post);
                       const isMorning = post.slotType === 'MORNING';
-                      const isMidday = post.slotType === 'MIDDAY' || post.isManual;
-                      const isEvening = post.slotType === 'EVENING';
 
                       return (
                         <div
@@ -2014,8 +1873,6 @@ export const ContentCalendarPage: React.FC = () => {
                           className={`p-4 sm:p-5 rounded-2xl border bg-slate-950/90 transition-all flex flex-col justify-between space-y-4 shadow-xl ${
                             isTweet
                               ? 'border-slate-800'
-                              : isMidday
-                              ? 'border-purple-500/40 bg-purple-950/10'
                               : isMorning
                               ? 'border-amber-500/40 bg-amber-950/10'
                               : 'border-blue-500/40 bg-blue-950/10'
@@ -2031,8 +1888,6 @@ export const ContentCalendarPage: React.FC = () => {
                                       ? 'bg-white/10 text-white border-white/20'
                                       : isMorning
                                       ? 'bg-amber-500/20 text-amber-300 border-amber-500/40'
-                                      : isMidday
-                                      ? 'bg-purple-500/20 text-purple-300 border-purple-500/40'
                                       : 'bg-blue-500/20 text-blue-300 border-blue-500/40'
                                   }`}
                                 >
@@ -2040,18 +1895,14 @@ export const ContentCalendarPage: React.FC = () => {
                                     <XLogo className="w-3 h-3" />
                                   ) : isMorning ? (
                                     <Sun className="w-3 h-3 text-amber-400" />
-                                  ) : isMidday ? (
-                                    <Clock className="w-3 h-3 text-purple-400" />
                                   ) : (
                                     <Moon className="w-3 h-3 text-blue-400" />
                                   )}
                                   <span>
                                     {isTweet
-                                      ? 'Tech Insight'
+                                      ? (isMorning ? '09:00 AM Tech Insight' : '06:00 PM Tech Insight')
                                       : isMorning
                                       ? '09:00 AM (Automated)'
-                                      : isMidday
-                                      ? '01:00 PM (Manual Post)'
                                       : '06:00 PM (Automated)'}
                                   </span>
                                 </span>
@@ -2071,14 +1922,6 @@ export const ContentCalendarPage: React.FC = () => {
                                 <span>FORMAT REQUIREMENT: Solid Red Background Text Card</span>
                                 <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 bg-rose-500/30 rounded text-rose-100">
                                   RED BACKGROUND
-                                </span>
-                              </div>
-                            )}
-                            {post.formatType === 'MANUAL_PROOF' && (
-                              <div className="px-3.5 py-2.5 rounded-xl bg-purple-500/15 border border-purple-500/40 text-purple-200 text-xs font-semibold flex items-center justify-between">
-                                <span>FORMAT REQUIREMENT: Post manually with unedited chat screenshot</span>
-                                <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 bg-purple-500/30 rounded text-purple-100">
-                                  MANUAL SCREENSHOT
                                 </span>
                               </div>
                             )}
