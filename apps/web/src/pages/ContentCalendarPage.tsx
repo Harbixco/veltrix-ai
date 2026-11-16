@@ -284,7 +284,7 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     carePillars: "Curiosity + Alignment",
     caption: "If your business takes more than 15 minutes to reply to a WhatsApp inquiry, you are quietly handing your paying customers over to your competitors.",
     firstComment: "We build custom AI assistants that answer inquiries, qualify leads, and handle pricing on WhatsApp in under 20 seconds. Test a live demo with Veltrix Hub here:\nhttps://wa.me/2348087098270",
-    mediaUrls: [],
+    mediaUrls: ["/designs/morning/red-card-nov16.jpg"],
     scheduledFor: '2026-11-16T08:00:00.000Z',
     status: 'SCHEDULED',
     page: { pageName: 'Veltrixhq', pageId: '112352500475248' }
@@ -346,7 +346,7 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     carePillars: "Curiosity + Alignment",
     caption: "Your past customer phone numbers are the most valuable asset you own. Most business owners never follow up once.",
     firstComment: "We set up automated customer retention and repeat-order workflows for your business. Chat directly with Veltrix Hub:\nhttps://wa.me/2348087098270",
-    mediaUrls: [],
+    mediaUrls: ["/designs/morning/red-card-nov17.jpg"],
     scheduledFor: '2026-11-17T08:00:00.000Z',
     status: 'SCHEDULED',
     page: { pageName: 'Veltrixhq', pageId: '112352500475248' }
@@ -408,7 +408,7 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     carePillars: "Curiosity + Alignment",
     caption: "Every extra field in your checkout form drops completed purchases by 20 percent. Keep it under 3 fields.",
     firstComment: "Need a streamlined checkout or payment flow for your products? Speak with our team on WhatsApp:\nhttps://wa.me/2348087098270",
-    mediaUrls: [],
+    mediaUrls: ["/designs/morning/red-card-nov18.jpg"],
     scheduledFor: '2026-11-18T08:00:00.000Z',
     status: 'SCHEDULED',
     page: { pageName: 'Veltrixhq', pageId: '112352500475248' }
@@ -470,7 +470,7 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     carePillars: "Curiosity + Alignment",
     caption: "A 1-second delay in page load time costs a business 7% of its customer inquiries. Speed is not a feature. Speed is revenue.",
     firstComment: "We optimize website load times to under 1.5 seconds on mobile networks. Get your performance audit:\nhttps://wa.me/2348087098270",
-    mediaUrls: [],
+    mediaUrls: ["/designs/morning/red-card-nov19.jpg"],
     scheduledFor: '2026-11-19T08:00:00.000Z',
     status: 'SCHEDULED',
     page: { pageName: 'Veltrixhq', pageId: '112352500475248' }
@@ -532,7 +532,7 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     carePillars: "Curiosity + Alignment",
     caption: "If your business relies on you remembering to send invoices, you do not have a system. You have a stressful job.",
     firstComment: "Automate invoicing, receipts, and order confirmations with Veltrix Hub. Message us on WhatsApp:\nhttps://wa.me/2348087098270",
-    mediaUrls: [],
+    mediaUrls: ["/designs/morning/red-card-nov20.jpg"],
     scheduledFor: '2026-11-20T08:00:00.000Z',
     status: 'SCHEDULED',
     page: { pageName: 'Veltrixhq', pageId: '112352500475248' }
@@ -594,7 +594,7 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     carePillars: "Curiosity + Alignment",
     caption: "Copying order details from WhatsApp into an Excel sheet is a waste of human talent. APIs do it in 200 milliseconds.",
     firstComment: "Connect WhatsApp directly to your spreadsheet or CRM. Test custom automations with Veltrix Hub:\nhttps://wa.me/2348087098270",
-    mediaUrls: [],
+    mediaUrls: ["/designs/morning/red-card-nov21.jpg"],
     scheduledFor: '2026-11-21T08:00:00.000Z',
     status: 'SCHEDULED',
     page: { pageName: 'Veltrixhq', pageId: '112352500475248' }
@@ -656,7 +656,7 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     carePillars: "Curiosity + Alignment",
     caption: "A business website without client testimonials is like a restaurant with no customers inside. Social proof creates trust.",
     firstComment: "We build high-converting websites featuring verified reviews and portfolio case studies. Message our team:\nhttps://wa.me/2348087098270",
-    mediaUrls: [],
+    mediaUrls: ["/designs/morning/red-card-nov22.jpg"],
     scheduledFor: '2026-11-22T08:00:00.000Z',
     status: 'SCHEDULED',
     page: { pageName: 'Veltrixhq', pageId: '112352500475248' }
@@ -718,7 +718,7 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     carePillars: "Curiosity + Alignment",
     caption: "If a customer has to pinch and zoom to read your price list on their phone, they have already decided not to buy.",
     firstComment: "We build clean, responsive mobile web platforms with direct WhatsApp checkout. Audit your mobile site with Veltrix Hub:\nhttps://wa.me/2348087098270",
-    mediaUrls: [],
+    mediaUrls: ["/designs/morning/red-card-nov23.jpg"],
     scheduledFor: '2026-11-23T08:00:00.000Z',
     status: 'SCHEDULED',
     page: { pageName: 'Veltrixhq', pageId: '112352500475248' }
@@ -780,7 +780,7 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     carePillars: "Curiosity + Alignment",
     caption: "Poetic taglines sound smart in meetings, but plain language makes sales on the internet.",
     firstComment: "We engineer website architectures that state your value in 5 seconds and convert visitors immediately. Message our team:\nhttps://wa.me/2348087098270",
-    mediaUrls: [],
+    mediaUrls: ["/designs/morning/red-card-nov24.jpg"],
     scheduledFor: '2026-11-24T08:00:00.000Z',
     status: 'SCHEDULED',
     page: { pageName: 'Veltrixhq', pageId: '112352500475248' }
@@ -842,7 +842,7 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     carePillars: "Curiosity + Alignment",
     caption: "Your website has only 5 seconds to answer: What do you sell? Who is it for? And how do I buy it?",
     firstComment: "Get a clear, conversion-tested website for your business. Chat with Veltrix Hub on WhatsApp:\nhttps://wa.me/2348087098270",
-    mediaUrls: [],
+    mediaUrls: ["/designs/morning/red-card-nov25.jpg"],
     scheduledFor: '2026-11-25T08:00:00.000Z',
     status: 'SCHEDULED',
     page: { pageName: 'Veltrixhq', pageId: '112352500475248' }
@@ -904,7 +904,7 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     carePillars: "Curiosity + Alignment",
     caption: "Spending money on ads before fixing your landing page is like pouring water into a bucket full of holes.",
     firstComment: "We build high-converting landing pages that maximize your return on ad spend. Message our team:\nhttps://wa.me/2348087098270",
-    mediaUrls: [],
+    mediaUrls: ["/designs/morning/red-card-nov26.jpg"],
     scheduledFor: '2026-11-26T08:00:00.000Z',
     status: 'SCHEDULED',
     page: { pageName: 'Veltrixhq', pageId: '112352500475248' }
@@ -966,7 +966,7 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     carePillars: "Curiosity + Alignment",
     caption: "If your brand looks amateur online, high-paying clients will assume your actual work is amateur too.",
     firstComment: "Transform your web presence into an executive-grade platform that commands premium pricing. Reach out:\nhttps://wa.me/2348087098270",
-    mediaUrls: [],
+    mediaUrls: ["/designs/morning/red-card-nov27.jpg"],
     scheduledFor: '2026-11-27T08:00:00.000Z',
     status: 'SCHEDULED',
     page: { pageName: 'Veltrixhq', pageId: '112352500475248' }
@@ -1028,7 +1028,7 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     carePillars: "Curiosity + Alignment",
     caption: "A WhatsApp status lasts 24 hours. A custom web platform works for your business every single day.",
     firstComment: "Build permanent digital assets that generate leads 365 days a year. Chat with Veltrix Hub on WhatsApp:\nhttps://wa.me/2348087098270",
-    mediaUrls: [],
+    mediaUrls: ["/designs/morning/red-card-nov28.jpg"],
     scheduledFor: '2026-11-28T08:00:00.000Z',
     status: 'SCHEDULED',
     page: { pageName: 'Veltrixhq', pageId: '112352500475248' }
@@ -1090,7 +1090,7 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     carePillars: "Curiosity + Alignment",
     caption: "The most expensive website is the one that was built cheap and had to be rebuilt six months later.",
     firstComment: "We engineer durable, scalable software and web architectures built to last. Partner with Veltrix Hub on WhatsApp:\nhttps://wa.me/2348087098270",
-    mediaUrls: [],
+    mediaUrls: ["/designs/morning/red-card-nov29.jpg"],
     scheduledFor: '2026-11-29T08:00:00.000Z',
     status: 'SCHEDULED',
     page: { pageName: 'Veltrixhq', pageId: '112352500475248' }
@@ -1152,7 +1152,7 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     carePillars: "Curiosity + Alignment",
     caption: "If your pricing is a complete secret, customers assume they cannot afford you and move on to your competitor.",
     firstComment: "We help brands present pricing frameworks that filter tire-kickers and attract serious buyers. Message our team:\nhttps://wa.me/2348087098270",
-    mediaUrls: [],
+    mediaUrls: ["/designs/morning/red-card-nov30.jpg"],
     scheduledFor: '2026-11-30T08:00:00.000Z',
     status: 'SCHEDULED',
     page: { pageName: 'Veltrixhq', pageId: '112352500475248' }
@@ -1214,7 +1214,7 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     carePillars: "Curiosity + Alignment",
     caption: "Good design is not how a website looks. Good design is how easily a first-time visitor buys.",
     firstComment: "We build high-performance e-commerce and lead gen platforms designed for seamless user checkout. Connect with us:\nhttps://wa.me/2348087098270",
-    mediaUrls: [],
+    mediaUrls: ["/designs/morning/red-card-dec01.jpg"],
     scheduledFor: '2026-12-01T08:00:00.000Z',
     status: 'SCHEDULED',
     page: { pageName: 'Veltrixhq', pageId: '112352500475248' }
@@ -1276,7 +1276,7 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     carePillars: "Curiosity + Alignment",
     caption: "Stop sending high-value prospects to an Instagram bio link. Give them a professional home to evaluate your business.",
     firstComment: "Establish your brand's official corporate web presence with custom engineering from Veltrix Hub:\nhttps://wa.me/2348087098270",
-    mediaUrls: [],
+    mediaUrls: ["/designs/morning/red-card-dec02.jpg"],
     scheduledFor: '2026-12-02T08:00:00.000Z',
     status: 'SCHEDULED',
     page: { pageName: 'Veltrixhq', pageId: '112352500475248' }
@@ -1338,7 +1338,7 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     carePillars: "Curiosity + Alignment",
     caption: "A slow website does not just frustrate visitors. It quietly kills your advertising return on investment.",
     firstComment: "Speed up your web infrastructure and slash your cost per customer acquisition. Message Veltrix Hub:\nhttps://wa.me/2348087098270",
-    mediaUrls: [],
+    mediaUrls: ["/designs/morning/red-card-dec03.jpg"],
     scheduledFor: '2026-12-03T08:00:00.000Z',
     status: 'SCHEDULED',
     page: { pageName: 'Veltrixhq', pageId: '112352500475248' }
@@ -1400,7 +1400,7 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     carePillars: "Curiosity + Alignment",
     caption: "Never make a client ask: \"Are you still in business?\" Keep your digital presence active, current, and verified.",
     firstComment: "Maintain an active, credible digital footprint with continuous updates from Veltrix Hub. Reach out:\nhttps://wa.me/2348087098270",
-    mediaUrls: [],
+    mediaUrls: ["/designs/morning/red-card-dec04.jpg"],
     scheduledFor: '2026-12-04T08:00:00.000Z',
     status: 'SCHEDULED',
     page: { pageName: 'Veltrixhq', pageId: '112352500475248' }
@@ -1462,7 +1462,7 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     carePillars: "Curiosity + Alignment",
     caption: "Consistency beats intensity. Two focused digital inquiries a day will build a bigger company than occasional viral posts.",
     firstComment: "We engineer automated inbound pipelines that generate predictable client inquiries every single week. Message Veltrix Hub:\nhttps://wa.me/2348087098270",
-    mediaUrls: [],
+    mediaUrls: ["/designs/morning/red-card-dec05.jpg"],
     scheduledFor: '2026-12-05T08:00:00.000Z',
     status: 'SCHEDULED',
     page: { pageName: 'Veltrixhq', pageId: '112352500475248' }
@@ -1524,7 +1524,7 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     carePillars: "Curiosity + Alignment",
     caption: "If your customer support takes 4 hours to reply, your competitors will close the deal in 4 minutes.",
     firstComment: "Automate instant 24/7 lead responses on WhatsApp and web with Veltrix Hub. Connect with our team:\nhttps://wa.me/2348087098270",
-    mediaUrls: [],
+    mediaUrls: ["/designs/morning/red-card-dec06.jpg"],
     scheduledFor: '2026-12-06T08:00:00.000Z',
     status: 'SCHEDULED',
     page: { pageName: 'Veltrixhq', pageId: '112352500475248' }
@@ -1586,7 +1586,7 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     carePillars: "Curiosity + Alignment",
     caption: "Your logo is only 5 percent of your brand. The other 95 percent is the trust customers feel when doing business with you.",
     firstComment: "We engineer high-trust digital assets that establish corporate credibility and elevate client confidence. Connect with us:\nhttps://wa.me/2348087098270",
-    mediaUrls: [],
+    mediaUrls: ["/designs/morning/red-card-dec07.jpg"],
     scheduledFor: '2026-12-07T08:00:00.000Z',
     status: 'SCHEDULED',
     page: { pageName: 'Veltrixhq', pageId: '112352500475248' }
@@ -1648,7 +1648,7 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     carePillars: "Curiosity + Alignment",
     caption: "Do not build a digital business on rented land alone. Own your domain, your customer database, and your website.",
     firstComment: "Own your business infrastructure with a dedicated web platform from Veltrix Hub. Speak with us:\nhttps://wa.me/2348087098270",
-    mediaUrls: [],
+    mediaUrls: ["/designs/morning/red-card-dec08.jpg"],
     scheduledFor: '2026-12-08T08:00:00.000Z',
     status: 'SCHEDULED',
     page: { pageName: 'Veltrixhq', pageId: '112352500475248' }
@@ -1710,7 +1710,7 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     carePillars: "Curiosity + Alignment",
     caption: "An inquiry without follow-up is wasted marketing money. Automate your reminders or lose the deal.",
     firstComment: "Implement automated follow-up workflows that close warm leads systematically. Message Veltrix Hub:\nhttps://wa.me/2348087098270",
-    mediaUrls: [],
+    mediaUrls: ["/designs/morning/red-card-dec09.jpg"],
     scheduledFor: '2026-12-09T08:00:00.000Z',
     status: 'SCHEDULED',
     page: { pageName: 'Veltrixhq', pageId: '112352500475248' }
@@ -1772,7 +1772,7 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     carePillars: "Curiosity + Alignment",
     caption: "If your checkout process takes more than 3 steps, you are actively paying customers to leave.",
     firstComment: "Streamline your checkout and inquiry flows with custom web engineering from Veltrix Hub. Message us:\nhttps://wa.me/2348087098270",
-    mediaUrls: [],
+    mediaUrls: ["/designs/morning/red-card-dec10.jpg"],
     scheduledFor: '2026-12-10T08:00:00.000Z',
     status: 'SCHEDULED',
     page: { pageName: 'Veltrixhq', pageId: '112352500475248' }
@@ -1834,7 +1834,7 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     carePillars: "Curiosity + Alignment",
     caption: "Trust is the ultimate conversion accelerator. Display your verified credentials and testimonials prominently.",
     firstComment: "We build high-trust digital platforms engineered to turn skeptical prospects into committed buyers. Connect with us:\nhttps://wa.me/2348087098270",
-    mediaUrls: [],
+    mediaUrls: ["/designs/morning/red-card-dec11.jpg"],
     scheduledFor: '2026-12-11T08:00:00.000Z',
     status: 'SCHEDULED',
     page: { pageName: 'Veltrixhq', pageId: '112352500475248' }
@@ -1896,7 +1896,7 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     carePillars: "Curiosity + Alignment",
     caption: "You do not need more website visitors if you are converting zero percent of the ones you already have.",
     firstComment: "Fix your conversion mechanics before spending on more traffic. Get a conversion audit with Veltrix Hub:\nhttps://wa.me/2348087098270",
-    mediaUrls: [],
+    mediaUrls: ["/designs/morning/red-card-dec12.jpg"],
     scheduledFor: '2026-12-12T08:00:00.000Z',
     status: 'SCHEDULED',
     page: { pageName: 'Veltrixhq', pageId: '112352500475248' }
@@ -1958,7 +1958,7 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     carePillars: "Curiosity + Alignment",
     caption: "Make your contact details impossible to miss. A customer ready to pay should never have to search for your number.",
     firstComment: "We design frictionless communication pathways that connect ready buyers straight to your phone. Message us:\nhttps://wa.me/2348087098270",
-    mediaUrls: [],
+    mediaUrls: ["/designs/morning/red-card-dec13.jpg"],
     scheduledFor: '2026-12-13T08:00:00.000Z',
     status: 'SCHEDULED',
     page: { pageName: 'Veltrixhq', pageId: '112352500475248' }
@@ -2020,7 +2020,7 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     carePillars: "Curiosity + Alignment",
     caption: "If Google cannot find your business, your local competitors will take all your inbound customers.",
     firstComment: "We engineer websites with clean technical SEO and structured data to dominate local search. Chat with Veltrix Hub:\nhttps://wa.me/2348087098270",
-    mediaUrls: [],
+    mediaUrls: ["/designs/morning/red-card-dec14.jpg"],
     scheduledFor: '2026-12-14T08:00:00.000Z',
     status: 'SCHEDULED',
     page: { pageName: 'Veltrixhq', pageId: '112352500475248' }
@@ -2082,7 +2082,7 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     carePillars: "Curiosity + Alignment",
     caption: "Your website should be your hardest-working employee: never sleeping, never taking a break, and always closing deals.",
     firstComment: "Build an automated digital powerhouse that generates revenue 24/7 with Veltrix Hub. Message us on WhatsApp:\nhttps://wa.me/2348087098270",
-    mediaUrls: [],
+    mediaUrls: ["/designs/morning/red-card-dec15.jpg"],
     scheduledFor: '2026-12-15T08:00:00.000Z',
     status: 'SCHEDULED',
     page: { pageName: 'Veltrixhq', pageId: '112352500475248' }
@@ -2208,7 +2208,7 @@ export const ContentCalendarPage: React.FC = () => {
   // Cache key v15 (strictly real posts, deduplicated, zero dummy data)
   const [scheduledPosts, setScheduledPosts] = useState<ScheduledPost[]>(() => {
     if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('veltrix_scheduled_posts_v18');
+      const saved = localStorage.getItem('veltrix_scheduled_posts_v19');
       if (saved) {
         try {
           const parsed = JSON.parse(saved);
@@ -2225,7 +2225,7 @@ export const ContentCalendarPage: React.FC = () => {
 
   const [publishedPosts, setPublishedPosts] = useState<PublishedPost[]>(() => {
     if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('veltrix_published_posts_v18');
+      const saved = localStorage.getItem('veltrix_published_posts_v19');
       if (saved) {
         try {
           const parsed = JSON.parse(saved);
@@ -2399,7 +2399,7 @@ export const ContentCalendarPage: React.FC = () => {
   useEffect(() => {
     if (typeof window !== 'undefined') {
       try {
-        localStorage.setItem('veltrix_scheduled_posts_v18', JSON.stringify(scheduledPosts));
+        localStorage.setItem('veltrix_scheduled_posts_v19', JSON.stringify(scheduledPosts));
       } catch (err) {
         console.warn('Storage quota exceeded, preserving in-memory state:', err);
       }
@@ -2409,7 +2409,7 @@ export const ContentCalendarPage: React.FC = () => {
   useEffect(() => {
     if (typeof window !== 'undefined') {
       try {
-        localStorage.setItem('veltrix_published_posts_v18', JSON.stringify(publishedPosts));
+        localStorage.setItem('veltrix_published_posts_v19', JSON.stringify(publishedPosts));
       } catch (err) {
         console.warn('Storage quota exceeded, preserving in-memory state:', err);
       }
@@ -3067,8 +3067,8 @@ export const ContentCalendarPage: React.FC = () => {
       }
       setScheduledPosts(INITIAL_CURATED_SCHEDULED);
       setPublishedPosts(INITIAL_HISTORICAL_PUBLISHED);
-      localStorage.setItem('veltrix_scheduled_posts_v18', JSON.stringify(INITIAL_CURATED_SCHEDULED));
-      localStorage.setItem('veltrix_published_posts_v18', JSON.stringify(INITIAL_HISTORICAL_PUBLISHED));
+      localStorage.setItem('veltrix_scheduled_posts_v19', JSON.stringify(INITIAL_CURATED_SCHEDULED));
+      localStorage.setItem('veltrix_published_posts_v19', JSON.stringify(INITIAL_HISTORICAL_PUBLISHED));
       setActionSuccess('Content calendar reloaded cleanly!');
       setTimeout(() => setActionSuccess(null), 3000);
     }

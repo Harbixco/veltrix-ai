@@ -304,7 +304,7 @@ export class CalendarService {
       }
 
       try {
-      // Only treat as media if user manually uploaded a flyer (Base64 data:image or custom upload), never automatic templates
+      // Treat as media if user uploaded a flyer (Base64) or if a curated flyer / morning red card is attached
       const rawMedia = effectiveMediaUrls.length > 0 ? effectiveMediaUrls[0] : '';
       const isAutoTemplate = rawMedia.includes('/designs/flyers/') || rawMedia.includes('veltrix-design');
       const hasMedia = Boolean(rawMedia) && !isAutoTemplate;
@@ -340,13 +340,18 @@ export class CalendarService {
             permalinkUrl = `https://facebook.com/${publishedExternalId}`;
             isLivePublished = true;
           }
-        } else if (media.startsWith('http')) {
-          // Public image URL
+        } else {
+          // Public image URL or relative path on Vercel frontend
+          const publicPhotoUrl = media.startsWith('http')
+            ? media
+            : `https://veltrixhubai.vercel.app${media.startsWith('/') ? '' : '/'}${media}`;
+
+          console.info(`[Meta Direct Publish] Publishing photo from public URL: ${publicPhotoUrl}`);
           const response = await fetch(`https://graph.facebook.com/v19.0/${post.page.pageId}/photos`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-              url: media,
+              url: publicPhotoUrl,
               caption: effectiveCaption,
               access_token: decryptedToken
             })
@@ -394,15 +399,38 @@ export class CalendarService {
             (post as any)?.firstComment ||
             "Want to test our AI assistant live or discuss a high-converting website? Send Veltrix Hub a message on WhatsApp:\nhttps://wa.me/2348087098270";
 
-          await fetch(`https://graph.facebook.com/v19.0/${publishedExternalId}/comments`, {
+          // Try standard Meta Graph API comment endpoint with access_token in URL query and form-encoded body
+          const commentEndpoint = `https://graph.facebook.com/v19.0/${publishedExternalId}/comments?access_token=${encodeURIComponent(decryptedToken)}`;
+          const commentRes = await fetch(commentEndpoint, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              message: firstCommentMessage,
-              access_token: decryptedToken
-            })
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: new URLSearchParams({ message: firstCommentMessage }).toString()
           });
-          console.info(`[Meta Direct Publish] First comment automatically posted to ${publishedExternalId}`);
+
+          const commentResult = (await commentRes.json()) as any;
+          if (commentResult.error) {
+            console.warn('[Meta First Comment Error]', commentResult.error.message || commentResult.error);
+            // Also try with simple post ID if publishedExternalId has pageId_postId format
+            if (publishedExternalId.includes('_')) {
+              const simpleId = publishedExternalId.split('_')[1];
+              const retryRes = await fetch(
+                `https://graph.facebook.com/v19.0/${simpleId}/comments?access_token=${encodeURIComponent(decryptedToken)}`,
+                {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                  body: new URLSearchParams({ message: firstCommentMessage }).toString()
+                }
+              );
+              const retryResult = (await retryRes.json()) as any;
+              if (retryResult.id) {
+                console.info(`[Meta Direct Publish] First comment posted with simple ID ${simpleId}:`, retryResult.id);
+              } else {
+                console.warn('[Meta First Comment Retry Warning]', retryResult.error?.message || retryResult.error);
+              }
+            }
+          } else if (commentResult.id) {
+            console.info(`[Meta Direct Publish] First comment automatically posted to ${publishedExternalId}:`, commentResult.id);
+          }
         } catch (commentErr) {
           console.warn('[Meta First Comment Warning] Could not post first comment:', commentErr);
         }
