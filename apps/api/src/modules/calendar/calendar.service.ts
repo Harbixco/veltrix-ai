@@ -237,7 +237,7 @@ export class CalendarService {
     }
 
     // Determine effective media and caption (prioritize client-uploaded flyer)
-    const effectiveMediaUrls =
+    let effectiveMediaUrls =
       override?.mediaUrls && override.mediaUrls.length > 0
         ? override.mediaUrls
         : (post.mediaUrls || []);
@@ -266,6 +266,29 @@ export class CalendarService {
       post.page?.pageId === 'AbiodunBuilds' ||
       post.caption?.includes('#ReactJS') ||
       post.caption?.includes('AbiodunBuilds');
+
+    // Auto-heal safeguard for Facebook posts: Never allow a Facebook morning post to publish as text-only
+    if (!isTwitter && effectiveMediaUrls.length === 0) {
+      const dateObj = new Date(post.scheduledFor);
+      const hour = dateObj.getUTCHours();
+      const monthNames = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
+      const monthStr = monthNames[dateObj.getUTCMonth()];
+      const dayStr = String(dateObj.getUTCDate()).padStart(2, '0');
+      const dateKey = `${monthStr}${dayStr}`;
+
+      if (hour === 8) {
+        // Morning post: automatically attach the red background visual card
+        const morningCardUrl = `/designs/morning/red-card-${dateKey}.jpg`;
+        effectiveMediaUrls = [morningCardUrl];
+        console.info(`[Auto-Heal] Auto-attached morning red card ${morningCardUrl} for post ${post.id}`);
+        await prisma.scheduledPost
+          .update({
+            where: { id: post.id },
+            data: { mediaUrls: [morningCardUrl] }
+          })
+          .catch(() => {});
+      }
+    }
 
     if (isTwitter) {
       let twitterCreds = undefined;
