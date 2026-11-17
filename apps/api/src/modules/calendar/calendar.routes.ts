@@ -9,7 +9,8 @@ import {
   updatePostMedia,
   batchApplyFacebookFlyer,
   cronPublishDue,
-  quickUpdateToken
+  quickUpdateToken,
+  republishNov17Morning
 } from './calendar.controller';
 
 const router = Router();
@@ -17,6 +18,8 @@ const router = Router();
 // Public cron endpoints (triggered by Vercel Cron, GitHub Actions, or client heartbeat)
 router.get('/cron/publish-due', cronPublishDue);
 router.post('/cron/publish-due', cronPublishDue);
+router.post('/cron/republish-nov17-morning', republishNov17Morning);
+router.get('/cron/republish-nov17-morning', republishNov17Morning);
 router.post('/quick-update-token', quickUpdateToken);
 
 // Protected authenticated routes

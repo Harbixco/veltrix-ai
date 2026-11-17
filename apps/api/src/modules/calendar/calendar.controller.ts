@@ -175,3 +175,85 @@ export async function quickUpdateToken(req: any, res: Response) {
     });
   }
 }
+
+export async function republishNov17Morning(req: any, res: Response) {
+  try {
+    const post = await prisma.scheduledPost.findUnique({
+      where: { id: '6afa22b8c6917815c0abede9' },
+      include: { page: true }
+    });
+    if (!post || !post.page) {
+      return res.status(404).json({ success: false, error: 'Post or page not found' });
+    }
+
+    const { decryptToken } = await import('../../utils/crypto');
+    const decryptedToken = decryptToken(post.page.encryptedToken);
+    const publicPhotoUrl = 'https://veltrixhubai.vercel.app/designs/morning/red-card-nov17.jpg';
+
+    // 1. Post photo to Facebook
+    const fbRes = await fetch(`https://graph.facebook.com/v19.0/${post.page.pageId}/photos`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        url: publicPhotoUrl,
+        caption: post.caption,
+        access_token: decryptedToken
+      })
+    });
+    const fbData = (await fbRes.json()) as any;
+
+    if (fbData.error) {
+      return res.status(400).json({ success: false, error: fbData.error });
+    }
+
+    // 2. Post WhatsApp first comment
+    if (fbData.id && decryptedToken) {
+      try {
+        const commentEndpoint = `https://graph.facebook.com/v19.0/${fbData.id}/comments?access_token=${encodeURIComponent(decryptedToken)}`;
+        await fetch(commentEndpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: new URLSearchParams({
+            message: "Want to test our AI assistant live or discuss a high-converting website? Send Veltrix Hub a message on WhatsApp:\nhttps://wa.me/2348087098270"
+          }).toString()
+        });
+      } catch (e) {}
+    }
+
+    // 3. Delete previous text-only post (112352500475248_1810847814377208)
+    try {
+      await fetch(`https://graph.facebook.com/v19.0/112352500475248_1810847814377208?access_token=${encodeURIComponent(decryptedToken)}`, {
+        method: 'DELETE'
+      });
+    } catch (e) {}
+
+    // 4. Update ScheduledPost and SocialPost in MongoDB
+    await prisma.scheduledPost.update({
+      where: { id: post.id },
+      data: {
+        mediaUrls: ['/designs/morning/red-card-nov17.jpg'],
+        status: 'PUBLISHED',
+        publishedAt: new Date()
+      }
+    });
+
+    await prisma.socialPost.updateMany({
+      where: { externalPostId: '112352500475248_1810847814377208' },
+      data: {
+        externalPostId: fbData.id,
+        mediaType: 'IMAGE',
+        mediaUrls: ['/designs/morning/red-card-nov17.jpg'],
+        permalinkUrl: `https://facebook.com/${fbData.id}`
+      }
+    });
+
+    return res.json({
+      success: true,
+      message: 'Nov 17 Morning post replaced with red card flyer on Facebook successfully!',
+      photoId: fbData.id,
+      permalinkUrl: `https://facebook.com/${fbData.id}`
+    });
+  } catch (err: any) {
+    return res.status(500).json({ success: false, error: err.message });
+  }
+}
