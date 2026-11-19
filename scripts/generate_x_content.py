@@ -1528,8 +1528,8 @@ def write_threads_markdown(threads, filepath):
             f.write("---\n\n")
 
 def write_csv_schedule(posts, filepath):
-    # Starting date: Tomorrow (2026-11-20)
-    base_date = datetime(2026, 11, 20)
+    # Starting date: Today (2026-11-19)
+    base_date = datetime(2026, 11, 19)
 
     fieldnames = ["Date", "Time", "Day", "Post_Number", "Category", "CTA_Type", "Media_Suggestion", "Post_Text"]
 
