@@ -31,7 +31,8 @@ export class CalendarService {
         page: {
           select: {
             pageName: true,
-            pageId: true
+            pageId: true,
+            pageCategory: true
           }
         }
       },
@@ -55,7 +56,8 @@ export class CalendarService {
         page: {
           select: {
             pageName: true,
-            pageId: true
+            pageId: true,
+            pageCategory: true
           }
         }
       },
@@ -66,6 +68,9 @@ export class CalendarService {
     return {
       scheduledPosts: scheduled.map((p) => {
         const isTwitter =
+          p.socialPageId === '6af8033978f3c833e6f4bf5c' ||
+          p.socialPageId === 'AbiodunBuilds' ||
+          p.page?.pageCategory === 'X_TWITTER_PROFILE' ||
           p.page?.pageId === 'AbiodunBuilds' ||
           p.caption.includes('AbiodunBuilds') ||
           p.caption.includes('#ReactJS') ||
@@ -91,6 +96,9 @@ export class CalendarService {
       }),
       publishedPosts: published.map((p) => {
         const isTwitter =
+          p.socialPageId === '6af8033978f3c833e6f4bf5c' ||
+          p.socialPageId === 'AbiodunBuilds' ||
+          p.page?.pageCategory === 'X_TWITTER_PROFILE' ||
           p.page?.pageId === 'AbiodunBuilds' ||
           p.caption.includes('AbiodunBuilds') ||
           p.caption.includes('#ReactJS');
@@ -139,7 +147,8 @@ export class CalendarService {
         page: {
           select: {
             pageName: true,
-            pageId: true
+            pageId: true,
+            pageCategory: true
           }
         }
       }
@@ -263,7 +272,9 @@ export class CalendarService {
     let isLivePublished = false;
 
     const isTwitter =
+      post.socialPageId === '6af8033978f3c833e6f4bf5c' ||
       post.socialPageId === 'AbiodunBuilds' ||
+      post.page?.pageCategory === 'X_TWITTER_PROFILE' ||
       post.page?.pageId === 'AbiodunBuilds' ||
       post.caption?.includes('#ReactJS') ||
       post.caption?.includes('AbiodunBuilds');
@@ -601,7 +612,8 @@ export class CalendarService {
         page: {
           select: {
             pageName: true,
-            pageId: true
+            pageId: true,
+            pageCategory: true
           }
         }
       }
@@ -707,6 +719,12 @@ export class CalendarService {
         results.push({ id: post.id, status: 'PUBLISHED', permalinkUrl: res.permalinkUrl });
       } catch (err: any) {
         console.error(`[Cron Publish Error] Post ${post.id}:`, err.message);
+        await prisma.scheduledPost
+          .update({
+            where: { id: post.id },
+            data: { errorMessage: err.message }
+          })
+          .catch(() => {});
         results.push({ id: post.id, status: 'FAILED', error: err.message });
       }
     }
