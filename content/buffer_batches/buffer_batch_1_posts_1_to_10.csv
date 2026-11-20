@@ -1,0 +1,145 @@
+"Text","Image URL","Tags","Posting Time"
+"Most developers focus only on *how* to write code.
+
+I focus on *why* that code needs to exist.
+
+Hi, I’m Abiodun 👋 — Frontend Engineer working with React, TypeScript, and modern web UX.
+
+I specialize in turning raw concepts into high-performance, user-friendly digital products that actually solve real problems.
+
+Over the next 28 days, I’m documenting:
+• Practical React & TypeScript patterns
+• Building intuitive UI for non-technical users
+• Bridging engineering decisions with business outcomes
+
+If you’re a developer, founder, or hiring manager, let's connect. Drop a comment below!","","AbiodunBuilds","2026-11-20 13:00"
+"Writing code is the easiest part of software engineering.
+
+Understanding *why* you are writing it takes real maturity.
+
+Junior mindset: ""How do I build this feature?""
+
+Senior mindset:
+1. Who actually needs this?
+2. What business or user bottleneck does it solve?
+3. What happens if this fails in production?
+4. Can the next developer maintain this in 6 months?
+
+Code is cheap. Context and problem-solving are expensive.
+
+Which question do you ask first before writing a single line of code?","","AbiodunBuilds","2026-11-20 19:00"
+"If a user needs instructions to navigate your app, your frontend failed.
+
+Frontend engineering isn't just about making Figma mockups look pretty in Chrome.
+
+Real frontend engineering happens where 4 things meet:
+• Accessibility: Everyone can use it without frustration.
+• Performance: It loads instantly even on poor 3G connections.
+• Intuitive UX: Zero cognitive load or second-guessing.
+• Resilient Logic: Errors and edge cases are handled gracefully.
+
+A pretty UI that confuses users is just decoration.
+
+Save this for your next design review 📌","","AbiodunBuilds","2026-11-21 09:00"
+"Your customers aren't abandoning your website because of your price.
+
+They're leaving because your digital experience feels confusing.
+
+When someone lands on your site, they decide within 3 seconds:
+• Can I instantly tell what you do?
+• Can I find pricing without hunting through menus?
+• Do I trust you with my credit card?
+• Is the next step completely obvious?
+
+If your competitor's site answers these in 3 seconds and yours takes 30, they win the customer.
+
+Your website isn’t a digital business card. It’s your 24/7 sales representative.","","AbiodunBuilds","2026-11-21 19:00"
+"Stop using `useEffect` to calculate values that can be derived directly.
+
+It’s the #1 cause of unnecessary re-renders and sync bugs in React.
+
+❌ DON'T DO THIS:
+const [items, setItems] = useState([]);
+const [total, setTotal] = useState(0);
+useEffect(() => {
+  setTotal(items.reduce((acc, i) => acc + i.price, 0));
+}, [items]);
+
+✅ DO THIS INSTEAD:
+const total = items.reduce((acc, i) => acc + i.price, 0);
+// Or wrap in useMemo only if calculation is computationally heavy
+
+Not everything needs state. Not everything needs an effect.
+
+Keep data flow simple, and your components will stay bug-free.
+
+Bookmark this snippet 📌","","AbiodunBuilds","2026-11-22 09:00"
+"Watching 30 hours of tutorials won't make you a software developer.
+
+Building 1 project without hand-holding will.
+
+Tutorials give a false sense of mastery because someone else already:
+• Debugged the weird console errors
+• Structured the folders
+• Designed the data architecture
+
+Real engineering begins the minute your screen goes red and Google has no direct answer.
+
+To all devs: What was the breakthrough project that finally pulled you out of tutorial hell?","","AbiodunBuilds","2026-11-22 19:00"
+"The most dangerous assumption in tech:
+
+""It works for me, so it works for the user.""
+
+As the developer, you have full context:
+• You know which button to click first
+• You know not to double-click submit
+• You know what happens behind the scenes
+
+Your users don't care about your component tree. They skim, misclick, use poor connections, and expect everything to just work.
+
+Build for human behavior, not developer ideals.","","AbiodunBuilds","2026-11-23 09:00"
+"The #1 conversion killer on 90% of business websites:
+
+No clear next step.
+
+A visitor lands on your homepage. They scroll. They read. And then...
+
+Nothing.
+
+Are they supposed to:
+• Book a 15-min discovery call?
+• Request an instant quote?
+• Add the product to cart?
+• Sign up for a free trial?
+
+If you don't tell visitors exactly what action to take next, they take the easiest option available: closing the tab.
+
+Every single page needs one clear, prominent Primary CTA.","","AbiodunBuilds","2026-11-23 19:00"
+"TypeScript isn't just about catching typos in your code.
+
+It’s the best documentation your codebase will ever have.
+
+When you write strict, expressive types:
+• Onboarding new engineers takes days, not weeks
+• Refactoring a 500-line component is no longer terrifying
+• Your IDE autocompletes complex API payloads effortlessly
+• Null and undefined bugs are resolved before git push
+
+Good types turn implicit guesses into rock-solid guarantees.
+
+TypeScript isn't overhead—it's production insurance.
+
+Save this for your team 📌","","AbiodunBuilds","2026-11-24 09:00"
+"Stop collecting certificates like Pokémon cards.
+
+Build 2 production-grade applications instead.
+
+Hiring managers don't care how many 40-hour course completion badges are on your LinkedIn profile.
+
+They want to see that you can:
+1. Build an app that solves an actual user problem
+2. Defend your technical decisions and trade-offs
+3. Handle network errors, empty states, and loading UI
+4. Write clean, maintainable code with clear commit messages
+
+One live, deployed app with clean architecture beats 10 certificates every single time.","","AbiodunBuilds","2026-11-24 19:00"

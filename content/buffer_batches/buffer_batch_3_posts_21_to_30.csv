@@ -1,0 +1,136 @@
+"Text","Image URL","Tags","Posting Time"
+"Responsive design is NOT shrinking a desktop UI until it fits an iPhone.
+
+Mobile users behave in fundamentally different ways:
+• Thumbs have a limited reach zone
+• Hover states do not exist
+• Keyboards take up 50% of the viewport
+• Connectivity is intermittent
+
+If your mobile user has to pinch-to-zoom or struggles to tap an 18px link, the layout isn’t responsive.
+
+Design for mobile thumbs, thumb zones, and touch targets (minimum 44x44px).
+
+Save this reminder 📌","","AbiodunBuilds","2026-11-30 09:00"
+"Pouring traffic into a website with poor UX is like filling a bucket with holes.
+
+Businesses spend thousands on SEO, Google Ads, and influencers.
+
+Yet visitors arrive and encounter:
+• Slow page loads (>4s)
+• Unclear headlines that don't explain the product
+• Cluttered navigation menus
+• Broken mobile layouts
+
+Traffic generates visibility. User experience generates revenue.
+
+Patch the bucket before buying more water.","","AbiodunBuilds","2026-11-30 19:00"
+"You probably don't need Redux, Zustand, or Context for that feature.
+
+Before reaching for a global state library, use this hierarchy:
+
+1. Local Component State (`useState`)
+   → If only this component cares, keep it here.
+
+2. Lifted State (`props`)
+   → If siblings care, lift it to their common parent.
+
+3. Server State (`TanStack Query / SWR`)
+   → If it comes from an API, cache it; don't put it in global client state.
+
+4. Global Client State (`Zustand / Jotai`)
+   → Only for true app-wide UI state (modals, auth sessions, themes).
+
+Simpler architecture = fewer bugs.
+
+Bookmark this decision tree 📌","","AbiodunBuilds","2026-12-01 09:00"
+"To Engineering Managers & Tech Recruiters:
+
+What is the #1 signal that tells you a frontend developer is truly senior?
+
+Is it:
+• Clean code architecture & design patterns?
+• Ownership and ability to ship without supervision?
+• Clear communication with non-technical stakeholders?
+• Track record of business impact and user-centric thinking?
+
+Beyond LeetCode and tech keywords, what makes a portfolio or interview an instant 'YES'?
+
+Curious to hear your perspectives 👇","","AbiodunBuilds","2026-12-01 19:00"
+"Accessibility isn't an optional checklist feature for ""later"".
+
+It’s basic engineering competency.
+
+Building accessible interfaces isn't rocket science:
+• Use native `<button>` instead of `<div onClick>`
+• Provide meaningful `alt` text for images
+• Maintain clear contrast ratios for readability
+• Ensure the entire app is fully keyboard navigable
+• Use semantic tags (`<nav>`, `<main>`, `<header>`)
+
+Over 1 billion people worldwide navigate with accessibility needs.
+
+When you build accessible software, you make the web better for everyone.
+
+Save this reminder 📌","","AbiodunBuilds","2026-12-02 09:00"
+"A 10x developer who can’t communicate clearly is effectively a 1x developer.
+
+Technical brilliance means little if you can't:
+• Explain why a deadline needs to shift
+• Translate an API outage into plain language for customer support
+• Write Pull Requests that reviewers can understand in 5 minutes
+• Articulate the ROI of technical debt refactoring to leadership
+
+Code is written for computers to execute, but communication is what moves teams forward.
+
+Invest in your writing and speaking as much as your code.","","AbiodunBuilds","2026-12-02 19:00"
+"Your portfolio shouldn't just be screenshots of pretty landing pages.
+
+Anyone can clone a UI tutorial.
+
+A compelling engineering case study shows:
+• The Problem: What specific business/user issue were you solving?
+• The Architecture: Why did you pick this tech stack over others?
+• The Edge Cases: How did you handle errors, offline mode, and latency?
+• The Result: How did it impact speed, usability, or conversions?
+
+Show your engineering thinking, not just your CSS styles.
+
+Save this framework for your portfolio rewrite 📌","","AbiodunBuilds","2026-12-03 09:00"
+"Day 14. Two weeks of sharing frontend engineering daily.
+
+Here are the two hardest lessons experience teaches you:
+
+1. Knowing how to build a complex system.
+2. Knowing when NOT to build it.
+
+The second one is 10x harder.
+
+When you start coding, you want to use every design pattern, every state library, and every animation tool.
+
+As you mature, you realize the ultimate sophistication in software is simplicity and reliability.
+
+What’s a lesson that only real production experience taught you?","","AbiodunBuilds","2026-12-03 19:00"
+"Your users do not care if your app is built with Next.js, Remix, Astro, or plain HTML.
+
+They only care:
+• Does it solve my problem quickly?
+• Does it work without crashing?
+• Is it intuitive and fast?
+
+Too many projects drown in technical bikeshedding before finding product-market fit.
+
+Technology is a vehicle, not the destination.
+
+Pick reliable tools. Ship value. Iterate with real user feedback.","","AbiodunBuilds","2026-12-04 09:00"
+"Business owners: Take a look at your website on your phone right now.
+
+Ask yourself these 3 honest questions:
+
+1. In 5 seconds, can a stranger tell *exactly* what you offer?
+2. Can they find proof (testimonials, reviews, client results) easily?
+3. Can they contact or purchase in under 2 clicks?
+
+If the answer to any of these is NO, you are actively leaking money every day.
+
+Your website isn’t an expense—it’s an investment that should generate returns.","","AbiodunBuilds","2026-12-04 19:00"
