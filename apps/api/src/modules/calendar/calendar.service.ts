@@ -258,6 +258,7 @@ export class CalendarService {
     }
 
     let publishedExternalId = `post_${Date.now()}`;
+    let publishedStoryPostId: string | null = null;
     let permalinkUrl = `https://facebook.com/${post.page?.pageId || 'Veltrixhq'}/posts/${publishedExternalId}`;
     let isLivePublished = false;
 
@@ -358,9 +359,12 @@ export class CalendarService {
             throw new Error(`Meta Graph API Error: ${result.error.message || 'Failed to upload photo'} (Code: ${result.error.code || 'unknown'})`);
           }
 
+          if (result.post_id) {
+            publishedStoryPostId = result.post_id;
+          }
           if (result.id) {
             publishedExternalId = result.id;
-            permalinkUrl = `https://facebook.com/${publishedExternalId}`;
+            permalinkUrl = result.post_id ? `https://facebook.com/${result.post_id}` : `https://facebook.com/${publishedExternalId}`;
             isLivePublished = true;
           }
         } else {
@@ -385,9 +389,12 @@ export class CalendarService {
             throw new Error(`Meta Graph API Error: ${result.error.message || 'Failed to publish photo'} (Code: ${result.error.code || 'unknown'})`);
           }
 
+          if (result.post_id) {
+            publishedStoryPostId = result.post_id;
+          }
           if (result.id) {
             publishedExternalId = result.id;
-            permalinkUrl = `https://facebook.com/${publishedExternalId}`;
+            permalinkUrl = result.post_id ? `https://facebook.com/${result.post_id}` : `https://facebook.com/${publishedExternalId}`;
             isLivePublished = true;
           }
         }
@@ -417,42 +424,51 @@ export class CalendarService {
       // Automatically post first comment directly to Facebook (Metricool style)
       if (publishedExternalId && decryptedToken) {
         try {
+          // Allow 2.5 seconds for Meta's servers to replicate and index the new post before adding comment
+          await new Promise((resolve) => setTimeout(resolve, 2500));
+
           const firstCommentMessage =
             override?.firstComment ||
             (post as any)?.firstComment ||
             "Want to test our AI assistant live or discuss a high-converting website? Send Veltrix Hub a message on WhatsApp:\nhttps://wa.me/2348087098270";
 
-          // Try standard Meta Graph API comment endpoint with access_token in URL query and form-encoded body
-          const commentEndpoint = `https://graph.facebook.com/v19.0/${publishedExternalId}/comments?access_token=${encodeURIComponent(decryptedToken)}`;
-          const commentRes = await fetch(commentEndpoint, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: new URLSearchParams({ message: firstCommentMessage }).toString()
-          });
+          // Target candidate IDs:
+          // 1. Story Post ID from photo upload (e.g. "pageId_photoId" - most reliable for comments on photo stories)
+          // 2. Full PageId_PostId composite if publishedExternalId is a standalone number
+          // 3. Raw publishedExternalId (for direct /feed text posts)
+          const candidateTargets = [
+            publishedStoryPostId,
+            publishedExternalId.includes('_') ? publishedExternalId : `${post.page?.pageId || '112352500475248'}_${publishedExternalId}`,
+            publishedExternalId
+          ].filter(Boolean) as string[];
 
-          const commentResult = (await commentRes.json()) as any;
-          if (commentResult.error) {
-            console.warn('[Meta First Comment Error]', commentResult.error.message || commentResult.error);
-            // Also try with simple post ID if publishedExternalId has pageId_postId format
-            if (publishedExternalId.includes('_')) {
-              const simpleId = publishedExternalId.split('_')[1];
-              const retryRes = await fetch(
-                `https://graph.facebook.com/v19.0/${simpleId}/comments?access_token=${encodeURIComponent(decryptedToken)}`,
-                {
-                  method: 'POST',
-                  headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                  body: new URLSearchParams({ message: firstCommentMessage }).toString()
-                }
-              );
-              const retryResult = (await retryRes.json()) as any;
-              if (retryResult.id) {
-                console.info(`[Meta Direct Publish] First comment posted with simple ID ${simpleId}:`, retryResult.id);
-              } else {
-                console.warn('[Meta First Comment Retry Warning]', retryResult.error?.message || retryResult.error);
+          const uniqueTargets = [...new Set(candidateTargets)];
+
+          let commentPosted = false;
+          for (const targetId of uniqueTargets) {
+            if (commentPosted) break;
+            try {
+              const commentEndpoint = `https://graph.facebook.com/v19.0/${targetId}/comments`;
+              const commentRes = await fetch(commentEndpoint, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: new URLSearchParams({
+                  message: firstCommentMessage,
+                  access_token: decryptedToken
+                }).toString()
+              });
+
+              const commentResult = (await commentRes.json()) as any;
+              if (commentResult.id) {
+                console.info(`[Meta Direct Publish] First comment automatically posted to ${targetId}:`, commentResult.id);
+                commentPosted = true;
+                break;
+              } else if (commentResult.error) {
+                console.warn(`[Meta First Comment Warning] Attempt on target ${targetId} returned error:`, commentResult.error.message || commentResult.error);
               }
+            } catch (err: any) {
+              console.warn(`[Meta First Comment Warning] Network error on target ${targetId}:`, err.message);
             }
-          } else if (commentResult.id) {
-            console.info(`[Meta Direct Publish] First comment automatically posted to ${publishedExternalId}:`, commentResult.id);
           }
         } catch (commentErr) {
           console.warn('[Meta First Comment Warning] Could not post first comment:', commentErr);
