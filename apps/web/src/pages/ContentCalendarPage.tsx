@@ -477,7 +477,7 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
   },
   // --- 2026-11-19 MORNING TWITTER ---
   {
-    id: 'sched_2026_11_19_x_am',
+    id: 'sched_2026_12_17_x_am',
     socialPageId: 'AbiodunBuilds',
     channel: 'TWITTER',
     slotType: 'MORNING',
@@ -486,7 +486,7 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     carePillars: "Curiosity + Alignment",
     caption: "Most developers focus on *how* to code.\nI focus on *why* that code needs to exist.\n\nHi, I\u2019m Abiodun \ud83d\udc4b Frontend Engineer (React/TypeScript/UX).\n\nOver 28 days, I'm documenting practical React patterns & building UI that converts.\n\nDrop a comment to connect! \ud83d\ude80",
     mediaUrls: [],
-    scheduledFor: '2026-11-19T08:00:00.000Z',
+    scheduledFor: '2026-12-17T08:00:00.000Z',
     status: 'SCHEDULED',
     page: { pageName: 'Abiodun Builds (@AbiodunBuilds)', pageId: 'AbiodunBuilds' }
   },
@@ -508,7 +508,7 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
   },
   // --- 2026-11-19 EVENING TWITTER ---
   {
-    id: 'sched_2026_11_19_x_pm',
+    id: 'sched_2026_12_17_x_pm',
     socialPageId: 'AbiodunBuilds',
     channel: 'TWITTER',
     slotType: 'EVENING',
@@ -517,7 +517,7 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     carePillars: "Reliability + Emotion",
     caption: "Writing code is easy. Understanding *why* you write it takes maturity.\n\nJunior: \"How do I build this?\"\nSenior:\n1. Who needs this?\n2. What bottleneck does it solve?\n3. What if it fails in prod?\n\nContext > code.\n\nWhich question do you ask first? \ud83d\udcac",
     mediaUrls: [],
-    scheduledFor: '2026-11-19T18:00:00.000Z',
+    scheduledFor: '2026-12-17T18:00:00.000Z',
     status: 'SCHEDULED',
     page: { pageName: 'Abiodun Builds (@AbiodunBuilds)', pageId: 'AbiodunBuilds' }
   },
@@ -539,7 +539,7 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
   },
   // --- 2026-11-20 MORNING TWITTER ---
   {
-    id: 'sched_2026_11_20_x_am',
+    id: 'sched_2026_12_18_x_am',
     socialPageId: 'AbiodunBuilds',
     channel: 'TWITTER',
     slotType: 'MORNING',
@@ -548,7 +548,7 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     carePillars: "Curiosity + Alignment",
     caption: "If a user needs instructions to navigate your app, your frontend failed.\n\nGreat frontend engineering:\n\u2022 Loads fast on 3G\n\u2022 Zero cognitive load\n\u2022 Accessible to all\n\u2022 Graceful error states\n\nPretty UI without intuitive UX is just decoration \ud83d\udccc",
     mediaUrls: [],
-    scheduledFor: '2026-11-20T08:00:00.000Z',
+    scheduledFor: '2026-12-18T08:00:00.000Z',
     status: 'SCHEDULED',
     page: { pageName: 'Abiodun Builds (@AbiodunBuilds)', pageId: 'AbiodunBuilds' }
   },
@@ -570,7 +570,7 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
   },
   // --- 2026-11-20 EVENING TWITTER ---
   {
-    id: 'sched_2026_11_20_x_pm',
+    id: 'sched_2026_12_18_x_pm',
     socialPageId: 'AbiodunBuilds',
     channel: 'TWITTER',
     slotType: 'EVENING',
@@ -579,7 +579,7 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     carePillars: "Reliability + Emotion",
     caption: "Customers aren't abandoning your website because of price.\nThey leave because your UX is confusing.\n\nIn 3 seconds, users decide:\n\u2022 What do you do?\n\u2022 Where is pricing?\n\u2022 Can I trust you?\n\nIf a competitor answers in 3s and you take 30s, they win. \ud83d\ude80",
     mediaUrls: [],
-    scheduledFor: '2026-11-20T18:00:00.000Z',
+    scheduledFor: '2026-12-18T18:00:00.000Z',
     status: 'SCHEDULED',
     page: { pageName: 'Abiodun Builds (@AbiodunBuilds)', pageId: 'AbiodunBuilds' }
   },
@@ -601,7 +601,7 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
   },
   // --- 2026-11-21 MORNING TWITTER ---
   {
-    id: 'sched_2026_11_21_x_am',
+    id: 'sched_2026_12_19_x_am',
     socialPageId: 'AbiodunBuilds',
     channel: 'TWITTER',
     slotType: 'MORNING',
@@ -610,7 +610,7 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     carePillars: "Curiosity + Alignment",
     caption: "Stop using `useEffect` for derived values! It causes redundant re-renders.\n\n\u274c Bad:\nuseEffect(() => setFull(`${first} ${last}`), [first, last]);\n\n\u2705 Good:\nconst full = `${first} ${last}`;\n\nCompute in render. Less state = fewer bugs \ud83d\udccc",
     mediaUrls: [],
-    scheduledFor: '2026-11-21T08:00:00.000Z',
+    scheduledFor: '2026-12-19T08:00:00.000Z',
     status: 'SCHEDULED',
     page: { pageName: 'Abiodun Builds (@AbiodunBuilds)', pageId: 'AbiodunBuilds' }
   },
@@ -632,7 +632,7 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
   },
   // --- 2026-11-21 EVENING TWITTER ---
   {
-    id: 'sched_2026_11_21_x_pm',
+    id: 'sched_2026_12_19_x_pm',
     socialPageId: 'AbiodunBuilds',
     channel: 'TWITTER',
     slotType: 'EVENING',
@@ -641,7 +641,7 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     carePillars: "Reliability + Emotion",
     caption: "Watching 30 hours of tutorials won't make you a developer.\nBuilding 1 messy project from scratch will.\n\nTutorials give the illusion of competence without the pain of debugging.\n\nClose YouTube. Open your IDE. Break things. Fix them.\n\nWhat are you building right now? \ud83d\udc47",
     mediaUrls: [],
-    scheduledFor: '2026-11-21T18:00:00.000Z',
+    scheduledFor: '2026-12-19T18:00:00.000Z',
     status: 'SCHEDULED',
     page: { pageName: 'Abiodun Builds (@AbiodunBuilds)', pageId: 'AbiodunBuilds' }
   },
@@ -656,14 +656,14 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     carePillars: "Curiosity + Alignment",
     caption: "A business website without client testimonials is like a restaurant with no customers inside. Social proof creates trust.",
     firstComment: "We build high-converting websites featuring verified reviews and portfolio case studies. Message our team:\nhttps://wa.me/2348087098270",
-    mediaUrls: ["/designs/morning/red-card-nov23.jpg"],
+    mediaUrls: ["/designs/morning/red-card-nov24.jpg"],
     scheduledFor: '2026-11-22T08:00:00.000Z',
     status: 'SCHEDULED',
     page: { pageName: 'Veltrixhq', pageId: '112352500475248' }
   },
   // --- 2026-11-22 MORNING TWITTER ---
   {
-    id: 'sched_2026_11_22_x_am',
+    id: 'sched_2026_12_20_x_am',
     socialPageId: 'AbiodunBuilds',
     channel: 'TWITTER',
     slotType: 'MORNING',
@@ -672,7 +672,7 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     carePillars: "Curiosity + Alignment",
     caption: "The most dangerous assumption in tech:\n\"It works for me, so it's fine.\"\n\nYou test on a MacBook Pro with high-speed WiFi.\nYour user is on a $120 phone with 2 bars of 3G.\n\nAlways throttle your network in DevTools.\nPerformance is UX. Optimize early \ud83d\udccc",
     mediaUrls: [],
-    scheduledFor: '2026-11-22T08:00:00.000Z',
+    scheduledFor: '2026-12-20T08:00:00.000Z',
     status: 'SCHEDULED',
     page: { pageName: 'Abiodun Builds (@AbiodunBuilds)', pageId: 'AbiodunBuilds' }
   },
@@ -687,14 +687,14 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     carePillars: "Reliability + Alignment",
     caption: "If you were a first-time visitor, would you trust your own business website?\n\nTake an objective look at your digital presence from the viewpoint of someone who has never heard of you.\n\nDoes your website load within three seconds, or does it hang on a blank screen?\nAre your contact phone numbers, email addresses, and registered CAC details clearly displayed?\nDoes the checkout button take them to a secure, branded payment portal or an ambiguous personal account?\n\nFirst impressions on the internet happen in milliseconds. When doubt enters a customer's mind, they do not ask for clarification; they click the back button.\n\nCredibility is built intentionally through clear typography, fast load speeds, secure certificates, and transparent company policies.\n\nAt Veltrix Hub, we design corporate web platforms that immediately establish institutional authority and position your brand as the obvious choice in your market.",
     firstComment: "Get an executive digital presence that earns customer confidence instantly. Message Veltrix Hub on WhatsApp:\nhttps://wa.me/2348087098270",
-    mediaUrls: ["/designs/executive/flyer-nov23-first-time-visitor.jpg"],
+    mediaUrls: ["/designs/executive/flyer-nov24-first-time-visitor.jpg"],
     scheduledFor: '2026-11-22T18:00:00.000Z',
     status: 'SCHEDULED',
     page: { pageName: 'Veltrixhq', pageId: '112352500475248' }
   },
   // --- 2026-11-22 EVENING TWITTER ---
   {
-    id: 'sched_2026_11_22_x_pm',
+    id: 'sched_2026_12_20_x_pm',
     socialPageId: 'AbiodunBuilds',
     channel: 'TWITTER',
     slotType: 'EVENING',
@@ -703,7 +703,7 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     carePillars: "Reliability + Emotion",
     caption: "The #1 conversion killer on 90% of business sites:\n\nNo clear CTA above the fold.\n\nIf users must scroll past paragraphs of text just to figure out how to book or buy, you lost them.\n\nPut one clear action button front and center.\n\nSimplicity sells \ud83d\ude80",
     mediaUrls: [],
-    scheduledFor: '2026-11-22T18:00:00.000Z',
+    scheduledFor: '2026-12-20T18:00:00.000Z',
     status: 'SCHEDULED',
     page: { pageName: 'Abiodun Builds (@AbiodunBuilds)', pageId: 'AbiodunBuilds' }
   },
@@ -718,14 +718,14 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     carePillars: "Curiosity + Alignment",
     caption: "If a customer has to pinch and zoom to read your price list on their phone, they have already decided not to buy.",
     firstComment: "We build clean, responsive mobile web platforms with direct WhatsApp checkout. Audit your mobile site with Veltrix Hub:\nhttps://wa.me/2348087098270",
-    mediaUrls: ["/designs/morning/red-card-nov23.jpg"],
+    mediaUrls: ["/designs/morning/red-card-nov24.jpg"],
     scheduledFor: '2026-11-23T08:00:00.000Z',
     status: 'SCHEDULED',
     page: { pageName: 'Veltrixhq', pageId: '112352500475248' }
   },
   // --- 2026-11-23 MORNING TWITTER ---
   {
-    id: 'sched_2026_11_23_x_am',
+    id: 'sched_2026_12_21_x_am',
     socialPageId: 'AbiodunBuilds',
     channel: 'TWITTER',
     slotType: 'MORNING',
@@ -734,7 +734,7 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     carePillars: "Curiosity + Alignment",
     caption: "TypeScript isn't just about catching typos.\nIt's living documentation and refactoring insurance.\n\nWhen you return to code 6 months later:\n\u2022 Strict types explain intent\n\u2022 Autocomplete prevents guesswork\n\u2022 Renaming props won't break prod\n\nWrite strict TS today \ud83d\udccc",
     mediaUrls: [],
-    scheduledFor: '2026-11-23T08:00:00.000Z',
+    scheduledFor: '2026-12-21T08:00:00.000Z',
     status: 'SCHEDULED',
     page: { pageName: 'Abiodun Builds (@AbiodunBuilds)', pageId: 'AbiodunBuilds' }
   },
@@ -749,14 +749,14 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     carePillars: "Reliability + Alignment",
     caption: "A cheap website can become costly if customers struggle to use it.\n\nWhen hiring a web designer, cutting corners on price often looks like a smart expense saving. But a website is not a stationary expense. It is your primary digital storefront.\n\nHere is what a poorly built website actually costs you:\n\n1. Lost clients from broken mobile layouts. If buttons overlap or navigation menus refuse to close on an iPhone or Android, visitors leave immediately. You rarely see the sales you lost.\n2. Security vulnerabilities and zero backups. Cheap setups often skip SSL configuration, database backups, and software updates, leaving your business exposed to downtime and crashes.\n3. Rebuild expenses. Fixing structural code flaws, slow load speeds, and bad navigation six months down the line usually costs twice as much as building it properly from the start.\n\nBuild your business infrastructure on solid foundations. At Veltrix Hub, we engineer custom, robust web platforms designed for speed, security, and measurable client acquisition.",
     firstComment: "Do not let poor code cost you ready buyers. Talk to our engineering team on WhatsApp:\nhttps://wa.me/2348087098270",
-    mediaUrls: ["/designs/executive/flyer-nov23-cheap-website-costly.jpg"],
+    mediaUrls: ["/designs/executive/flyer-nov24-cheap-website-costly.jpg"],
     scheduledFor: '2026-11-23T18:00:00.000Z',
     status: 'SCHEDULED',
     page: { pageName: 'Veltrixhq', pageId: '112352500475248' }
   },
   // --- 2026-11-23 EVENING TWITTER ---
   {
-    id: 'sched_2026_11_23_x_pm',
+    id: 'sched_2026_12_21_x_pm',
     socialPageId: 'AbiodunBuilds',
     channel: 'TWITTER',
     slotType: 'EVENING',
@@ -765,7 +765,7 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     carePillars: "Reliability + Emotion",
     caption: "Stop collecting certificates like Pok\u00e9mon cards.\n\nBuild 2 production-grade apps instead of 15 tutorial clones:\n\u2022 Real database & auth\n\u2022 Responsive UI & error states\n\u2022 Live deployed URL\n\nHiring managers want problem-solvers, not tutorial copiers \ud83d\udcac",
     mediaUrls: [],
-    scheduledFor: '2026-11-23T18:00:00.000Z',
+    scheduledFor: '2026-12-21T18:00:00.000Z',
     status: 'SCHEDULED',
     page: { pageName: 'Abiodun Builds (@AbiodunBuilds)', pageId: 'AbiodunBuilds' }
   },
@@ -787,7 +787,7 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
   },
   // --- 2026-11-24 MORNING TWITTER ---
   {
-    id: 'sched_2026_11_24_x_am',
+    id: 'sched_2026_12_22_x_am',
     socialPageId: 'AbiodunBuilds',
     channel: 'TWITTER',
     slotType: 'MORNING',
@@ -796,7 +796,7 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     carePillars: "Curiosity + Alignment",
     caption: "Nobody cares how clean your code is if your site takes 7 seconds to load.\n\nA 1-second delay cuts conversions by 7%.\n\nQuick wins:\n1. Compress images to WebP/AVIF\n2. Lazy load below the fold\n3. Code-split heavy routes\n\nSpeed is direct revenue optimization \ud83d\udccc",
     mediaUrls: [],
-    scheduledFor: '2026-11-24T08:00:00.000Z',
+    scheduledFor: '2026-12-22T08:00:00.000Z',
     status: 'SCHEDULED',
     page: { pageName: 'Abiodun Builds (@AbiodunBuilds)', pageId: 'AbiodunBuilds' }
   },
@@ -818,7 +818,7 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
   },
   // --- 2026-11-24 EVENING TWITTER ---
   {
-    id: 'sched_2026_11_24_x_pm',
+    id: 'sched_2026_12_22_x_pm',
     socialPageId: 'AbiodunBuilds',
     channel: 'TWITTER',
     slotType: 'EVENING',
@@ -827,7 +827,7 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     carePillars: "Reliability + Emotion",
     caption: "If you could travel back to Day 1 of your software engineering journey, what ONE piece of advice would you give yourself?\n\nMine: Learn how the browser works before memorizing 5 different frameworks.\n\nWhat's yours? Drop it below! \ud83d\udc47",
     mediaUrls: [],
-    scheduledFor: '2026-11-24T18:00:00.000Z',
+    scheduledFor: '2026-12-22T18:00:00.000Z',
     status: 'SCHEDULED',
     page: { pageName: 'Abiodun Builds (@AbiodunBuilds)', pageId: 'AbiodunBuilds' }
   },
@@ -849,7 +849,7 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
   },
   // --- 2026-11-25 MORNING TWITTER ---
   {
-    id: 'sched_2026_11_25_x_am',
+    id: 'sched_2026_12_23_x_am',
     socialPageId: 'AbiodunBuilds',
     channel: 'TWITTER',
     slotType: 'MORNING',
@@ -858,7 +858,7 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     carePillars: "Curiosity + Alignment",
     caption: "Senior engineers aren't walking documentation libraries.\n\nThey know when NOT to write code:\n\u2022 Junior: Builds 500 lines of custom logic\n\u2022 Senior: Solves it with 3 lines of CSS or existing browser API\n\nThe best code is the code you never had to write \ud83d\ude80",
     mediaUrls: [],
-    scheduledFor: '2026-11-25T08:00:00.000Z',
+    scheduledFor: '2026-12-23T08:00:00.000Z',
     status: 'SCHEDULED',
     page: { pageName: 'Abiodun Builds (@AbiodunBuilds)', pageId: 'AbiodunBuilds' }
   },
@@ -880,7 +880,7 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
   },
   // --- 2026-11-25 EVENING TWITTER ---
   {
-    id: 'sched_2026_11_25_x_pm',
+    id: 'sched_2026_12_23_x_pm',
     socialPageId: 'AbiodunBuilds',
     channel: 'TWITTER',
     slotType: 'EVENING',
@@ -889,7 +889,7 @@ const INITIAL_CURATED_SCHEDULED: ScheduledPost[] = [
     carePillars: "Reliability + Emotion",
     caption: "Week 1 of 4 completed! \ud83d\ude80\n\nMy biggest takeaway:\nCode is only a tool. The real value is solving human and business bottlenecks.\n\nThank you to everyone connecting and replying this week!\n\nWhat was your biggest tech win this week? Drop it below! \ud83d\udcac",
     mediaUrls: [],
-    scheduledFor: '2026-11-25T18:00:00.000Z',
+    scheduledFor: '2026-12-23T18:00:00.000Z',
     status: 'SCHEDULED',
     page: { pageName: 'Abiodun Builds (@AbiodunBuilds)', pageId: 'AbiodunBuilds' }
   },
@@ -2238,7 +2238,7 @@ export const ContentCalendarPage: React.FC = () => {
   // Cache key v15 (strictly real posts, deduplicated, zero dummy data)
   const [scheduledPosts, setScheduledPosts] = useState<ScheduledPost[]>(() => {
     if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('veltrix_scheduled_posts_v23');
+      const saved = localStorage.getItem('veltrix_scheduled_posts_v24');
       if (saved) {
         try {
           const parsed = JSON.parse(saved);
@@ -2255,7 +2255,7 @@ export const ContentCalendarPage: React.FC = () => {
 
   const [publishedPosts, setPublishedPosts] = useState<PublishedPost[]>(() => {
     if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('veltrix_published_posts_v23');
+      const saved = localStorage.getItem('veltrix_published_posts_v24');
       if (saved) {
         try {
           const parsed = JSON.parse(saved);
@@ -2429,7 +2429,7 @@ export const ContentCalendarPage: React.FC = () => {
   useEffect(() => {
     if (typeof window !== 'undefined') {
       try {
-        localStorage.setItem('veltrix_scheduled_posts_v23', JSON.stringify(scheduledPosts));
+        localStorage.setItem('veltrix_scheduled_posts_v24', JSON.stringify(scheduledPosts));
       } catch (err) {
         console.warn('Storage quota exceeded, preserving in-memory state:', err);
       }
@@ -2439,7 +2439,7 @@ export const ContentCalendarPage: React.FC = () => {
   useEffect(() => {
     if (typeof window !== 'undefined') {
       try {
-        localStorage.setItem('veltrix_published_posts_v23', JSON.stringify(publishedPosts));
+        localStorage.setItem('veltrix_published_posts_v24', JSON.stringify(publishedPosts));
       } catch (err) {
         console.warn('Storage quota exceeded, preserving in-memory state:', err);
       }
@@ -3097,8 +3097,8 @@ export const ContentCalendarPage: React.FC = () => {
       }
       setScheduledPosts(INITIAL_CURATED_SCHEDULED);
       setPublishedPosts(INITIAL_HISTORICAL_PUBLISHED);
-      localStorage.setItem('veltrix_scheduled_posts_v23', JSON.stringify(INITIAL_CURATED_SCHEDULED));
-      localStorage.setItem('veltrix_published_posts_v23', JSON.stringify(INITIAL_HISTORICAL_PUBLISHED));
+      localStorage.setItem('veltrix_scheduled_posts_v24', JSON.stringify(INITIAL_CURATED_SCHEDULED));
+      localStorage.setItem('veltrix_published_posts_v24', JSON.stringify(INITIAL_HISTORICAL_PUBLISHED));
       setActionSuccess('Content calendar reloaded cleanly!');
       setTimeout(() => setActionSuccess(null), 3000);
     }
