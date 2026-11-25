@@ -1,140 +1,83 @@
 "Text","Image URL","Tags","Posting Time"
-"A frontend engineer who understands database modeling is 3x more lethal than one who doesn't.
+"A frontend engineer who understands backend data modeling is 3x more valuable.
 
-You don't need to be a DBA or write complex PostgreSQL migrations every day.
+When you understand:
+• API pagination costs
+• DB query indexing
+• Cache headers (ETag, max-age)
 
-But understanding:
-• One-to-many vs Many-to-many relationships
-• How database indexing impacts API latency
-• Pagination strategies (Cursor vs Offset)
-• Caching headers (`Cache-Control`, `ETags`)
-
-Empowers you to collaborate effectively with backend teams and design seamless, ultra-fast client-side state.
-
-Connect the dots across the stack.
-
-Save this reminder 📌","","AbiodunBuilds","2026-12-10 09:00"
+You build lighter, faster apps that backend devs love 📌","","AbiodunBuilds","2026-12-16 09:00"
 "Your code is not your identity.
 
-Detach your ego from your Pull Requests.
+Detach your ego from your pull requests:
+• PR comments are improvements, not personal attacks
+• Welcome critique with curiosity
+• Be happy when someone points out an edge case
 
-Early in your career, code review comments can feel like personal attacks:
-• ""Why did they suggest rewriting this?""
-• ""Did they not see how clever my one-liner was?""
-
-Maturity is realizing that feedback is a free masterclass.
-
-Another engineer spotted an edge case you missed, a performance leak, or a simpler API.
-
-The goal is not defending your code. The goal is shipping the best possible product.","","AbiodunBuilds","2026-12-10 19:00"
+Growth starts where defensiveness ends 🤝","","AbiodunBuilds","2026-12-16 19:00"
 "AI won't replace software engineers.
+Engineers who leverage AI will replace those who don't.
 
-Engineers who use AI with deep technical judgment will replace those who don’t.
+Use AI to:
+• Generate boilerplate & regex
+• Brainstorm edge cases
+• Write unit tests
 
-Generating code with LLMs is easy.
-
-The real engineering skill is:
-• Knowing when the AI generated hallucinated or deprecated APIs
-• Spotting subtle security flaws and XSS vulnerabilities
-• Refactoring bloated boilerplate into maintainable architecture
-• Understanding the system boundaries that AI can't see
-
-AI is a 10x multiplier on your existing fundamentals.
-10x times 0 fundamentals is still 0.
-
-Invest in the foundation.","","AbiodunBuilds","2026-12-11 09:00"
+Keep the architecture & problem-solving in human hands 🚀","","AbiodunBuilds","2026-12-17 09:00"
 "An online brochure costs money.
-
 A conversion-optimized website prints money.
 
-What makes the difference?
+If your website doesn't capture leads or make booking frictionless, it's an expense, not an asset.
 
-Brochure site:
-• Generic text: ""We provide quality services""
-• Complicated multi-step contact forms
-• Hidden pricing and vague offerings
+Transform your web presence into your best salesperson 🚀","","AbiodunBuilds","2026-12-17 19:00"
+"How to master a new framework in 48 hours:
 
-Conversion-optimized site:
-• Laser-sharp value proposition above the fold
-• Proof: Case studies, numbers, social proof
-• Frictionless next step (1-click WhatsApp, direct booking, or instant checkout)
+1. Understand its mental model
+2. Learn how it handles state & routing
+3. Inspect its reactivity system
+4. Build a CRUD app without tutorials
 
-Is your website an expense or an asset?","","AbiodunBuilds","2026-12-11 19:00"
-"How to learn a new framework without getting overwhelmed by 300 pages of documentation:
+Understand the design philosophy first 📌","","AbiodunBuilds","2026-12-18 09:00"
+"Building my network on tech X! 🌐
 
-Don't start by memorizing every API.
+I'm looking to connect with:
+• React & TypeScript developers
+• Founders scaling web products
+• Engineering hiring managers
 
-Ask 4 core questions:
-1. What exact problem was this built to solve that existing tools couldn't?
-2. How does it handle data flow and reactivity?
-3. How does it manage server vs client rendering?
-4. What are its architectural limitations and trade-offs?
-
-Once you understand the *philosophy* of a tool, learning its syntax takes 48 hours.
-
-Save this learning framework 📌","","AbiodunBuilds","2026-12-12 09:00"
-"Building my network on tech X.
-
-I’m looking to connect with:
-• Frontend & Full-stack Engineers (React, TypeScript, Next.js)
-• Engineering Managers & Tech Leads
-• Startup Founders building ambitious digital products
-• Technical Recruiters sourcing top engineering talent
-
-I share practical frontend lessons, clean architecture breakdowns, and product insights daily.
-
-If that’s your world, drop a comment below with what you’re currently building. Let's connect!","","AbiodunBuilds","2026-12-12 19:00"
+If you build high-performance software, drop a comment or follow. Let's connect! 👋","","AbiodunBuilds","2026-12-18 19:00"
 "A great code review shouldn't feel like an interrogation.
 
-It should feel like collaborative pair programming.
+Healthy PR habits:
+• Praise clever solutions
+• Explain *why*, not just *what*
+• Label comments: [Nit], [Question], [Blocking]
 
-Bad review comments:
-❌ ""Why did you do it this way? This is bad.""
-❌ ""Rewrite this.""
+Code reviews are mentorship opportunities, not gatekeeping 📌","","AbiodunBuilds","2026-12-19 09:00"
+"Building your entire business on Instagram or TikTok is building on rented land.
 
-Great review comments:
-✅ ""Have we considered how this behaves if the array is empty?""
-✅ ""Extracting this logic into a custom hook might make unit testing easier. What do you think?""
+One algorithm tweak or account suspension can wipe out your pipeline.
 
-Ask guiding questions instead of making demands.
+Own your platform:
+• A fast, dedicated website
+• An owned email list
 
-Code reviews build team culture just as much as they build software.","","AbiodunBuilds","2026-12-13 09:00"
-"Building your entire business on Instagram or TikTok is building your house on rented land.
+Own your customer relationships 🚀","","AbiodunBuilds","2026-12-19 19:00"
+"Frontend developers: Never hide secrets in client code.
 
-Social media is phenomenal for discovery and attention.
+Any `NEXT_PUBLIC_` or Vite `VITE_` env variable is visible to anyone opening Chrome DevTools.
 
-But you don't own:
-• The algorithm
-• Your follower reach
-• Your customer list
-• The checkout experience
+• Never put secret API keys in frontend
+• Always validate forms on backend too
 
-One algorithm tweak or account suspension can cripple your revenue overnight.
-
-Use social media to capture attention. Direct that attention to an owned website and email list that you control 100%.","","AbiodunBuilds","2026-12-13 19:00"
-"Frontend developers: Never assume that hiding something in the UI makes it secure.
-
-Disabling a 'Submit' button with `disabled={!isAdmin}` doesn't stop anyone from opening DevTools or sending a raw POST request with Postman.
-
-Frontend security rules every dev must know:
-• Client validation is for UX; Server validation is for SECURITY.
-• Never store sensitive API secrets in frontend `.env` bundles.
-• Sanitize user input to eliminate Cross-Site Scripting (XSS).
-• Use `HttpOnly`, `SameSite` cookies for session tokens.
-
-Never trust data simply because it came from your own frontend.
-
-Save this security reminder 📌","","AbiodunBuilds","2026-12-14 09:00"
+Frontend security matters 📌","","AbiodunBuilds","2026-12-20 09:00"
 "The biggest mistake in professional networking:
 
-Only reaching out when you need a job.
+Only reaching out when you desperately need a job.
 
-True networking is about planting seeds before you need shade:
-• Celebrate other people’s project launches
-• Share thoughtful feedback on their work
-• Answer questions in public communities
-• Introduce two people who could help each other
+Build authentic relationships beforehand:
+• Share your learnings publicly
+• Help others solve bugs
+• Celebrate others' wins
 
-Give value with zero immediate expectation.
-
-When you treat networking as genuine relationship building, opportunities find you naturally.","","AbiodunBuilds","2026-12-14 19:00"
+Opportunities flow to generous builders 🤝","","AbiodunBuilds","2026-12-20 19:00"

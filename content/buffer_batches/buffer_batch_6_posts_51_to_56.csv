@@ -1,79 +1,52 @@
 "Text","Image URL","Tags","Posting Time"
-"Software development in reality:
+"Software engineering in reality:
 
-30 minutes writing new code.
-2.5 hours figuring out why the existing code behaves unexpectedly.
+• 30 mins: Writing new code
+• 2 hours: Reading documentation
+• 3 hours: Debugging why one prop is undefined
 
-And that’s completely normal.
+Don't feel like an imposter. That's what real engineering looks like!
 
-Your value as an engineer is never measured by:
-• Lines of code written
-• How fast your fingers type
-• How many files you touched
-
-Your value is measured by the quality, reliability, and business impact of the problems you resolve.
-
-Some of the most valuable days in engineering end with a net negative lines of code in your Git diff.","","AbiodunBuilds","2026-12-15 09:00"
+Who can relate? 😂💬","","AbiodunBuilds","2026-12-21 09:00"
 "To business owners and founders:
 
-If you could fix ONE thing about your company’s website this week, what would it be?
+If you could fix ONE thing on your website by tomorrow morning without spending a dime, what would it be?
 
-1. Increasing the conversion rate (more enquiries & sales)
-2. Making it look modern and credible to high-end clients
-3. Fixing mobile responsiveness and slow loading speed
-4. Automating customer onboarding and appointment booking
+Speed? Mobile layout? Higher checkout conversion?
 
-What’s your current #1 bottleneck?
+Drop your site link or bottleneck below for quick feedback! 👇","","AbiodunBuilds","2026-12-21 19:00"
+"Getting code to work is step one.
+Getting code to be maintainable is what makes you senior.
 
-Reply with your site or drop a comment below. I’ll give you a free, honest UX & performance review 👇","","AbiodunBuilds","2026-12-15 19:00"
-"Getting code to work is amateur hour.
+Before opening a PR, ask:
+""Can someone with zero context understand this in 5 minutes?""
 
-Getting code to be easily maintainable and extensible is professional engineering.
+If the answer is no, simplify.
 
-Before shipping, ask the Maintainability Test:
-• Are variable and function names self-descriptive?
-• Does each component have a single, well-defined responsibility?
-• Are complex business rules encapsulated in pure functions or custom hooks?
-• Are errors caught where they can be properly recovered?
+Write code for humans first, computers second 📌","","AbiodunBuilds","2026-12-22 09:00"
+"To tech recruiters & engineering managers:
 
-Fast shipping wins hackathons. Maintainable architecture wins long-term businesses.
+When reviewing frontend candidate portfolios, what is your biggest instant RED flag?
 
-Save this reminder 📌","","AbiodunBuilds","2026-12-16 09:00"
-"To engineering recruiters & hiring managers:
+Broken live links? Unresponsive mobile layouts? Zero commit history?
 
-When reviewing hundreds of frontend portfolios, what makes you stop scrolling and say: ""We need to interview this person""?
+Help the developer community level up below! 💬","","AbiodunBuilds","2026-12-22 19:00"
+"My 6-step framework for shipping products:
 
-Is it:
-• A live, deployed product solving a real-world problem?
-• Clear write-ups explaining technical architecture & trade-offs?
-• Deep attention to detail in UX, animations, and accessibility?
-• High-quality open-source contributions?
+1. Clarify user outcome
+2. Map data models & APIs
+3. Design responsive mobile UI
+4. Implement resilient state logic
+5. Optimize performance & SEO
+6. Measure user conversion
 
-Would love to hear what truly moves the needle in 2026 👇","","AbiodunBuilds","2026-12-16 19:00"
-"My 6-step framework for building world-class digital products:
-
-1. Understand the real problem (not just the surface request).
-2. Understand the human user (their constraints, habits, and pains).
-3. Select simple, reliable tools (avoid trend-chasing).
-4. Build the core loop first (cut every non-essential feature).
-5. Optimize for speed, accessibility, and edge-case errors.
-6. Iterate based on real behavioral data, not developer opinions.
-
-Great software isn’t built with the most lines of code.
-It’s built with the highest clarity of purpose.
-
-Bookmark this blueprint 📌","","AbiodunBuilds","2026-12-17 09:00"
+Ship fast, ship resilient 📌","","AbiodunBuilds","2026-12-23 09:00"
 "28 days. 56 posts. One mission:
 
-To bridge frontend engineering with real-world business impact.
+To bridge technical engineering with real business conversion.
 
-If you’ve been following along, thank you.
+Thank you to everyone who followed, commented, and shared!
 
-Here is my ongoing commitment:
-• Building intuitive, high-performance web products with React & TypeScript
-• Sharing transparent lessons, clean architecture, and practical tips
-• Collaborating with founders, engineering teams, and visionary leaders
+Need a high-converting web app or performance audit? DM me or let's connect!
 
-If you're hiring, building a new product, or looking for an engineer who treats your business like their own:
-
-My DMs are open. Let’s build something extraordinary together 🚀","","AbiodunBuilds","2026-12-17 19:00"
+Onward to the next build 🚀","","AbiodunBuilds","2026-12-23 19:00"

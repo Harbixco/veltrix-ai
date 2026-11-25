@@ -1,139 +1,81 @@
 "Text","Image URL","Tags","Posting Time"
-"A great frontend isn’t just how your app looks when the backend works perfectly.
+"A great frontend isn’t just how your app looks when things go right.
 
-It’s how it behaves when the backend catches fire.
+It’s how it behaves when things go wrong:
+• Actionable error messages
+• Retry buttons on failed API calls
+• Offline indicators
 
-Every production frontend must gracefully handle:
-• Network timeouts & offline mode
-• 401 Unauthorized token expirations
-• 429 Rate limiting backoffs
-• 500 Server error retry states with clear user messaging
-• Skeleton loading screens (never jarring layout shifts)
+Never leave users on a blank screen. Design resilient UI 📌","","AbiodunBuilds","2026-12-11 09:00"
+"Best advice for frontend devs:
 
-Defensive frontend engineering is what separates fragile prototypes from enterprise-grade software.
+Spend less time watching tutorials and more time reading official documentation.
 
-Save this checklist for your next API integration 📌","","AbiodunBuilds","2026-12-05 09:00"
-"The best advice I can give any frontend developer:
+Tutorials teach someone else's opinion.
+Docs teach how the technology actually works under the hood.
 
-Spend less time talking only to developers.
+Level up your craft. Read the docs 🚀","","AbiodunBuilds","2026-12-11 19:00"
+"Clean code isn't code that looks clever.
+Clean code is code that's effortless to delete.
 
-Talk to:
-• Designers (learn visual hierarchy and usability)
-• Product managers (learn prioritization and roadmaps)
-• Marketers (learn conversion psychology and SEO)
-• Founders (learn unit economics and client acquisition)
+• Clear variable names > clever tricks
+• Pure predictable functions
+• Obvious code paths
 
-When you understand the whole business engine, your code becomes 10x more valuable.
-
-Who outside of tech taught you the most valuable lesson for your career?","","AbiodunBuilds","2026-12-05 19:00"
-"Clean code isn’t code that looks clever.
-
-Clean code is code that makes its intent completely obvious.
-
-Before merging a PR, ask yourself:
-• Can a teammate understand this function without a 30-minute walkthrough?
-• Can I come back to this file in 6 months without being confused?
-• Are variable names descriptive, or did I use single-letter shortcuts?
-
-Always write code as if the person who will maintain it is a violent psychopath who knows where you live.
-
-And remember: that maintainer will usually be future you.
-
-Bookmark this rule 📌","","AbiodunBuilds","2026-12-06 09:00"
+Write code for the next engineer who will maintain it at 2:00 AM 📌","","AbiodunBuilds","2026-12-12 09:00"
 "Small businesses don't need million-dollar custom enterprise software.
 
-They need one frustrating bottleneck solved.
+They need simple, robust workflows:
+• Direct WhatsApp lead capture
+• Instant automated quotes
+• Clean mobile payment checkouts
 
-Often, the highest value tech upgrades are simple:
-• Automating a manual booking or WhatsApp inquiry workflow
-• Replacing a clunky PDF menu with a fast, mobile-friendly web page
-• Setting up automated order confirmations
-• Making their location and operating hours unmistakable
+Automate manual bottlenecks. Save 10+ hours a week 🚀","","AbiodunBuilds","2026-12-12 19:00"
+"Organizing React by `components/`, `hooks/`, `utils/` breaks down at scale.
 
-Don't sell technology. Sell hours saved and friction eliminated.","","AbiodunBuilds","2026-12-06 19:00"
-"Organizing your React components by `components/`, `hooks/`, and `utils/` breaks down after 10 features.
+Organize by feature instead:
+📁 features/auth/
+  ├── components/
+  ├── hooks/
+  └── api/
 
-Switch to a Feature-First architecture:
+When deleting a feature, delete one folder. Modular & scalable 📌","","AbiodunBuilds","2026-12-13 09:00"
+"How to ace frontend interviews without memorizing LeetCode:
 
-src/
-├── features/
-│   ├── auth/
-│   │   ├── components/
-│   │   ├── hooks/
-│   │   └── api/
-│   └── billing/
-│       ├── components/
-│       └── hooks/
-└── shared/ (common buttons, inputs, layouts)
+1. Clarify constraints before coding
+2. Think aloud so they see your problem-solving
+3. Mention trade-offs & edge cases
+4. Ask how their team operates
 
-Why? Code that changes together stays together.
+They hire teammates, not compilers 💬","","AbiodunBuilds","2026-12-13 19:00"
+"Why I chose Frontend Engineering:
 
-When you delete or refactor a feature, you don’t have to hunt across 12 different root directories.
+You touch human psychology and business impact directly.
 
-Save this structure for your next app 📌","","AbiodunBuilds","2026-12-07 09:00"
-"How to ace technical frontend interviews without memorizing 500 LeetCode problems:
+A backend database optimization is great.
+But a seamless UI checkout actually converts visitors into paying customers.
 
-Interviewers care far more about *how you think* than instant perfection.
-
-During a live coding session:
-1. Clarify constraints: Ask about edge cases and data shapes before typing.
-2. Talk out loud: Explain your mental model and trade-offs.
-3. Start simple: Build a working naive solution, then optimize.
-4. Handle failure gracefully: When something breaks, debug systematically instead of panicking.
-
-Demonstrating collaboration and resilience will win you more offers than rote memorization.","","AbiodunBuilds","2026-12-07 19:00"
-"Why I chose Frontend Engineering over everything else:
-
-In frontend, there is zero barrier between the code you write and the human using it.
-
-• A 50ms performance optimization saves users precious seconds.
-• A well-placed form validation error prevents real user anxiety.
-• An accessible component allows someone with a disability to complete their work.
-
-We aren't just manipulating the DOM.
-
-We are designing the bridge between human intention and computer power.
-
-That will never stop being exciting to me.","","AbiodunBuilds","2026-12-08 09:00"
+Frontend is the bridge to the user 🚀","","AbiodunBuilds","2026-12-14 09:00"
 "To startup founders and business owners:
 
-What is the single most repetitive task in your business that drives you crazy?
+What is the single biggest technical or UX bottleneck holding your business back right now?
 
-Is it:
-• Copy-pasting data between spreadsheets and emails?
-• Manually answering the same 5 customer questions on WhatsApp/DM?
-• Chasing clients for invoice approvals?
-• Updating inventory or booking schedules manually?
+Slow website? High bounce rates? Broken mobile checkout?
 
-Most founders lose 10+ hours a week on manual grind that a simple script or automated web portal could eliminate.
+Drop it below. Let’s diagnose it together! 💬","","AbiodunBuilds","2026-12-14 19:00"
+"Never leave users staring at a blank white screen.
 
-Tell me your biggest operational bottleneck below 👇","","AbiodunBuilds","2026-12-08 19:00"
-"Never leave a user staring at a blank white screen.
+Perceived performance matters as much as actual load speed:
+• Use skeleton screens
+• Show optimistic UI updates
+• Disable buttons with loaders on click
 
-Error boundaries are mandatory, not optional.
-
-When an uncaught JavaScript error crashes a component, your user shouldn't face a dead page.
-
-A resilient UI provides:
-1. Clear explanation: ""Something went wrong loading this widget.""
-2. Actionable recovery: A direct ""Try Again"" button that resets state.
-3. Isolation: The rest of the app/navbar continues functioning.
-4. Telemetry: Silent logging to Sentry/monitoring behind the scenes.
-
-Error states are part of your user experience. Design them with care.
-
-Save this for your app resilience checklist 📌","","AbiodunBuilds","2026-12-09 09:00"
+Responsive feedback builds user trust 📌","","AbiodunBuilds","2026-12-15 09:00"
 "You don't need to know everything to be an exceptional software engineer.
 
-You just need two things:
+You just need to know how to:
+1. Read error stacks patiently
+2. Ask precise questions
+3. Isolate variables systematically
 
-1. Relentless curiosity:
-   The hunger to dig into the source code, read the specs, and ask ""why does this behave like this?""
-
-2. Absolute accountability:
-   Taking ownership when things break, communicating proactively, and following through until the fix is shipped.
-
-Curiosity builds your technical depth.
-Accountability builds your reputation.
-
-What is one professional skill you're intentionally developing this quarter?","","AbiodunBuilds","2026-12-09 19:00"
+Resourcefulness beats memorization every time 🚀","","AbiodunBuilds","2026-12-15 19:00"

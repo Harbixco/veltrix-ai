@@ -1,0 +1,506 @@
+[
+  {
+    "day": 1,
+    "post_num": 1,
+    "time": "09:00 AM",
+    "category": "Positioning / Intro",
+    "cta_type": "Engagement / Follow",
+    "media_suggestion": "Clean, professional workspace photo or modern developer profile card.",
+    "text": "Most developers focus on *how* to code.\nI focus on *why* that code needs to exist.\n\nHi, I\u2019m Abiodun \ud83d\udc4b Frontend Engineer (React/TypeScript/UX).\n\nOver 28 days, I'm documenting practical React patterns & building UI that converts.\n\nDrop a comment to connect! \ud83d\ude80"
+  },
+  {
+    "day": 1,
+    "post_num": 2,
+    "time": "07:00 PM",
+    "category": "Engineering Mindset",
+    "cta_type": "Question / Discussion",
+    "media_suggestion": "Text graphic or clean diagram comparing Code vs Context.",
+    "text": "Writing code is easy. Understanding *why* you write it takes maturity.\n\nJunior: \"How do I build this?\"\nSenior:\n1. Who needs this?\n2. What bottleneck does it solve?\n3. What if it fails in prod?\n\nContext > code.\n\nWhich question do you ask first? \ud83d\udcac"
+  },
+  {
+    "day": 2,
+    "post_num": 3,
+    "time": "09:00 AM",
+    "category": "Frontend Engineering",
+    "cta_type": "Bookmark / Save",
+    "media_suggestion": "Side-by-side graphic: Pretty UI vs Intuitive Functional UX.",
+    "text": "If a user needs instructions to navigate your app, your frontend failed.\n\nGreat frontend engineering:\n\u2022 Loads fast on 3G\n\u2022 Zero cognitive load\n\u2022 Accessible to all\n\u2022 Graceful error states\n\nPretty UI without intuitive UX is just decoration \ud83d\udccc"
+  },
+  {
+    "day": 2,
+    "post_num": 4,
+    "time": "07:00 PM",
+    "category": "Business & UX",
+    "cta_type": "Thought Leadership",
+    "media_suggestion": "Quote graphic or high-contrast stat card on bounce rates.",
+    "text": "Customers aren't abandoning your website because of price.\nThey leave because your UX is confusing.\n\nIn 3 seconds, users decide:\n\u2022 What do you do?\n\u2022 Where is pricing?\n\u2022 Can I trust you?\n\nIf a competitor answers in 3s and you take 30s, they win. \ud83d\ude80"
+  },
+  {
+    "day": 3,
+    "post_num": 5,
+    "time": "09:00 AM",
+    "category": "React Best Practice",
+    "cta_type": "Bookmark / Save",
+    "media_suggestion": "Ray.so snippet showing derived state vs useEffect anti-pattern.",
+    "text": "Stop using `useEffect` for derived values! It causes redundant re-renders.\n\n\u274c Bad:\nuseEffect(() => setFull(`${first} ${last}`), [first, last]);\n\n\u2705 Good:\nconst full = `${first} ${last}`;\n\nCompute in render. Less state = fewer bugs \ud83d\udccc"
+  },
+  {
+    "day": 3,
+    "post_num": 6,
+    "time": "07:00 PM",
+    "category": "Dev Growth & Career",
+    "cta_type": "Question / Discussion",
+    "media_suggestion": "Clean minimalist graphic: 30 Hours of Tutorials vs 1 Production App.",
+    "text": "Watching 30 hours of tutorials won't make you a developer.\nBuilding 1 messy project from scratch will.\n\nTutorials give the illusion of competence without the pain of debugging.\n\nClose YouTube. Open your IDE. Break things. Fix them.\n\nWhat are you building right now? \ud83d\udc47"
+  },
+  {
+    "day": 4,
+    "post_num": 7,
+    "time": "09:00 AM",
+    "category": "Frontend UX & Performance",
+    "cta_type": "Bookmark / Save",
+    "media_suggestion": "Side-by-side Chrome DevTools screenshot: Desktop M2 Mac vs 3G Mobile Throttle.",
+    "text": "The most dangerous assumption in tech:\n\"It works for me, so it's fine.\"\n\nYou test on a MacBook Pro with high-speed WiFi.\nYour user is on a $120 phone with 2 bars of 3G.\n\nAlways throttle your network in DevTools.\nPerformance is UX. Optimize early \ud83d\udccc"
+  },
+  {
+    "day": 4,
+    "post_num": 8,
+    "time": "07:00 PM",
+    "category": "Business Conversion",
+    "cta_type": "Engagement / Lead Gen",
+    "media_suggestion": "Annotated landing page screenshot highlighting above-the-fold CTA placement.",
+    "text": "The #1 conversion killer on 90% of business sites:\n\nNo clear CTA above the fold.\n\nIf users must scroll past paragraphs of text just to figure out how to book or buy, you lost them.\n\nPut one clear action button front and center.\n\nSimplicity sells \ud83d\ude80"
+  },
+  {
+    "day": 5,
+    "post_num": 9,
+    "time": "09:00 AM",
+    "category": "TypeScript Deep Dive",
+    "cta_type": "Bookmark / Save",
+    "media_suggestion": "Carbon.now.sh code card showing strict typing vs any.",
+    "text": "TypeScript isn't just about catching typos.\nIt's living documentation and refactoring insurance.\n\nWhen you return to code 6 months later:\n\u2022 Strict types explain intent\n\u2022 Autocomplete prevents guesswork\n\u2022 Renaming props won't break prod\n\nWrite strict TS today \ud83d\udccc"
+  },
+  {
+    "day": 5,
+    "post_num": 10,
+    "time": "07:00 PM",
+    "category": "Portfolio & Career",
+    "cta_type": "Community / Discussion",
+    "media_suggestion": "Clean infographic comparing Shallow Tutorial Repos vs 2 Production Case Studies.",
+    "text": "Stop collecting certificates like Pok\u00e9mon cards.\n\nBuild 2 production-grade apps instead of 15 tutorial clones:\n\u2022 Real database & auth\n\u2022 Responsive UI & error states\n\u2022 Live deployed URL\n\nHiring managers want problem-solvers, not tutorial copiers \ud83d\udcac"
+  },
+  {
+    "day": 6,
+    "post_num": 11,
+    "time": "09:00 AM",
+    "category": "Performance & Web Vitals",
+    "cta_type": "Bookmark / Save",
+    "media_suggestion": "Core Web Vitals scorecard graphic with green 95+ performance metrics.",
+    "text": "Nobody cares how clean your code is if your site takes 7 seconds to load.\n\nA 1-second delay cuts conversions by 7%.\n\nQuick wins:\n1. Compress images to WebP/AVIF\n2. Lazy load below the fold\n3. Code-split heavy routes\n\nSpeed is direct revenue optimization \ud83d\udccc"
+  },
+  {
+    "day": 6,
+    "post_num": 12,
+    "time": "07:00 PM",
+    "category": "Community Question",
+    "cta_type": "Question / Reply Bait",
+    "media_suggestion": "Quote graphic: 'Advice to Day 1 Self'.",
+    "text": "If you could travel back to Day 1 of your software engineering journey, what ONE piece of advice would you give yourself?\n\nMine: Learn how the browser works before memorizing 5 different frameworks.\n\nWhat's yours? Drop it below! \ud83d\udc47"
+  },
+  {
+    "day": 7,
+    "post_num": 13,
+    "time": "09:00 AM",
+    "category": "Engineering Culture",
+    "cta_type": "Thought Leadership",
+    "media_suggestion": "Diagram comparing Junior vs Mid vs Senior Engineer decision priorities.",
+    "text": "Senior engineers aren't walking documentation libraries.\n\nThey know when NOT to write code:\n\u2022 Junior: Builds 500 lines of custom logic\n\u2022 Senior: Solves it with 3 lines of CSS or existing browser API\n\nThe best code is the code you never had to write \ud83d\ude80"
+  },
+  {
+    "day": 7,
+    "post_num": 14,
+    "time": "07:00 PM",
+    "category": "Week 1 Reflection",
+    "cta_type": "Engagement / Community",
+    "media_suggestion": "Clean visual graphic: 7 Days of Frontend Insights Recapped.",
+    "text": "Week 1 of 4 completed! \ud83d\ude80\n\nMy biggest takeaway:\nCode is only a tool. The real value is solving human and business bottlenecks.\n\nThank you to everyone connecting and replying this week!\n\nWhat was your biggest tech win this week? Drop it below! \ud83d\udcac"
+  },
+  {
+    "day": 8,
+    "post_num": 15,
+    "time": "09:00 AM",
+    "category": "Architecture & Code Quality",
+    "cta_type": "Bookmark / Save",
+    "media_suggestion": "Code architecture diagram showing flat vs over-nested components.",
+    "text": "Premature abstraction is the root of all evil in frontend.\n\nDon't build a generic `<SuperButton />` with 47 props for a button used in 2 places.\n\nDuplication is far cheaper than the wrong abstraction.\n\nBuild for today. Refactor when you see 3 identical use cases \ud83d\udccc"
+  },
+  {
+    "day": 8,
+    "post_num": 16,
+    "time": "07:00 PM",
+    "category": "Business Mindset",
+    "cta_type": "Thought Leadership",
+    "media_suggestion": "Contrast card: Order Taker vs Strategic Product Partner.",
+    "text": "A great engineer doesn't just take orders. They question requirements:\n\n\"Why do users need this?\"\n\"What metric are we moving?\"\n\"Is there a simpler way to test this?\"\n\nWhen you care about business outcomes, you become an indispensable partner \ud83d\ude80"
+  },
+  {
+    "day": 9,
+    "post_num": 17,
+    "time": "09:00 AM",
+    "category": "Tech Stack Wisdom",
+    "cta_type": "Bookmark / Save",
+    "media_suggestion": "Hierarchy diagram: HTML/CSS/JS fundamentals at base, Frameworks at top.",
+    "text": "Learning 5 frameworks won't make you senior.\n\nMaster 4 fundamentals instead:\n1. JS event loop & closures\n2. DOM rendering & CSS layout\n3. Network protocols & HTTP cache\n4. Web accessibility (HTML/ARIA)\n\nFrameworks change. Core basics don't \ud83d\udccc"
+  },
+  {
+    "day": 9,
+    "post_num": 18,
+    "time": "07:00 PM",
+    "category": "Sales & UX",
+    "cta_type": "Engagement / Lead Gen",
+    "media_suggestion": "Funnel graphic illustrating 60% drop-off at checkout vs streamlined 1-click checkout.",
+    "text": "You don't need more ad traffic.\nYou need to fix checkout friction.\n\nIf your mobile checkout has 14 required fields, users leave.\n\nEvery extra field cuts conversion by ~5%.\nCut the noise. Make buying effortless.\n\nHow many steps is your checkout? \ud83d\udcac"
+  },
+  {
+    "day": 10,
+    "post_num": 19,
+    "time": "09:00 AM",
+    "category": "Debugging & Problem Solving",
+    "cta_type": "Bookmark / Save",
+    "media_suggestion": "Flowchart: 4-step scientific debugging process.",
+    "text": "Randomly changing code until an error disappears isn't debugging. It's guessing.\n\nThe 4-step debugging framework:\n1. Reproduce reliably\n2. Isolate the layer (network, state, render)\n3. Form a hypothesis\n4. Verify the fix\n\nSave hours of frustration \ud83d\udccc"
+  },
+  {
+    "day": 10,
+    "post_num": 20,
+    "time": "07:00 PM",
+    "category": "Leadership & Collaboration",
+    "cta_type": "Thought Leadership",
+    "media_suggestion": "Team dynamics quote card: 'High-performing teams disagree constructively'.",
+    "text": "The best engineering teams don't avoid disagreement.\nThey debate technical trade-offs openly:\n\n\u2022 Challenge code, never the person\n\u2022 Ground arguments in performance & DX\n\u2022 Disagree, then fully commit\n\nStrong opinions, loosely held. That's real teamwork \ud83e\udd1d"
+  },
+  {
+    "day": 11,
+    "post_num": 21,
+    "time": "09:00 AM",
+    "category": "Responsive Design",
+    "cta_type": "Bookmark / Save",
+    "media_suggestion": "Visual breakdown: True responsive mobile UX vs scaled-down desktop UI.",
+    "text": "Responsive design is NOT shrinking a desktop UI to fit mobile.\n\nMobile is a distinct experience:\n\u2022 Thumb-friendly touch targets (min 48px)\n\u2022 Bottom-sheet navigation\n\u2022 Native input types (`type=\"tel\"`)\n\n80% of web traffic is mobile. Design mobile-first \ud83d\udccc"
+  },
+  {
+    "day": 11,
+    "post_num": 22,
+    "time": "07:00 PM",
+    "category": "Conversion Optimization",
+    "cta_type": "Thought Leadership",
+    "media_suggestion": "Metaphor illustration: Pouring water into a leaky bucket.",
+    "text": "Pouring traffic into a website with poor UX is like filling a leaky bucket.\n\nBefore spending another $500 on ads:\n1. Test site speed on 3G\n2. Clarify your headline & CTA\n3. Fix broken mobile buttons\n\nPlug the leaks first. Growth follows \ud83d\ude80"
+  },
+  {
+    "day": 12,
+    "post_num": 23,
+    "time": "09:00 AM",
+    "category": "State Management",
+    "cta_type": "Bookmark / Save",
+    "media_suggestion": "State architecture diagram: Server State vs URL State vs Local State vs Global State.",
+    "text": "You probably don't need Redux or global state for that app.\n\nModern state belongs in 3 places:\n1. URL params: Filters, tabs, search\n2. Server state: React Query / SWR (caching)\n3. Local state: `useState` inside components\n\nKeep state as local as possible \ud83d\udccc"
+  },
+  {
+    "day": 12,
+    "post_num": 24,
+    "time": "07:00 PM",
+    "category": "Hiring & Recruitment",
+    "cta_type": "Question / Discussion",
+    "media_suggestion": "Question prompt graphic for tech hiring managers.",
+    "text": "To Engineering Managers & Tech Recruiters:\n\nWhat is the #1 green flag you look for when reviewing a frontend developer's code or portfolio?\n\nIs it architecture, clean Git history, live deployed projects, or communication?\n\nI'd love your insight below! \ud83d\udcac"
+  },
+  {
+    "day": 13,
+    "post_num": 25,
+    "time": "09:00 AM",
+    "category": "Accessibility & SEO",
+    "cta_type": "Bookmark / Save",
+    "media_suggestion": "Visual comparison: `div onClick` vs proper `<button>` with keyboard focus indicators.",
+    "text": "Accessibility isn't an optional feature. It's engineering hygiene.\n\nSemantic HTML gives you for free:\n\u2022 Keyboard navigation (`Tab`, `Enter`)\n\u2022 Screen-reader support\n\u2022 Higher Google SEO rank\n\nStop replacing `<button>` with `<div onClick>`. Use real HTML \ud83d\udccc"
+  },
+  {
+    "day": 13,
+    "post_num": 26,
+    "time": "07:00 PM",
+    "category": "Soft Skills & Career",
+    "cta_type": "Thought Leadership",
+    "media_suggestion": "Quote card: 'Code gets you hired. Communication gets you promoted.'",
+    "text": "A 10x developer who can\u2019t communicate clearly is effectively a 1x developer.\n\nGreat engineers:\n\u2022 Write concise PR summaries\n\u2022 Explain trade-offs in plain English\n\u2022 Proactively flag blockers\n\nTechnical skill is baseline. Clear communication is your superpower \ud83d\ude80"
+  },
+  {
+    "day": 14,
+    "post_num": 27,
+    "time": "09:00 AM",
+    "category": "Portfolio Proof",
+    "cta_type": "Bookmark / Save",
+    "media_suggestion": "Case study template layout: Problem \u2192 Solution \u2192 Technical Trade-offs \u2192 Business Result.",
+    "text": "Your portfolio shouldn't just be pretty landing page screenshots.\n\nTurn your projects into case studies:\n\u2022 What real problem did it solve?\n\u2022 Which trade-offs did you make?\n\u2022 What metrics improved?\n\nDon't show code. Show business impact \ud83d\udccc"
+  },
+  {
+    "day": 14,
+    "post_num": 28,
+    "time": "07:00 PM",
+    "category": "Week 2 Milestone",
+    "cta_type": "Community / Networking",
+    "media_suggestion": "Milestone badge graphic: Day 14 / Halfway through 28-day campaign.",
+    "text": "Day 14. Halfway through my 28-day frontend engineering series! \ud83d\ude80\n\nTop lesson so far:\nThe community rewards practical, no-nonsense engineering over buzzword hype.\n\nIf you build digital products or manage tech teams, let's connect!\n\nSay hi below \ud83d\udc47"
+  },
+  {
+    "day": 15,
+    "post_num": 29,
+    "time": "09:00 AM",
+    "category": "Tech Stack Reality",
+    "cta_type": "Thought Leadership",
+    "media_suggestion": "Minimalist graphic: User Needs (Fast, Functional, Reliable) vs Tech Stack Choice.",
+    "text": "Users don't care if your app is Next.js, Remix, or vanilla JS.\n\nThey care about 3 things:\n1. Did it solve my problem?\n2. Was it fast and bug-free?\n3. Was it easy to use?\n\nBuild with tools you master. Ship value, not framework hype \ud83d\ude80"
+  },
+  {
+    "day": 15,
+    "post_num": 30,
+    "time": "07:00 PM",
+    "category": "Business UX Audit",
+    "cta_type": "Engagement / Lead Gen",
+    "media_suggestion": "Checklist card: 3-point mobile usability check for business websites.",
+    "text": "Business owners: Open your website on your phone right now.\n\nCheck 3 things:\n1. Can you tap your phone/WhatsApp button in 1 click?\n2. Does it load in under 3 seconds?\n3. Is text readable without zooming?\n\nIf not, your site is losing money daily. Fix it \ud83d\udcac"
+  },
+  {
+    "day": 16,
+    "post_num": 31,
+    "time": "09:00 AM",
+    "category": "Error Handling & UX",
+    "cta_type": "Bookmark / Save",
+    "media_suggestion": "UI card comparison: Cryptic '500 Server Error' vs Helpful friendly fallback UI.",
+    "text": "A great frontend isn\u2019t just how your app looks when things go right.\n\nIt\u2019s how it behaves when things go wrong:\n\u2022 Actionable error messages\n\u2022 Retry buttons on failed API calls\n\u2022 Offline indicators\n\nNever leave users on a blank screen. Design resilient UI \ud83d\udccc"
+  },
+  {
+    "day": 16,
+    "post_num": 32,
+    "time": "07:00 PM",
+    "category": "Junior Dev Advice",
+    "cta_type": "Thought Leadership",
+    "media_suggestion": "Quote card: 'Read documentation like a detective'.",
+    "text": "Best advice for frontend devs:\n\nSpend less time watching tutorials and more time reading official documentation.\n\nTutorials teach someone else's opinion.\nDocs teach how the technology actually works under the hood.\n\nLevel up your craft. Read the docs \ud83d\ude80"
+  },
+  {
+    "day": 17,
+    "post_num": 33,
+    "time": "09:00 AM",
+    "category": "Clean Code",
+    "cta_type": "Bookmark / Save",
+    "media_suggestion": "Side-by-side code snippet: Clever complex regex vs Simple readable function.",
+    "text": "Clean code isn't code that looks clever.\nClean code is code that's effortless to delete.\n\n\u2022 Clear variable names > clever tricks\n\u2022 Pure predictable functions\n\u2022 Obvious code paths\n\nWrite code for the next engineer who will maintain it at 2:00 AM \ud83d\udccc"
+  },
+  {
+    "day": 17,
+    "post_num": 34,
+    "time": "07:00 PM",
+    "category": "Business Automation",
+    "cta_type": "Engagement / Lead Gen",
+    "media_suggestion": "Workflow diagram: Manual WhatsApp copy-paste vs Automated CRM booking.",
+    "text": "Small businesses don't need million-dollar custom enterprise software.\n\nThey need simple, robust workflows:\n\u2022 Direct WhatsApp lead capture\n\u2022 Instant automated quotes\n\u2022 Clean mobile payment checkouts\n\nAutomate manual bottlenecks. Save 10+ hours a week \ud83d\ude80"
+  },
+  {
+    "day": 18,
+    "post_num": 35,
+    "time": "09:00 AM",
+    "category": "Project Structure",
+    "cta_type": "Bookmark / Save",
+    "media_suggestion": "Folder tree comparison: Feature-based architecture vs Type-based folder structure.",
+    "text": "Organizing React by `components/`, `hooks/`, `utils/` breaks down at scale.\n\nOrganize by feature instead:\n\ud83d\udcc1 features/auth/\n  \u251c\u2500\u2500 components/\n  \u251c\u2500\u2500 hooks/\n  \u2514\u2500\u2500 api/\n\nWhen deleting a feature, delete one folder. Modular & scalable \ud83d\udccc"
+  },
+  {
+    "day": 18,
+    "post_num": 36,
+    "time": "07:00 PM",
+    "category": "Interview Prep",
+    "cta_type": "Bookmark / Save",
+    "media_suggestion": "Checklist: 4-step communication framework for coding interviews.",
+    "text": "How to ace frontend interviews without memorizing LeetCode:\n\n1. Clarify constraints before coding\n2. Think aloud so they see your problem-solving\n3. Mention trade-offs & edge cases\n4. Ask how their team operates\n\nThey hire teammates, not compilers \ud83d\udcac"
+  },
+  {
+    "day": 19,
+    "post_num": 37,
+    "time": "09:00 AM",
+    "category": "Why Frontend",
+    "cta_type": "Thought Leadership",
+    "media_suggestion": "Personal quote card: 'Frontend is where human psychology meets engineering logic'.",
+    "text": "Why I chose Frontend Engineering:\n\nYou touch human psychology and business impact directly.\n\nA backend database optimization is great.\nBut a seamless UI checkout actually converts visitors into paying customers.\n\nFrontend is the bridge to the user \ud83d\ude80"
+  },
+  {
+    "day": 19,
+    "post_num": 38,
+    "time": "07:00 PM",
+    "category": "Founder Question",
+    "cta_type": "Question / Lead Gen",
+    "media_suggestion": "Discussion card for founders: 'What is your biggest tech bottleneck?'",
+    "text": "To startup founders and business owners:\n\nWhat is the single biggest technical or UX bottleneck holding your business back right now?\n\nSlow website? High bounce rates? Broken mobile checkout?\n\nDrop it below. Let\u2019s diagnose it together! \ud83d\udcac"
+  },
+  {
+    "day": 20,
+    "post_num": 39,
+    "time": "09:00 AM",
+    "category": "Perceived Performance",
+    "cta_type": "Bookmark / Save",
+    "media_suggestion": "Visual comparison: Skeleton screen loading state vs annoying full-screen spinner.",
+    "text": "Never leave users staring at a blank white screen.\n\nPerceived performance matters as much as actual load speed:\n\u2022 Use skeleton screens\n\u2022 Show optimistic UI updates\n\u2022 Disable buttons with loaders on click\n\nResponsive feedback builds user trust \ud83d\udccc"
+  },
+  {
+    "day": 20,
+    "post_num": 40,
+    "time": "07:00 PM",
+    "category": "Continuous Learning",
+    "cta_type": "Thought Leadership",
+    "media_suggestion": "Quote card: 'The best skill in tech is knowing how to learn fast'.",
+    "text": "You don't need to know everything to be an exceptional software engineer.\n\nYou just need to know how to:\n1. Read error stacks patiently\n2. Ask precise questions\n3. Isolate variables systematically\n\nResourcefulness beats memorization every time \ud83d\ude80"
+  },
+  {
+    "day": 21,
+    "post_num": 41,
+    "time": "09:00 AM",
+    "category": "Full-Stack Empathy",
+    "cta_type": "Bookmark / Save",
+    "media_suggestion": "Architectural diagram showing Frontend REST/GraphQL query aligned with Backend DB indices.",
+    "text": "A frontend engineer who understands backend data modeling is 3x more valuable.\n\nWhen you understand:\n\u2022 API pagination costs\n\u2022 DB query indexing\n\u2022 Cache headers (ETag, max-age)\n\nYou build lighter, faster apps that backend devs love \ud83d\udccc"
+  },
+  {
+    "day": 21,
+    "post_num": 42,
+    "time": "07:00 PM",
+    "category": "Ego in Tech",
+    "cta_type": "Thought Leadership",
+    "media_suggestion": "Quote graphic: 'Detach your ego from your pull requests'.",
+    "text": "Your code is not your identity.\n\nDetach your ego from your pull requests:\n\u2022 PR comments are improvements, not personal attacks\n\u2022 Welcome critique with curiosity\n\u2022 Be happy when someone points out an edge case\n\nGrowth starts where defensiveness ends \ud83e\udd1d"
+  },
+  {
+    "day": 22,
+    "post_num": 43,
+    "time": "09:00 AM",
+    "category": "AI in Engineering",
+    "cta_type": "Thought Leadership",
+    "media_suggestion": "Infographic: AI as an Engineering Multiplier, not replacement.",
+    "text": "AI won't replace software engineers.\nEngineers who leverage AI will replace those who don't.\n\nUse AI to:\n\u2022 Generate boilerplate & regex\n\u2022 Brainstorm edge cases\n\u2022 Write unit tests\n\nKeep the architecture & problem-solving in human hands \ud83d\ude80"
+  },
+  {
+    "day": 22,
+    "post_num": 44,
+    "time": "07:00 PM",
+    "category": "Website ROI",
+    "cta_type": "Engagement / Lead Gen",
+    "media_suggestion": "Comparison card: Static Brochure vs High-Converting Digital Sales Engine.",
+    "text": "An online brochure costs money.\nA conversion-optimized website prints money.\n\nIf your website doesn't capture leads or make booking frictionless, it's an expense, not an asset.\n\nTransform your web presence into your best salesperson \ud83d\ude80"
+  },
+  {
+    "day": 23,
+    "post_num": 45,
+    "time": "09:00 AM",
+    "category": "Framework Mastery",
+    "cta_type": "Bookmark / Save",
+    "media_suggestion": "Mindmap diagram: How to deconstruct and master any new framework in 48 hours.",
+    "text": "How to master a new framework in 48 hours:\n\n1. Understand its mental model\n2. Learn how it handles state & routing\n3. Inspect its reactivity system\n4. Build a CRUD app without tutorials\n\nUnderstand the design philosophy first \ud83d\udccc"
+  },
+  {
+    "day": 23,
+    "post_num": 46,
+    "time": "07:00 PM",
+    "category": "Networking",
+    "cta_type": "Community / Follow",
+    "media_suggestion": "Clean connect card: Profile snapshot of AbiodunBuilds.",
+    "text": "Building my network on tech X! \ud83c\udf10\n\nI'm looking to connect with:\n\u2022 React & TypeScript developers\n\u2022 Founders scaling web products\n\u2022 Engineering hiring managers\n\nIf you build high-performance software, drop a comment or follow. Let's connect! \ud83d\udc4b"
+  },
+  {
+    "day": 24,
+    "post_num": 47,
+    "time": "09:00 AM",
+    "category": "Code Review Culture",
+    "cta_type": "Bookmark / Save",
+    "media_suggestion": "Checklist: High-empathy Code Review Guidelines for Engineering Teams.",
+    "text": "A great code review shouldn't feel like an interrogation.\n\nHealthy PR habits:\n\u2022 Praise clever solutions\n\u2022 Explain *why*, not just *what*\n\u2022 Label comments: [Nit], [Question], [Blocking]\n\nCode reviews are mentorship opportunities, not gatekeeping \ud83d\udccc"
+  },
+  {
+    "day": 24,
+    "post_num": 48,
+    "time": "07:00 PM",
+    "category": "Business Platform Risk",
+    "cta_type": "Thought Leadership",
+    "media_suggestion": "Metaphor card: Building on Rented Land (Social Media) vs Owned Digital Asset (Website).",
+    "text": "Building your entire business on Instagram or TikTok is building on rented land.\n\nOne algorithm tweak or account suspension can wipe out your pipeline.\n\nOwn your platform:\n\u2022 A fast, dedicated website\n\u2022 An owned email list\n\nOwn your customer relationships \ud83d\ude80"
+  },
+  {
+    "day": 25,
+    "post_num": 49,
+    "time": "09:00 AM",
+    "category": "Frontend Security",
+    "cta_type": "Bookmark / Save",
+    "media_suggestion": "Security audit diagram: What gets bundled into client JS vs Server-only secrets.",
+    "text": "Frontend developers: Never hide secrets in client code.\n\nAny `NEXT_PUBLIC_` or Vite `VITE_` env variable is visible to anyone opening Chrome DevTools.\n\n\u2022 Never put secret API keys in frontend\n\u2022 Always validate forms on backend too\n\nFrontend security matters \ud83d\udccc"
+  },
+  {
+    "day": 25,
+    "post_num": 50,
+    "time": "07:00 PM",
+    "category": "Professional Networking",
+    "cta_type": "Thought Leadership",
+    "media_suggestion": "Quote graphic: 'Build your network before you need it'.",
+    "text": "The biggest mistake in professional networking:\n\nOnly reaching out when you desperately need a job.\n\nBuild authentic relationships beforehand:\n\u2022 Share your learnings publicly\n\u2022 Help others solve bugs\n\u2022 Celebrate others' wins\n\nOpportunities flow to generous builders \ud83e\udd1d"
+  },
+  {
+    "day": 26,
+    "post_num": 51,
+    "time": "09:00 AM",
+    "category": "Software Realities",
+    "cta_type": "Community / Discussion",
+    "media_suggestion": "Humorous reality chart: 10% Writing Code vs 90% Reading Documentation & Debugging.",
+    "text": "Software engineering in reality:\n\n\u2022 30 mins: Writing new code\n\u2022 2 hours: Reading documentation\n\u2022 3 hours: Debugging why one prop is undefined\n\nDon't feel like an imposter. That's what real engineering looks like!\n\nWho can relate? \ud83d\ude02\ud83d\udcac"
+  },
+  {
+    "day": 26,
+    "post_num": 52,
+    "time": "07:00 PM",
+    "category": "Founder Engagement",
+    "cta_type": "Question / Lead Gen",
+    "media_suggestion": "Discussion card: 'The #1 website element founders want to overhaul'.",
+    "text": "To business owners and founders:\n\nIf you could fix ONE thing on your website by tomorrow morning without spending a dime, what would it be?\n\nSpeed? Mobile layout? Higher checkout conversion?\n\nDrop your site link or bottleneck below for quick feedback! \ud83d\udc47"
+  },
+  {
+    "day": 27,
+    "post_num": 53,
+    "time": "09:00 AM",
+    "category": "Maintainability",
+    "cta_type": "Bookmark / Save",
+    "media_suggestion": "Architecture card: Easy to read, easy to modify, easy to delete.",
+    "text": "Getting code to work is step one.\nGetting code to be maintainable is what makes you senior.\n\nBefore opening a PR, ask:\n\"Can someone with zero context understand this in 5 minutes?\"\n\nIf the answer is no, simplify.\n\nWrite code for humans first, computers second \ud83d\udccc"
+  },
+  {
+    "day": 27,
+    "post_num": 54,
+    "time": "07:00 PM",
+    "category": "Recruiter Insights",
+    "cta_type": "Question / Community",
+    "media_suggestion": "Discussion card for engineering recruiters and hiring managers.",
+    "text": "To tech recruiters & engineering managers:\n\nWhen reviewing frontend candidate portfolios, what is your biggest instant RED flag?\n\nBroken live links? Unresponsive mobile layouts? Zero commit history?\n\nHelp the developer community level up below! \ud83d\udcac"
+  },
+  {
+    "day": 28,
+    "post_num": 55,
+    "time": "09:00 AM",
+    "category": "Delivery Framework",
+    "cta_type": "Bookmark / Save",
+    "media_suggestion": "Visual roadmap: My 6-Step End-to-End Product Engineering Framework.",
+    "text": "My 6-step framework for shipping products:\n\n1. Clarify user outcome\n2. Map data models & APIs\n3. Design responsive mobile UI\n4. Implement resilient state logic\n5. Optimize performance & SEO\n6. Measure user conversion\n\nShip fast, ship resilient \ud83d\udccc"
+  },
+  {
+    "day": 28,
+    "post_num": 56,
+    "time": "07:00 PM",
+    "category": "Campaign Finale",
+    "cta_type": "Engagement / Lead Gen",
+    "media_suggestion": "Master summary infographic: 28 Days of Frontend Engineering Recapped.",
+    "text": "28 days. 56 posts. One mission:\n\nTo bridge technical engineering with real business conversion.\n\nThank you to everyone who followed, commented, and shared!\n\nNeed a high-converting web app or performance audit? DM me or let's connect!\n\nOnward to the next build \ud83d\ude80"
+  }
+]
