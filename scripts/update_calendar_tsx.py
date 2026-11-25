@@ -1,5 +1,6 @@
 import json
 import re
+from datetime import datetime, timedelta
 
 with open("content/concise_posts.json", "r", encoding="utf-8") as f:
     concise_posts = json.load(f)
@@ -9,19 +10,8 @@ print(f"Loaded {len(concise_posts)} concise posts.")
 with open("apps/web/src/pages/ContentCalendarPage.tsx", "r", encoding="utf-8") as f:
     tsx_content = f.read()
 
-# Replace captions of the 56 Twitter posts
-# Pattern matches:
-# id: 'sched_\d{4}_\d{2}_\d{2}_x_(am|pm)',.*?caption:\s*"([^"\\]*(?:\\.[^"\\]*)*)"
-# We only want to update the 56 posts from 2026-11-19 onwards.
-
-# Let's find each block
-dates = []
-for day in range(19, 31):
-    dates.append(f"2026_11_{day:02d}")
-for day in range(1, 17):
-    dates.append(f"2026_12_{day:02d}")
-
-print(f"Total dates in 28-day schedule: {len(dates)}")
+start_date = datetime(2026, 11, 26)
+dates = [(start_date + timedelta(days=i)).strftime("%Y_%m_%d") for i in range(28)]
 
 updated_count = 0
 for idx, date_prefix in enumerate(dates):
@@ -34,12 +24,8 @@ for idx, date_prefix in enumerate(dates):
     pm_id = f"sched_{date_prefix}_x_pm"
     
     for pid, pdata in [(am_id, am_post), (pm_id, pm_post)]:
-        # Regex to find block for pid and replace its caption
-        # Pattern: (id:\s*'{pid}',[\s\S]*?caption:\s*")(.*?)("[\s\S]*?scheduledFor:)
         pattern = re.compile(rf"(id:\s*'{pid}',[\s\S]*?caption:\s*\")(.*?)(\",\s*\n\s*mediaUrls:)", re.DOTALL)
-        
-        # Escape newlines and quotes in JSON string style for JS
-        js_escaped_caption = json.dumps(pdata["text"])[1:-1] # strip outer quotes
+        js_escaped_caption = json.dumps(pdata["text"])[1:-1]
         
         match = pattern.search(tsx_content)
         if match:
@@ -50,9 +36,9 @@ for idx, date_prefix in enumerate(dates):
 
 print(f"Updated {updated_count} Twitter captions in ContentCalendarPage.tsx")
 
-# Bump cache key from v22 to v23
-tsx_content = tsx_content.replace("v22", "v23")
-print("Bumped cache key to v23")
+# Bump cache key from v24 to v25
+tsx_content = tsx_content.replace("v24", "v25")
+print("Bumped cache key to v25")
 
 with open("apps/web/src/pages/ContentCalendarPage.tsx", "w", encoding="utf-8") as f:
     f.write(tsx_content)
